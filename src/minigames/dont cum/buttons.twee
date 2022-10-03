@@ -32,9 +32,8 @@
           </span>
         ]
         (set:$dir to 0)
-        (live:2.5s)[
+        (after: time + 2.5s)[
           (replace:?directions)[(display:"dont cum buttons")]
-          (stop:)
         ]
         (set:$quicktime_params's "interrupts" to $quicktime_params's "interrupts" - 1)
       ](else:)[
@@ -47,15 +46,13 @@
         <span class='chromatic'>Too fast!</span>
       ]
       (set:$dir to 0)
-      (live:1s)[
+      (after: time + 1s)[
         (replace:?directions)[(display:"dont cum buttons")]
-        (stop:)
       ]
     }]
   ]
   (set:$rhythm_check to "false")
-  (live:(ceil:$quicktime_params's "rhythm" * 0.75))[
+  (after: time + (ceil:$quicktime_params's "rhythm" * 0.75))[
     (set:$rhythm_check to "true")
-    (stop:)
   ]
 }

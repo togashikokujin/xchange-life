@@ -28,11 +28,10 @@
 :: dont cum finish {"position":"571,4525","size":"100,100"}
 {
   (set:$dontcum to "finished")
-  (live:0.5s)[
+  (after: time + 0.5s)[
     (replace:?score_bar)[]
     (replace:?arrows)[]
     (display:"quicktime gain xp")
-    (stop:)
   ]
   (stop:)
   (replace:?timer)[(stop:)]
