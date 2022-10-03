@@ -1,0 +1,26 @@
+:: event shop deal finish sex insert {"position":"12126,4171","size":"100,100"}
+{
+  (set:$npc's "sex name" to "the X-Change Pharmacist")
+  (display:"sex doggy transactional")
+  (replace:?portrait)[{
+    (print:"<img class='border' src='img/characters/sex/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+  }]
+  (if:$character's "race" is "black")[
+    (if:(random:1,2) is 1)[
+      (print:"<video src='img/scenes/generic/sex/pre/insert/bwc doggy b.mp4' autoplay='' loop='' muted='' playsinline/>")
+    ](else:)[
+      (print:"<video src='img/scenes/generic/sex/pre/insert/bwc doggy w.mp4' autoplay='' loop='' muted='' playsinline/>")
+    ]
+  ](else:)[
+    (print:"<img class='greyborder' src='img/scenes/characters/" + $character's "id" + "/sex/doggy/transactional insert " + (text:(random:1,4)) + ".jpg' width=100% height=auto>")
+  ]
+  (set:$position to "doggy")
+  (display:"sex insertion")
+  (display:"play sound")
+  <div class='options'>
+    (link:"Get fucked.")[
+      (set:$next to "event shop deal finish sex fuck")
+      (display:"change screen")
+    ]
+  </div>
+}

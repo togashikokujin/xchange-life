@@ -1,0 +1,17 @@
+:: event shop deal finish offer sex {"position":"12126,4056","size":"100,100"}
+{
+  The pharmacist pushes you off his cock. You sit back, sputtering. 
+  <br/><br/>
+  "You know..." he says, flashing the trading card. "You could earn this, if you want. If you let me fuck you. I love deflowering X-Change virgins, hahaha."
+  <br/>
+  <div class='options'>
+    (link:"Ok")[
+      (set:$next to "event shop deal finish sex insert")
+      (display:"change screen")
+    ]
+    (link:"No")[
+      (set:$next to "event shop deal finish offer sex refuse finish")
+      (display:"change screen")
+    ]
+  </div>
+}

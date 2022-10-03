@@ -1,0 +1,105 @@
+:: event shop deal accept {"position":"12016,3814","size":"100,100"}
+{
+  (display:"sex tracks")
+  (print:"<img class='greyborder' src='img/scenes/generic/sex/pre/bwc/" + (either:"bj 1","bj 2","bj 3") + ".jpg' width=100% height=auto>")
+  (set:$se to "unzip")
+  (display:"play sound")
+  (set:_comment to $character's "id" of (dm:
+    "alina","Damn, you're PRETTY now. Fuck, that's a face, fit for a model. But you'd rather suck cocks to earn money, huh?",
+    "mia","Damn, those tits are PRIME. Nothing like a blonde with big tits, seriously. Really a girl-next-door kind of look.",
+    "cassidy","Holy fuck, those TITS! I was NOT expecting them to be so fucking huge. God-damn!",
+    "ella","Holy shit, those are some cow tits you got, haha. You better find yourself a bra soon - if you walk around with those flopping around, I'm not the last guy you're gonna have to suck off.",
+    "jade","Mmm mmm mmm. Damn, your face looks a little dumb, but those TITS. Really big, for an asian. Haha.",
+    "jia","No tits, huh? Damn, that's quite an ass though. You should find some tight pants to show it off...",
+    "liya","Fuck, those are some nice tits. And you're absolutely gorgeous. Let me guess, you're eastern European or something? Ah, who cares, you got nice tits, is all I'm trying to say.",
+    "lana","Fuck, you look like a TOTAL bimbo, hahaha. Like, your face looks DUMB. And those LIPS - damn, am I lucky or what, you're gonna be wrapping them around my cock.",
+    "rae","Oh my god, you're tiny now. Haha. You got a really sultry face - tell me, do you feel like a slut now? Either way, you're gonna in a minute.",
+    "scarlit","Fuck now THAT'S an ass. Not to be racist, but I was really hoping you were gonna have a big ass."))
+  (set:_command to (either:
+    "Now suck.",
+    "Now, on your knees.",
+    "Now, kneel down.",
+    "Alright now, on your knees.",
+    "Ok now, on your knees - don't worry, this won't take long - my balls haven't been drained a while."))
+  (set:_thought to $character's "id" of (dm:
+    "alina","*What a tool.*",
+    "cassidy","*Yeah, these are gigantic. Gotta put on a bra later...*",
+    "ella","*He's not wrong, these are seriously gonna weigh me down.*",
+    "jade","*What an asshole!
+
+    ...do I really look dumb?*",
+    "jia","*Asshole.*",
+    "liya","*Damn, these tits ARE nice. The perfect size. It sucks that he's the first guy who gets to see them...*",
+    "lana","*Do I really look dumb?*",
+    "rae","*Geez, he's a jerk.*",
+    "mia","*Me, a 'girl next door...'*",
+    "scarlit","*Not to be racist. That's exactly what racists say. Do I really have to blow him?*"))
+  (set:_option to (either:
+    "Get to work.",
+    "Obey.",
+    "Fine.",
+    "Be a good girl."))
+  "_comment _command"
+  <br/><br/>
+  _thought
+  <br/>
+  <div class='options'>
+    (link:_option)[{
+      (set:$variant to (random:1,2))
+      (if:$variant is 1)[
+        (set:$img to "scenes/characters/" + $character's "id" + "/bj/transactional " + (text:(random:1,5)) + ".mp4")
+      ](else:)[
+        (if:(a:"scarlit","ella","cassidy") contains $character's "id")[
+          (set:$img to "scenes/generic/sex/bj/" + (either:"clothed 1","dark 1","dark 2") + ".mp4")
+        ](else:)[
+          (set:$img to "scenes/generic/sex/bj/" + (either:"clothed 1","light 1","light 2") + ".mp4")
+        ]
+      ]
+      (replace:?portrait)[{
+        (print:"<img class='border' src='img/characters/bj/bwc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+      }]
+      (set:$stats's "blowjobs given" to $stats's "blowjobs given" + 1)
+
+      (set:$quicktime_params to (dm:
+        "difficulty","medium",
+        "type","bj",
+        "skill check","bj",
+        "skill check difficulty",50,
+        "victory","He loves how eager you are.",
+        "defeat","*It's just so big...*",
+        "points to win",30,
+        "points",10,
+        "sequence",(a:"up","down","up","down","up","up","none","down","up","down","left","right"),
+        "quicktime timer",1,
+        "result passage","event shop deal finish",
+        "backdrop",$img
+      ))
+
+      (set:$quicktime_params's "sequence" to (a:"up","down","up","down","up","up","none","down","up","down","left","right"))
+
+      (set:$quicktime_params's "sequence" to (a:"up","left","right","down","up","down","up","down","none"))
+
+      (set:$quicktime_params's "sequence" to (a:"up","down","right","left","up","up","none","down","up","down","left","right"))
+      (if:$img is "scenes/characters/alina/bj/transactional 1.mp4" or $img is "scenes/characters/alina/bj/transactional 2.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"none","none","down","down","down","up","up","down","up","down","up","down","up","down","up","down","up"))
+      ](else-if:$img is "scenes/characters/angela/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"down","up","down","up","right","left","right","left","right","right","none","none"))
+      ](else-if:$img is "scenes/characters/cassidy/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"down","up","down","up","down","left","up","right","down","up","down","up"))
+      ](else-if:$img is "scenes/characters/ella/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"down","up","down","down","down","left","right","up","down","up","down","up","down","down"))
+      ](else-if:$img is "scenes/characters/jade/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"right","right","left","right","up","down","left","none","none","left","down","up","down","right","left","right","left"))
+      ](else-if:$img is "scenes/characters/jia/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"up","down","up","down","up","down","up","down","up","down","left","right","none"))
+      ](else-if:$img is "scenes/characters/lana/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"up","left","right","down","up","down","up","down","none"))
+      ](else-if:$img is "scenes/characters/liya/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"up","down","right","left","up","up","none","down","up","down","left","right"))
+      ]
+
+      (set:$next to "quicktime initialize")
+      (display:"change screen")
+    }]
+  </div>
+}

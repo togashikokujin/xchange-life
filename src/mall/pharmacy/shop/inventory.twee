@@ -1,0 +1,25 @@
+:: shop inventory {"position":"12014,3235","size":"100,100"}
+<span class='shadow'>X-Change Basic™</span> $100 (link:"Select")[
+  (set:$select to "Basic")
+  (set:$next to "shop buy item")
+  (display:"change screen")
+]
+<span class='shadow'>X-Change Breeder™</span> (css:"text-decoration: line-through;")[$500] (color:"#5e0000")[$450!] (link:"Select")[
+  (set:$select to "Breeder")
+  (set:$next to "shop buy item")
+  (display:"change screen")
+]
+<span class='shadow'>X-Change X-Tra Strength™</span> $1,500 (link:"Select")[
+  (set:$select to "X-Tra Strength")
+  (set:$next to "shop buy item")
+  (display:"change screen")
+]
+<span class='shadow'>X-Change Plus™</span> $10,000 (link:"Select")[
+  (set:$select to "Plus")
+  (set:$next to "shop buy item")
+  (display:"change screen")
+]
+<div class='options'>(link:"Leave")[
+  (set:$next to "Go shopping")
+  (display:"next")
+]</div>(display:"npc screen update")

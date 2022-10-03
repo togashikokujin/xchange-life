@@ -1,0 +1,5 @@
+:: shop deal end {"position":"12233,4276","size":"100,100"}
+{
+  (set:$next to "Go shopping")
+  (display:"next")
+}

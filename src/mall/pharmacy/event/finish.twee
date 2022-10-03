@@ -1,0 +1,120 @@
+:: event shop deal finish {"position":"12011,4056","size":"100,100"}
+{
+  (if:$stats's "sex as girl" is 0)[
+    (display:"event shop deal finish offer sex")
+  ](else:)[
+    (if:$result is "pass")[
+      (either:
+        "He lets out a loud grunt, and proceeds to ejaculate in your face.",
+        "You feel his cock twitch in your mouth, just before he pulls back and erupts all over your face.",
+        "He moans, before exploding all over your face.",
+        "He groans and blows his load in your face.",
+        "He moans. You taste the salt of his precum, just before he nuts all over your pretty face.")
+    ](else:)[
+      (set:_pushOff to (either:
+        "Impatient, he pushes you off.",
+        "He sighs, and pushes you off of his cock."))
+      (set:_jerkIt to (either:
+        "Jerking himself furiously, he proceeds to cum in your face.",
+        "You're then unceremoniously given a heavy facial.",
+        "He brings himself to climax, coming in close to nut all over your pretty face."))
+      _pushOff _jerkIt
+    ]
+    <br/><br/>
+    (display:"event shop deal finish facial")
+  ]
+}
+
+
+:: event shop deal finish offer sex refuse finish {"position":"12011,4168","size":"100,100"}
+{
+  (set:_facial to (either:
+    "He proceeds to cum in your face.",
+    "You're then unceremoniously given a heavy facial.",
+    "He brings himself to climax, coming in close to nut all over your pretty face."))
+  "Fine, be that way," he says, starting to jerk his cock. "Ungrateful bitch." _facial
+	<br/><br/>
+  (display:"event shop deal finish facial")
+}
+
+
+:: event shop deal finish facial
+{
+  (set:$song to 0)
+  (display:"play song")
+  (set:$se to "cum moan " + $character's "id")
+  (display:"play sound")
+  (set:$minigame to (dm:
+    "difficulty",7,
+    "babe type","clothed",
+    "cock type","nsfw",
+    "masculinity level",60,
+    "reason 1","You just sucked a guy's cock off for a *discount*.",
+    "reason 2","How does it feel, getting your face covered in cum?",
+    "reason 3","You're walking around with some dude's cum on your face.",
+    "afterwards","shop deal end"))
+  (set:$character's "status" to "cum")
+  (set:$npc_cum to $npc's "sex name")
+
+  (if:$variant is 1)[
+    (set:$img to "<video src='img/scenes/generic/sex/cum/" + (either:"facial 1","facial 2") + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+    (print:$img)
+  ](else:)[
+    (print:"<video src='img/scenes/characters/" + $character's "id" + "/cum/facial 1.mp4' autoplay='' loop='' muted='' playsinline/>")
+  ]
+  (replace:?portrait)[{
+    (print:"<img class='border' src='img/characters/cum/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+  }]
+
+  (set:_groan to (either:"Ugh","Nnngh","Uggh"))
+  (set:_splutter to (either:"Bluh","Spllf"))
+  (set:_verb to (either:"whimper","gasp"))
+  (set:_modifier to (either:
+    "as his jizz oozes down your face",
+    "through the warm faceful",
+    "through the gross, sticky face-painting",
+    "as the hot, sticky man-cream runs down your delicate features"))
+  "_groan... _splutter," you _verb _modifier.
+  <br/><br/>
+
+  (if:$result is "pass")[
+    (set:_remark to (cond:
+      $stats's "sex as girl" is 0, "That beej was pretty good, at least",
+      "That was pretty good"
+    ))
+    "_remark," the clerk says. "Really earned your discount." He offers you a towel.
+  ](else:)[
+    (set:$character's "money" to 0)
+    (display:"refresh stats")
+    (set:_remark to (cond:
+      $stats's "sex as girl" is 0, "That BJ was pretty sub-par, honestly",
+      "That was pretty sub-par"
+    ))
+    "_remark," the clerk says. "So I won't be giving you THAT steep of a discount. I'll just take whatever else you have on you."
+  ]
+  <br/><br/>
+
+  (set:$gain to 2)
+  (display:"gain arousal")
+  <br/><br/>
+
+  <div class='options'>
+    (if:$result is "pass")[
+      (link:"Clean Yourself Up")[
+        (set:$minigame to (dm:
+          "difficulty",7,
+          "babe type","clothed",
+          "cock type","nsfw",
+          "masculinity level",65,
+          "reason 1","You just sucked a guy's cock off for a *discount*.",
+          "reason 2","Did you ENJOY sucking the pharmacist's cock?",
+          "reason 3","You'll do anything for a little price reduction, you slut.",
+          "afterwards","shop deal end"))
+        (set:$character's "status" to "female")
+        (display:"refresh portrait")
+      ]
+    ]
+    (set:$next to "Go shopping")
+    (display:"masculinity crisis link")
+  </div>
+}

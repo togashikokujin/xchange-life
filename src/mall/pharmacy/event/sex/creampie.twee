@@ -1,0 +1,34 @@
+:: event shop deal finish offer sex accept finish {"position":"12013,4285","size":"100,100"}
+{
+  (set:$minigame to (dm:
+    "difficulty",7,
+    "babe type","clothed",
+    "cock type","nsfw",
+    "masculinity level",50,
+    "reason 1","You just got FUCKED. Think about that.",
+    "reason 2","How did it feel, getting filled up with cream like a donut?",
+    "reason 3","You look cute with cum leaking out of your pussy.",
+    "afterwards","shop deal end"))
+  The pharmacist grunts behind you. "I'm gonna give you a nice big creampie! Don't worry - since it's just a Basic, you won't get pregnant."
+
+  (display:"sex creampie image")
+  (set:$sex_loop to 0)
+  (display:"play sex loop")
+  (set:$se to "cum moan " + $character's "id")
+  (display:"play sound")
+  (display:"sex creampie")
+  (print:$img)
+  (set:$events to $events + (a:"sex creampie"))
+  (set:$character's "status" to "female")
+  (display:"refresh portrait")
+  (set:$card_inventory to $card_inventory + (a:$card_select))
+  He pulls out, and cum leaks down your legs. Was this stupid trading card really worth losing your female virginity?
+  <br/><br/>
+  (set:$gain to 4)(display:"gain arousal")
+  <br/><br/>
+  "Thanks for your business, please cum again," he winks at you as you get dressed. 
+  <div class='options'>
+    (set:$next to "Go shopping")
+    (display:"masculinity crisis link")
+  </div>
+}

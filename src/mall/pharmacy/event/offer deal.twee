@@ -1,0 +1,33 @@
+:: event shop deal {"position":"12014,3698","size":"100,100"}
+{
+  (display:"sex tracks")
+  (set:_opener to (either:
+    "Ok, here's the deal.",
+    "How about this?",
+    "Here's the deal...",
+    "Don't tell anyone, but... what if"
+  ))
+  (set:_closer to (either:
+    "And you suck me off.",
+    "And then you give me a blowjob - right here, right now."
+  ))
+  "_opener I give you a 50% discount on the pill, but you take it right now. _closer"
+  <div class='options'>
+    (link:"Ok...")[
+      (replace:?screen)[{
+        (either:"The clerk pops out the pink pill from its wrapper, and presses it between your lips.")
+        (set:$character's "money" to $character's "money" - (ceil:$price/2))
+        (display:"refresh stats")
+        <br/>
+        (set:$select to "Basic")
+        (set:$take_card_disabled to "event shop deny card")
+        (display:"take pill")
+        (set:$next to "event shop deal accept")
+      }]
+    ]
+    (link:"No way!")[
+      (set:$next to "X-Change Pharmacy")
+      (display:"next")
+    ]
+  </div>
+}
