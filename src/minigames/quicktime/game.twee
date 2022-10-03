@@ -1,0 +1,73 @@
+:: quicktime timer {"position":"225,5600","size":"100,100"}
+{
+  (replace:?challenge_text)[]
+  (replace:?score_bar)[]
+  (live:(cond: $quicktime_difficulty is "Quicktime Difficulty: Hardcore", 0.65s, 0.75s))[
+    (set:$timer to it + 1)
+    (if:(a:"bj","masturbate","satisfy") contains $type)[
+      (if:$quicktime is "over")[
+        (replace:?challenge_text)[]
+      ](else:)[
+        (replace:?challenge_text)[<span class='shadow'>(color:"#f9ced5")[(css:"font-size:4em")[$timer]]</span>]
+      ]
+    ]
+    (if:$quicktime is "over")[
+      (stop:)
+    ](else:)[
+      (set:_pointsToWin to $quicktime_params's "points to win")
+      (set:_multiplier to (cond:
+        $timer >= _pointsToWin * 3, 3,
+        $timer >= _pointsToWin * 1.5, 2,
+        1
+      ))
+      (set:$quicktime_params's "points" to it - $timer_loss * _multiplier)
+      (set:_points to $quicktime_params's "points")
+      <script>GE.updateStats(_pointsToWin, _points);</script>
+      (display:"quicktime check")
+    ]
+  ]
+}
+
+
+:: quicktime check {"position":"119,5606","size":"100,100"}
+{
+  (set:_link to "")
+
+  (if:$quicktime_params's "points" >= $quicktime_params's "points to win")[
+    (set:$quicktime to "over")
+    (set:$result to "pass")
+    (set:_link to "You win!")
+    (if:(a:"bj","satisfy") contains $type and $time_target > $timer)[
+      (set:$result to "fail")
+      (set:_link to "Not long enough...")
+    ]
+    (if:$type is "masturbate" and $time_target > $timer)[
+      (set:$result to "fail time")
+    ]
+    (if:$type is "bj" and (($time_target*2) <= $timer))[
+      (set:$double_time to "true")
+    ]
+  ](else-if:$quicktime_params's "points" <= 0)[
+    (set:$result to "fail")
+    (set:_link to "You lose...")
+  ]
+
+  (unless:_link is "")[
+    (replace:?arrows)[]
+    (replace:?challenge_text)[]
+    
+    (set:$quicktime to "over")
+    (set:$minigame_played to "true")
+    (set:$next to $quicktime_params's "result passage")
+    (replace:?right_options)[
+      (link:_link)[
+        (display:"change screen")
+      ]
+    ]
+
+    (after:time + 1s)[
+      (display:"quicktime gain xp")
+    ]
+  ]
+}
+

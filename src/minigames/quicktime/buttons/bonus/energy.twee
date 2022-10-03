@@ -1,0 +1,77 @@
+:: quicktime energy button space {"position":"745,6020","size":"100,100"}
+{
+  (if:$space is "yes")[
+    (set:$icon to (cond:$bonus is "space", "⚡⚡", "⚡"))
+    |space>[
+      <br/>
+      <mark>
+        (text-style:"rumble")[
+          (link:$icon)[
+            (set:$button to "normal")
+            (set:$select to "space")
+            (display:"quicktime energy button reward")
+          ]
+        ]
+      </mark>
+    ]
+  ]
+}
+
+
+:: quicktime energy button shift {"position":"853,6015","size":"100,100"}
+{
+  (if:$space is "yes")[
+    (set:$icon to (cond:$bonus is "shift", "⚡⚡", "⚡"))
+    |shift>[
+      <mark>
+        (text-style:"rumble")[
+          (link:$icon)[
+            (set:$button to "normal")
+            (set:$select to "shift")
+            (display:"quicktime energy button reward")
+          ]
+        ]
+      </mark>
+      <br/>
+    ]
+  ]
+}
+
+
+:: quicktime energy button reward {"position":"965,6015","size":"100,100"}
+{
+  (set:$se to "pleasure")
+  (display:"play sound")
+  (set:$slut_word to (either:"BREATHE","BREATHE DEEPLY","STRENGTH RECOVERED","DEEP BREATHS") + (either:"!","!!","..."))
+  (replace:?space)[]
+  (replace:?shift)[]
+  (if:$select is $bonus)[
+    (set:$energy_bonus to $energy_bonus + 2)
+    (set:$icon to "⚡⚡")
+  ](else:)[
+    (set:$energy_bonus to 1)
+    (set:$icon to "⚡")
+  ]
+  (replace:?space)[{
+    <br/>
+    <mark>
+      $icon $slut_word $icon
+    </mark>
+  }]
+  (replace:?shift)[{}
+    <mark>
+      $icon $slut_word $icon
+    </mark>
+    <br/>
+  }]
+  (display:"real time energy gain")
+}
+
+
+:: energy check spacebar {"position":"570,5833","size":"100,100"}
+{
+  (if:$correct > 5 and (random:1, (cond:$energy > 0, 7, 9)) is 1)[
+    (set:$space to "yes")
+    (set:$bonus to (either:"space","shift"))
+  ]
+}

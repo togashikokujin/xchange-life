@@ -1,0 +1,110 @@
+:: quicktime slut button {"position":"458,5718","size":"100,100"}
+{
+  (if:$space is "yes")[
+    (set:$slut_word to (either:"HO","SLUT","WHORE","HO","SLUT","HO","THOT","SEXY","SEXY BITCH"))
+    (set:$icon to (cond:
+      $amount is 3, "💵💵💵",
+      $amount is 2, "💵💵",
+      "💵",
+    ))
+    |shift>[
+      <mark>
+        (text-style:"rumble")[
+          (link:$icon)[
+            (set:$bar_dance's "slut amount" to $bar_dance's "slut amount" + 1)
+            (set:$button to "slut")
+            (display:"bar dance quicktime reward")
+          ]
+        ]
+      </mark>
+      <br/>
+    ]
+  ]
+}
+
+
+:: quicktime money button {"position":"348,5724","size":"100,100"}
+{
+  (if:$space is "yes")[
+    (set:$icon to (cond:
+      $amount is 3, "💵💵💵",
+      $amount is 2, "💵💵",
+      "💵",
+    ))
+    |space>[
+      <br/>
+      <mark>
+        (text-style:"rumble")[
+          (link:$icon)[
+            (set:$button to "normal")
+            (display:"bar dance quicktime reward")
+          ]
+        ]
+      </mark>
+    ]
+  ]
+}
+
+
+:: bar dance quicktime reward {"position":"457,5473","size":"100,100"}
+{
+  (set:$se to "kaching")
+  (display:"play sound")
+  (replace:?space)[]
+  (replace:?shift)[]
+  (if:$bar_dance's "satisfaction" < 4)[
+    (set:$bonus to (random:1,3))
+  ](else-if:$bar_dance's "satisfaction" > 7)[
+    (set:$bonus to (random:3,7))
+  ](else:)[
+    (set:$bonus to (random:2,5))
+  ]
+  (set:$bonus to $bonus * $amount)
+  (if:$button is "slut")[
+    (set:$slut_amount to $slut_amount + 1)
+    (set:$bonus to $bonus * 2)
+    (if:(a:"shake ass","jiggle breasts","shake ass 2") contains $bar_dance's "style")[
+      (set:$bonus to $bonus + $bar_dance's "horniness")
+    ]
+  ]
+  (if:(a:"pole") contains $bar_dance's "style")[
+    (set:$bonus to $bonus + $bar_dance's "satisfaction")
+  ]
+  
+  (set:$bar_dance's "earnings" to $bar_dance's "earnings" + $bonus)
+  (set:$bar_dance's "money earned" to $bar_dance's "money earned" + $bonus)
+  (replace:?space)[{
+    <br/>
+    <mark>
+      (if:$button is "slut")[😈$slut_word!😈] 💵 (color:"green")[+$$bonus]
+    </mark>
+  }]
+  (replace:?shift)[{
+    <mark>
+      💵 (color:"green")[+$$bonus] (if:$button is "slut")[😈$slut_word!😈]
+    </mark>
+    <br/>
+  }]
+  (display:"bar dance sidebar")
+}
+
+
+:: bar dance check spacebar {"position":"460,5598","size":"100,100"}
+{
+  (set:_correctTarget to 5)
+  (set:_randomChance to 5)
+  (set:_amount to (macro:[(out-data:(random:1,3))]))
+
+  (if:$bar_dance's "style" is "dance close")[
+    (set:_amount to (macro:[(out-data:(either:1,2,2,3,3))]))
+  ](else-if:$bar_dance's "style" is "jiggle breasts")[
+    (set:_amount to (macro:[(out-data:(either:1,1,1,1,2,3))]))
+    (set:_correctTarget to 2)
+    (set:_randomChance to 3)
+  ]
+
+  (if:$correct > _correctTarget and (random:1,_randomChance) is 1)[
+    (set:$space to "yes")
+    (set:$amount to (_amount:))
+  ]
+}

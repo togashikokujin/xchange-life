@@ -1,0 +1,80 @@
+:: quicktime pleasure button space {"position":"739,5908","size":"100,100"}
+{
+  (if:$space is "yes")[
+    (set:$icon to (cond:$bonus is "space", "💦💦", "💦"))
+    |space>[
+      <br/>
+      <mark>
+        (text-style:"rumble")[
+          (link:$icon)[
+            (set:$button to "normal")
+            (set:$select to "space")
+            (display:"quicktime pleasure button reward")
+          ]
+        ]
+      </mark>
+    ]
+  ]
+}
+
+
+:: quicktime pleasure button shift {"position":"849,5906","size":"100,100"}
+{
+  (if:$space is "yes")[
+    (set:$icon to (cond:$bonus is "shift", "💦💦", "💦"))
+    |shift>[
+      <mark>
+        (text-style:"rumble")[
+          (link:$icon)[
+            (set:$button to "normal")
+            (set:$select to "shift")
+            (display:"quicktime pleasure button reward")
+          ]
+        ]
+      </mark>
+      <br/>
+    ]
+  ]
+}
+
+
+:: pleasure check spacebar {"position":"455,5833","size":"100,100"}
+{
+  (set:$space to "no")
+  (set:_randomTarget to (cond:$character's "arousal" > 8, 6, 7))
+  (if:$correct > 5 and (random:1,_randomTarget) is 1)[
+    (set:$space to "yes")
+    (set:$bonus to (either:"space","shift"))
+  ]
+}
+
+
+:: quicktime pleasure button reward {"position":"969,5908","size":"100,100"}
+{
+  (set:$se to "pleasure")
+  (display:"play sound")
+  (set:$slut_word to (either:"MMM","Nnngh","Ungh","Mmm","Mmmmm","Ngh") + (either:"!","!!","...","-"))
+  (if:$select is $bonus)[
+    (set:$pleasure_bonus to $pleasure_bonus + 2)
+    (set:$icon to "💦💦")
+  ](else:)[
+    (set:$pleasure_bonus to 1)
+    (set:$icon to "💦")
+  ]
+  (replace:?space)[{
+    <br/>
+    <mark>
+      $icon $slut_word $icon
+    </mark>
+  }]
+  (replace:?shift)[{
+    <mark>
+      $icon $slut_word $icon
+    </mark>
+    <br/>
+  }]
+  (display:"real time pleasure gain")
+  (display:"update your pleasure")
+}
+
+

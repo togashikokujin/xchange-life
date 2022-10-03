@@ -2484,141 +2484,9 @@ Thank you to HiEv, for developing the save export system for X-Change Life, whic
 A little shoutout to some others, who have contributed writing for various portions of the game: Locked Goon, Bethany McQuillan, Ry#6801, Sophia Castillo, Betty Blake. If you contributed to the game and want to be mentioned, please do reach out on Discord!
 
 
-:: buttons left {"position":"108,5150","size":"100,100"}
-{(set:$space to "no")(if:$type is "stripping")[(display:"bar dance check spacebar")](if:$type is "try to cum")[(display:"pleasure check spacebar")](if:$type is "recover")[(display:"energy check spacebar")](replace:?directions)[<span class='borderless'>(if:$type is "stripping")[(display:"quicktime slut button")](if:$type is "try to cum")[(display:"quicktime pleasure button shift")](if:$type is "recover")[(display:"quicktime energy button shift")]|up>[(link-repeat:"<img src='img/ui/buttons/64button1up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons incorrect")]]
-|left>[(link-repeat:"<img src='img/ui/buttons/64button2left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons correct")]]|down>[(link-repeat:"<img src='img/ui/buttons/64button1down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons incorrect")]]|right>[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons incorrect")]](if:$type is "stripping")[(display:"quicktime money button")](if:$type is "try to cum")[(display:"quicktime pleasure button space")](if:$type is "recover")[(display:"quicktime energy button space")]</span>]}
-
-
-:: buttons down {"position":"113,5267","size":"100,100"}
-{(set:$space to "no")(if:$type is "stripping")[(display:"bar dance check spacebar")](if:$type is "try to cum")[(display:"pleasure check spacebar")](if:$type is "recover")[(display:"energy check spacebar")](replace:?directions)[<span class='borderless'>(if:$type is "stripping")[(display:"quicktime slut button")](if:$type is "try to cum")[(display:"quicktime pleasure button shift")](if:$type is "recover")[(display:"quicktime energy button shift")]|up>[(link-repeat:"<img src='img/ui/buttons/64button1up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons incorrect")]]
-|left>[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons incorrect")]]|down>[(link-repeat:"<img src='img/ui/buttons/64button2down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons correct")]]|right>[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons incorrect")]](if:$type is "stripping")[(display:"quicktime money button")](if:$type is "try to cum")[(display:"quicktime pleasure button space")](if:$type is "recover")[(display:"quicktime energy button space")]</span>]}
-
-
-:: buttons right {"position":"221,5145","size":"100,100"}
-{(set:$space to "no")(if:$type is "stripping")[(display:"bar dance check spacebar")](if:$type is "try to cum")[(display:"pleasure check spacebar")](if:$type is "recover")[(display:"energy check spacebar")](replace:?directions)[<span class='borderless'>(if:$type is "stripping")[(display:"quicktime slut button")](if:$type is "try to cum")[(display:"quicktime pleasure button shift")](if:$type is "recover")[(display:"quicktime energy button shift")]|up>[(link-repeat:"<img src='img/ui/buttons/64button1up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons incorrect")]]
-|left>[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons incorrect")]]|down>[(link-repeat:"<img src='img/ui/buttons/64button1down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons incorrect")]]|right>[(link-repeat:"<img src='img/ui/buttons/64button2right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons correct")]](if:$type is "stripping")[(display:"quicktime money button")](if:$type is "try to cum")[(display:"quicktime pleasure button space")](if:$type is "recover")[(display:"quicktime energy button space")]</span>]}
-
-
-:: buttons none {"position":"223,5268","size":"100,100"}
-{(set:$dir to "none")(replace:?directions)[<span class='borderless'>|up>[(link-repeat:"<img src='img/ui/buttons/64button1up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons incorrect")]]
-|left>[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons incorrect")]]|down>[(link-repeat:"<img src='img/ui/buttons/64button1down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons incorrect")]]|right>[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons incorrect")]]</span>](live:0.8s)[(if:$dir is "none")[(display:"buttons correct")](stop:)]}
-
-
-:: buttons {"position":"118,5375","size":"100,100"}
-{(set:$last_dir to $dir)(set:$dir to "none")(set:$buttons_dir to "buttons " + $correct_dir)(display:"buttons off")(live:50)[(if:$interrupts > 0 and (($index % 17) is $interrupt_mod))[(set:$text to "options")(display:$quicktime_params's "interrupt passage")(display:"quicktime choice")](else:)[(display:$buttons_dir)](stop:)]}
-
-
-:: quicktime buttons {"position":"113,5489","size":"100,100"}
-<div class='options'>{
-[(replace:?right_options)[(print:"
-")(link:"Play minigame")[(replace:?right_options)[](if:$type is "bj")[(if:(datanames:$npc) contains "cockimg")[(replace:?right_options)[(print:"<img class='greyborder' src='" + (text:$npc's "cockimg") + "' width='100%' height=auto>")]]](set:$method to "minigame")
-(replace:?challenge_text)[(if:$type is "bj" or $type is "satisfy")[(if:(datanames:$quicktime_params) contains "target")[(set:$time_target to $quicktime_params's "target")](else:)[(set:$time_target to 25)](color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(if:$type is "satisfy")[Make this last at least $time_target seconds.](else:)[(either:"Make this last at least $time_target seconds.","Make this last at least $time_target seconds.","Go slow enough to make this last at least $time_target seconds.")](if:(random:1,6) is 1)[ (either:"It isn't a race...","Slow and steady wins the race.")]</span>]]](if:$type is "group handjob")[(if:(datanames:$quicktime_params) contains "target")[(set:$time_target to $quicktime_params's "target")](else:)[(set:$time_target to 25)](color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(either:"Make this handjob last at least $time_target seconds.","Stroke them for at least $time_target seconds.")</span>]]](if:$type is "masturbate")[(set:$time_target to 30)(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(either:"Last $time_target seconds, and you'll cum harder.","Last at least $time_target seconds to cum harder.","Last at least $time_target seconds, and you'll cum harder.")(if:(random:1,6) is 1)[ (either:"No need to rush.","This is your time...","You're on your own clock...")]</span>]]](else-if:(datanames:$quicktime_params) contains "objective text")[(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(print:$quicktime_params's "objective text")</span>]]]]
-(replace:?directions)[(unless:(a:"try to cum","recover","stripping") contains $type)[<mark>**Use your arrow keys (or WASD) in 3... (live:1s)[2... (stop:)](live:2s)[1...]**</mark>](else:)[<mark>**Use your arrow keys (or WASD), and watch for bonuses!**</mark>](if:$type is "stripping")[(print:"
-
-")
-<mark>💵 Press the **SPACEBAR** when you see money. 💵</mark>(print:"
-")
-<mark>😈 Hit **SHIFT** instead to (either:"SLUT IT UP","BE A HO","REALLY SHAKE IT","BE SUPER SLUTTY") and double that $$$! 😈</mark>](if:$type is "try to cum")[(print:"
-
-")
-<mark>Press **SPACEBAR** or **SHIFT** to gain extra pleasure when you see 💦 icons!(print:"
-")SPACEBAR: lower option(print:"
-")SHIFT: upper option</mark>](if:$type is "recover")[(print:"
-
-")
-<mark>Press **SPACEBAR** or **SHIFT** to gain extra stamina when you see ⚡ icons!(print:"
-")SPACEBAR: lower option(print:"
-")SHIFT: upper option</mark>]](unless:(a:"try to cum","recover","stripping") contains $type)[(live:3s)[(replace:?directions)[{(display:"quicktime next sequence")}](if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[(display:"quicktime timer difficult")](else:)[(display:"quicktime timer")](stop:)]](else:)[(replace:?right_options)[(link:"Begin")[(set:$minigame_played to "true")(replace:?directions)[{(display:"quicktime next sequence")}](if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[(display:"quicktime timer difficult")](else:)[(display:"quicktime timer")]]]]](print:"
-")(display:"quicktime skill check")(if:$minigame_skip is "Skippable Minigames: On")[
-(link:"Skip (win)")[(replace:?right_options)[](set:$next to $quicktime_params's "result passage")(set:$result to "pass")(display:"change screen")]
-(link:"Skip (lose)")[(replace:?right_options)[](set:$next to $quicktime_params's "result passage")(set:$result to "fail")(display:"change screen")]]]]<directions|
-}</div>
-
-
-:: quicktime initialize {"position":"229,4911","size":"100,100"}
-{(set:$dontcum to "finished")(set:$quicktime to "over")(set:$minigame_played to "false")(set:$combo to 1)(set:$interrupt_mod to (random:10,16))(if:(datanames:$quicktime_params) contains "interrupt passage")[(set:$interrupts to $quicktime_params's "interrupt count")](else:)[(set:$interrupts to 0)](set:$game_type to "quicktime")(if:(datanames:$quicktime_params) contains "skill check")[(set:$skill_check to $quicktime_params's "skill check")(if:(datanames:$quicktime_params) contains "skill difficulty")[(set:$skill_difficulty to $quicktime_params's "skill difficulty")](else:)[(set:$skill_difficulty to 50)]](else:)[(set:$skill_check to "random")(set:$skill_difficulty to 50)]
-
-(set:$double_time to "false")(set:$quicktime_params's "sequence" to $quicktime_params's "sequence" - (a:"none"))<div class="game_header">(set:_vid to "<video src='img/" + $quicktime_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")(print:_vid)(set:$correct to 0)(set:$response_time to "none")(set:$type to "none")(if:(datanames:$quicktime_params) contains "type")[(if:"type" of $quicktime_params is "bj")[(set:$type to "bj")(if:$sex_loop is 0)[(display:"blowjob sounds")](display:"play sex loop")](else-if:"type" of $quicktime_params is "massage")[(set:$type to "massage")](else-if:"type" of $quicktime_params is "masturbate")[(set:$type to "masturbate")](else-if:"type" of $quicktime_params is "stripping")[(set:$type to "stripping")](else-if:type of $quicktime_params is "try to cum")[(display:"play sex loop")(set:$type to "try to cum")(set:$pleasure_bonus to 0)](else-if:type of $quicktime_params is "recover")[(display:"play sex loop")(set:$type to "recover")(set:$energy_bonus to 0)](else-if:type of $quicktime_params is "satisfy")[(set:$type to "satisfy")]](else:)[(set:$type to "null")](set:$responding to "false")(set:$timer to 0)(set:$quicktime to "running")(set:$timer_loss to 1)(set:$gain_amount to 1)(set:$correct_dir to "none")(set:$length to length of ($quicktime_params's "sequence"))(set:$index to 1)<div class="game_header_text">|challenge_text>[]
-[(display:"quicktime buttons")]<arrows|</div></div><div class="options">
-</div>
-[(print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: $quicktime_params's "points")
-+ ");")]<score_bar|
-<div id="win-bar">
-            <div class='bar' style='background: repeating-linear-gradient(
-               45deg,
-               rgba(255, 255, 255, 0.9),
-               rgba(255, 255, 255, 0.9) 40px,
-               rgba(255, 255, 255, 1) 40px,
-               rgba(255, 255, 255, 1) 80px
-               );'></div>
-</div><table cellpadding="0" cellspacing="0"><tr><div class="options">[(color:"white")[]]<score|</div></tr>
-</table></div>}
-
-
-:: quicktime check {"position":"119,5606","size":"100,100"}
-{(set:$link to "You win!")(if:$quicktime_params's "points" >= $quicktime_params's "points to win")[(replace:?arrows)[](replace:?challenge_text)[](live:1s)[(display:"quicktime gain xp")(stop:)]
-(set:$quicktime to "over")(set:$result to "pass")(set:$minigame_played to "true")(if:(a:"bj","satisfy") contains $type and $time_target > $timer)[(set:$result to "fail")(set:$link to "Not long enough...")](if:$type is "masturbate" and $time_target > $timer)[(set:$result to "fail time")](if:$type is "bj" and (($time_target*2) <= $timer))[(set:$double_time to "true")](set:$next to $quicktime_params's "result passage")(replace:?right_options)[(replace:?arrows)[]
-(link:$link)[(set:$next to $quicktime_params's "result passage")(display:"change screen")]]](else-if:$quicktime_params's "points" <= 0)[
-
-(replace:?arrows)[](replace:?challenge_text)[]
-(live:1s)[(display:"quicktime gain xp")(stop:)]
-
-(set:$quicktime to "over")(set:$result to "fail")(set:$minigame_played to "true")
-
-(replace:?right_options)[
-(link:"You lose...")[(set:$next to $quicktime_params's "result passage")(display:"change screen")]]]}
-
-
-:: buttons correct {"position":"124,5719","size":"100,100"}
-{(set:$correct to $correct + 1)(set:$prev_combo to $combo)(set:$combo to 1)(set:$old_dir to $dir)(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$gain_amount to $gain_amount / 3)(if:$correct > 3)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 2)](if:$correct > 7)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 3)](if:$correct > 11)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 4)](if:$correct > 15)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 5)](if:$correct > 19)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 6)](if:$correct > 23)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 7)](if:$correct > 27)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 8)](if:$correct > 31)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 9)](if:$correct > 35)[(set:$quicktime_params's "points" to $quicktime_params's "points" + $gain_amount)(set:$combo to 10)](if:$correct % 2 is 0)[(set:$se to "quicktime correct " + (text:$combo) + " A")](else:)[(set:$se to "quicktime correct " + (text:$combo) + " B")](display:"play sound")(if:$combo > $prev_combo and $combo > 1 and $combo < 11)[(set:$se to "quicktime combo " + (text:$combo))(display:"play sound")](set:$gain_amount to $gain_amount * 3)(replace:?score_bar)[(if:(datanames:$quicktime_params) contains "real time his pleasure")[(if:$timer % 7 is 0)[(set:$gain to 1)(set:$his_pleasure to (min:$his_pleasure + $gain,$his_pleasure_threshold))(display:"update his pleasure")]](print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: (min:$quicktime_params's "points",$quicktime_params's "points to win"))
-+ ");")(display:"quicktime check")
-(set:$font_size to "font-size:1." + (text:$combo) + "em")(if:$combo is 10)[(set:$font_size to "font-size:4vmin")]
-(if:$quicktime is "running")[(display:"quicktime next sequence")]](replace:?score)[(css:$font_size)[(if:$combo < 10)[<mark>Combo: $correct ((print:$combo)x)</mark>](else:)[<mark>(text-style:"shudder")[Combo: $correct ((print:$combo)x) (MAX)</mark>]]]]}
-
-
-:: buttons incorrect {"position":"127,5832","size":"100,100"}
-{(set:$se to "quicktime incorrect")(display:"play sound")(set:$quicktime_params's "points" to $quicktime_params's "points" - ($gain_amount*3))(replace:?score_bar)[(print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: (min:$quicktime_params's "points",$quicktime_params's "points to win"))
-+ ");")(display:"quicktime check")(if:$quicktime is "running")[
-
-(display:"quicktime next sequence")]](replace:?score)[<mark>❌COMBO LOST!❌</mark>(live:0.25s)[(replace:?score)[](stop:)]](set:$correct to 0)}
-
-
-:: quicktime timer {"position":"225,5600","size":"100,100"}
-{(replace:?challenge_text)[](replace:?score_bar)[]
-(live:0.75s)[(set:$timer to $timer + 1)(if:(a:"bj","masturbate","satisfy") contains $type)[(if:$quicktime is "over")[(replace:?challenge_text)[]](else:)[(replace:?challenge_text)[<span class='shadow'>(color:"#f9ced5")[(css:"font-size:4em")[$timer]]</span>]]](if:$quicktime is "over")[(stop:)](else:)[(set:$quicktime_params's "points" to $quicktime_params's "points" - $timer_loss)(if:$timer >= ($quicktime_params's "points to win" * 1.5))[(set:$quicktime_params's "points" to $quicktime_params's "points" - $timer_loss)](if:$timer >= ($quicktime_params's "points to win" * 3))[(set:$quicktime_params's "points" to $quicktime_params's "points" - $timer_loss)](print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: (min:$quicktime_params's "points",$quicktime_params's "points to win"))
-+ ");")(display:"quicktime check")]]
-}
-
-
-:: quicktime timer difficult {"position":"235,5716","size":"100,100"}
-{(replace:?challenge_text)[](replace:?score_bar)[]
-(live:0.65s)[(set:$timer to $timer + 1)(if:$type is "bj" or $type is "masturbate")[(if:$quicktime is "over")[(replace:?challenge_text)[]](else:)[(replace:?challenge_text)[<span class='shadow'>(color:"#f9ced5")[(css:"font-size:4em")[$timer]]</span>]]](if:$quicktime is "over")[(stop:)](else:)[(set:$quicktime_params's "points" to $quicktime_params's "points" - $timer_loss)(if:$timer >= ($quicktime_params's "points to win" * 1.5))[(set:$quicktime_params's "points" to $quicktime_params's "points" - $timer_loss)](if:$timer >= ($quicktime_params's "points to win" * 3))[(set:$quicktime_params's "points" to $quicktime_params's "points" - $timer_loss)](replace:?score_bar)[(print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: (min:$quicktime_params's "points",$quicktime_params's "points to win"))
-+ ");")(display:"quicktime check")]]]
-}
-
-
 :: quicktime respond continue {"position":"246,5835","size":"100,100"}
 (replace:?challenge_text)[<mark>$demand_more</mark>]
 (replace:?respond)[(set:$responding to "responding")(replace:?challenge_text)[<mark>$response</mark>]](if:$response_time is "none")[(live:5s)[(if:$responding is "begin")[(display:"quicktime response lose more")](else:)[(replace:?challenge_text)[(display:"quicktime response win")<mark>$congrats</mark>]](stop:)]]
-
-
-:: buttons up {"position":"114,5031","size":"100,100"}
-{(set:$space to "no")(if:$type is "stripping")[(display:"bar dance check spacebar")](if:$type is "try to cum")[(display:"pleasure check spacebar")](if:$type is "recover")[(display:"energy check spacebar")](replace:?directions)[<span class='borderless'>(if:$type is "stripping")[(display:"quicktime slut button")](if:$type is "try to cum")[(display:"quicktime pleasure button shift")](if:$type is "recover")[(display:"quicktime energy button shift")]|up>[(link-repeat:"<img src='img/ui/buttons/64button2up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons correct")]]
-|left>[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons incorrect")]]|down>[(link-repeat:"<img src='img/ui/buttons/64button1down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons incorrect")]]|right>[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons incorrect")]](if:$type is "stripping")[(display:"quicktime money button")](if:$type is "try to cum")[(display:"quicktime pleasure button space")](if:$type is "recover")[(display:"quicktime energy button space")]</span>]}
-
-
-:: quicktime next sequence {"position":"220,5026","size":"100,100"}
-{
-(set:$correct_dir to $index of $quicktime_params's "sequence")
-(display:"buttons")
-(set:$index to $index + 1)
-(if:$index > $length)[(set:$index to 1)]
-}
 
 
 :: refresh stats {"position":"1049,108","size":"100,100"}
@@ -7917,11 +7785,6 @@ You gulp, looking over at Alexia. Is your annoying little stepsister actually wo
 }
 
 
-:: buttons off {"position":"342,5267","size":"100,100"}
-{(set:$dir to "none")(replace:?directions)[<span class='borderless'>|up>[(link-repeat:"<img src='img/ui/buttons/64button1up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons incorrect")]]
-|left>[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons incorrect")]]|down>[(link-repeat:"<img src='img/ui/buttons/64button1down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons incorrect")]]|right>[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons incorrect")]]</span<]}
-
-
 :: play sound {"position":"3359,160","size":"100,100"}
 {
 (unless:$audio_toggle is "🔇")[
@@ -9312,20 +9175,6 @@ src='img/scenes/bar/dance/0 show ass.jpg' width=100% height=auto>")]
 (display:"bar dance 1 react")
 
 
-:: bar dance quicktime reward {"position":"457,5473","size":"100,100"}
-{
-(set:$se to "kaching")(display:"play sound")
-(replace:?space)[](replace:?shift)[]
-(if:$bar_dance's "satisfaction" < 4)[(set:$bonus to (random:1,3))](else-if:$bar_dance's "satisfaction" > 7)[(set:$bonus to (random:3,7))](else:)[(set:$bonus to (random:2,5))](set:$bonus to $bonus * $amount)(if:$button is "slut")[(set:$bonus to $bonus * 2)(if:(a:"shake ass","jiggle breasts","shake ass 2") contains $bar_dance's "style")[(set:$bonus to $bonus + $bar_dance's "horniness")]]
-(if:(a:"pole") contains $bar_dance's "style")[(set:$bonus to $bonus + $bar_dance's "satisfaction")]
-
-(set:$bar_dance's "earnings" to $bar_dance's "earnings" + $bonus)(set:$bar_dance's "money earned" to $bar_dance's "money earned" + $bonus)(replace:?space)[(print:"
-")<mark>(if:$button is "slut")[(set:$slut_amount to $slut_amount + 1)😈$slut_word!😈] 💵 (color:"green")[+$$bonus] </mark>](replace:?shift)[<mark>💵 (color:"green")[+$$bonus] (if:$button is "slut")[😈$slut_word!😈]</mark>(print:"
-")](display:"bar dance sidebar")
-
-}
-
-
 :: bar dance take off top {"position":"18244,3472","size":"100,100"}
 (set:$bar_dance's "stage" to 3)(print:"<video src='img/scenes/bar/dance/2 take off top.mp4' autoplay='' loop='' muted='' playsinline/>")
 (either:"With a deft motion","Expertly","With agility that surprises yourself"), (either:"you toss away your puny top","you whip off your dancing bra","you unstring your top"), (either:"letting your boobs bounce free","presenting your massive E-cup breasts to the room").
@@ -9485,20 +9334,6 @@ src='img/scenes/bar/dance/5 crawl show ass.jpg' width=100% height=auto>")]
 
 :: button money {"position":"338,5149","size":"100,100"}
 {}
-
-
-:: bar dance check spacebar {"position":"460,5598","size":"100,100"}
-{(if:$bar_dance's "style" is "dance close")[(if:$correct > 5 and (random:1,5) is 1)[(set:$space to "yes")(set:$amount to (either:1,2,2,3,3))]](else-if:$bar_dance's "style" is "jiggle breasts")[(if:$correct > 2 and (random:1,3) is 1)[(set:$space to "yes")(set:$amount to (either:1,1,1,1,2,3))]](else:)[(if:$correct > 5 and (random:1,5) is 1)[(set:$space to "yes")(set:$amount to (random:1,3))]]}
-
-
-:: quicktime money button {"position":"348,5724","size":"100,100"}
-{(if:$space is "yes")[(if:$amount is 1)[(set:$icon to "💵")](if:$amount is 2)[(set:$icon to "💵💵")](if:$amount is 3)[(set:$icon to "💵💵💵")]|space>[(print:"
-")<mark>(text-style:"rumble")[(link:$icon)[(set:$button to "normal")(display:"bar dance quicktime reward")]]</mark>]]}
-
-
-:: quicktime slut button {"position":"458,5718","size":"100,100"}
-(set:$slut_word to (either:"HO","SLUT","WHORE","HO","SLUT","HO","THOT","SEXY","SEXY BITCH")){(if:$space is "yes")[(if:$amount is 1)[(set:$icon to "💵")](if:$amount is 2)[(set:$icon to "💵💵")](if:$amount is 3)[(set:$icon to "💵💵💵")]|shift>[<mark>(text-style:"rumble")[(link:$icon)[(set:$bar_dance's "slut amount" to $bar_dance's "slut amount" + 1)(set:$button to "slut")(display:"bar dance quicktime reward")]]</mark>(print:"
-")]]}
 
 
 :: refresh stats stripping {"position":"1050,460","size":"100,100"}
@@ -19063,191 +18898,6 @@ D20 roll:(print:" ")<span class='shadow'>[]<dice|</span>
 }
 
 
-:: quicktime gain xp {"position":"467,5151","size":"100,100"}
-{
-
-(if:$method is "skill check")[(set:$gain_base to 5)](else-if:$game_type is "quicktime")[
-(set:$gain_base to (ceil:(min:(max:($timer / 2.5),5),20)))](else:)[
-(set:$gain_base to (ceil:(min:(max:(($quicktime_params's "time" - $timer) / 3),5),20)))]
-(set:$gain to (ceil:$gain_base * $score_multiplier))
-
-(unless:$method is "skill check")[
-(if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[(set:$gain to (floor:$gain * 1.5))]]
-
-(if:$skill_check is "bj")[
-
-
-(set:$skill_name to "BJ skill")
-(set:$message to "+$gain blowjob XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $blowjob_talent)
-(display:"quicktime gain xp calc")
-(set:$blowjob_talent to $current_skill)
-
-]
-(if:$skill_check is "titfuck")[
-
-
-(set:$skill_name to "titfuck skill")
-(set:$message to "+$gain titfuck XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $titfuck_talent)
-(display:"quicktime gain xp calc")
-(set:$titfuck_talent to $current_skill)
-
-]
-(if:$skill_check is "handjob")[
-
-
-(set:$skill_name to "Handjob skill")
-(set:$message to "+$gain handjob XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $handjob_talent)
-(display:"quicktime gain xp calc")
-(set:$handjob_talent to $current_skill)
-
-]
-
-(if:$skill_check is "female masturbation")[
-
-(set:$skill_name to "Masturbation skill")
-(set:$message to "+$gain masturbation XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $female_masturbation_talent)
-(display:"quicktime gain xp calc")
-(set:$female_masturbation_talent to $current_skill)
-
-]
-
-(if:$skill_check is "girl pleasure")[
-
-(set:$skill_name to "Female pleasure skill")
-(set:$message to "+$gain female pleasure XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $pleasuring_girls_talent)
-(display:"quicktime gain xp calc")
-(set:$pleasuring_girls_talent to $current_skill)
-
-]
-
-(if:$skill_check is "orgasm control")[
-
-(set:$skill_name to "Orgasm control skill")
-(set:$message to "+$gain orgasm control XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $orgasm_control)
-(display:"quicktime gain xp calc")
-(set:$orgasm_control to $current_skill)
-
-]
-
-(if:$skill_check is "arousal denial")[
-
-(set:$skill_name to "Willpower")
-(set:$message to "+$gain willpower XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $arousal_denial)
-(display:"quicktime gain xp calc")
-(set:$arousal_denial to $current_skill)
-
-]
-
-(if:$skill_check is "gag reflex")[
-
-(set:$skill_name to "Gag reflex skill")
-(set:$message to "+$gain gag reflex XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $gag_reflex)
-(display:"quicktime gain xp calc")
-(set:$gag_reflex to $current_skill)
-
-]
-
-(if:$skill_check is "sexy dance bar")[
-
-(if:$method is "skill check")[(display:"bar dance quicktime reward skill check")]
-(set:$skill_name to "Dancing skill")
-(set:$message to "💵 +$" + (text:$bar_dance's "money earned") + " 💵")(set:$message to $message + " 😈 +$slut_amount sluttiness 😈")
-(set:$current_skill to (dm:))
-(set:$current_skill to $sexy_dancing_bar_talent)
-(display:"quicktime gain xp calc")
-(set:$sexy_dancing_bar_talent to $current_skill)
-
-]
-
-(if:$skill_check is "passive sex")[
-
-(set:$skill_name to "Passive sex skill")
-(set:$message to "+$gain passive sex XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $sub_sex_talent)
-(display:"quicktime gain xp calc")
-(set:$sub_sex_talent to $current_skill)
-
-]
-
-(if:$skill_check is "active sex")[
-
-(set:$skill_name to "Active sex skill")
-(set:$message to "+$gain active sex XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $dom_sex_talent)
-(display:"quicktime gain xp calc")
-(set:$dom_sex_talent to $current_skill)
-
-]
-
-(if:$skill_check is "male masturbation")[
-
-(set:$skill_name to "Male masturbation skill")
-(set:$message to "+$gain masturbation XP
-($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
-(set:$current_skill to (dm:))
-(set:$current_skill to $male_masturbation_talent)
-(display:"quicktime gain xp calc")
-(set:$male_masturbation_talent to $current_skill)
-
-]
-}
-
-
-:: quicktime gain xp calc {"position":"470,5262","size":"100,100"}
-{
-(set:$current_skill's level to (max:(min:10,$current_skill's level),1))
-
-(set:$level_up to "false")
-(unless:$skill_check is "random")[
-(set:$current_skill's xp to $current_skill's xp + $gain)
-
-(set:$next_level to (min:$current_skill's level + 1,10))
-(unless:$current_skill's level > 9)[
-(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill increase!","Skill up!"))(set:$level_up to "true")(set:$current_skill's level to $next_level)(set:$se to "skill up")(set:$next_level to $current_skill's level + 1)(display:"play sound")]
-
-(unless:$current_skill's level > 9)[
-(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill increase! (+2)","Skill up! (+2)"))(set:$level_up to "double")(set:$current_skill's level to $next_level)(set:$next_level to $current_skill's level + 1)(live:0.5s)[(display:"play sound")(stop:)]]
-
-(unless:$current_skill's level > 9)[
-(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill increase! (+3)","Skill up! (+3)"))(set:$level_up to "triple")(set:$current_skill's level to $next_level)(set:$next_level to $current_skill's level + 1)(live:1s)[(display:"play sound")(stop:)]]
-
-(unless:$current_skill's level > 9)[
-(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill increase! (+4)","Skill up! (+4)"))(set:$level_up to "quadruple")(set:$current_skill's level to $next_level)(set:$next_level to $current_skill's level + 1)(live:1s)[(display:"play sound")(stop:)]]
-]
-(if:$skill_check is "sexy dance bar")[(replace:?score)[(text-style:"fade-in-out")[<span class='shadow'>$message</span>]]](else:)[(replace:?score)[|tooltip>[(text-style:"fade-in-out")[<span class='shadow'>$message(unless:$level_up is "false")[(print:"
-")(color:"Bisque")[(print:$message_2)]]</span>]|tooltiptext>[$skill_name: (print:$current_skill's level)(if:$level_up is "true")[ (+1)](else-if:$level_up is "double")[ (+2)](else-if:$level_up is "triple")[ (+3)](else-if:$level_up is "quadruple")[ (+4)](unless:$current_skill's level > 9)[(print:"
-")(meter: bind $current_skill's xp, $current_skill's level of $current_skill's "xp to level", "X", (text:$current_skill's level of $current_skill's "xp to level" - $current_skill's xp) + " XP to level " + (text:$next_level), #F2D2BD)]]]]]]]]]
-}
-
-
 :: initialize sex skills {"position":"1415,796","size":"100,100"}
 {
 (print:'
@@ -20260,31 +19910,6 @@ src='img/scenes/bar/party/pics/" + $position's img + ".jpg' width=100% height=au
 }
 
 
-:: quicktime pleasure button shift {"position":"849,5906","size":"100,100"}
-{(if:$space is "yes")[(if:$bonus is "shift")[(set:$icon to "💦💦")](else:)[(set:$icon to "💦")]|shift>[<mark>(text-style:"rumble")[(link:$icon)[(set:$button to "normal")(set:$select to "shift")(display:"quicktime pleasure button reward")]]</mark>(print:"
-")]]}
-
-
-:: pleasure check spacebar {"position":"455,5833","size":"100,100"}
-{(set:$space to "no")(if:$character's "arousal" > 8)[(if:$correct > 5 and (random:1,6) is 1)[(set:$space to "yes")(set:$bonus to (either:"space","shift"))]](else:)[(if:$correct > 5 and (random:1,7) is 1)[(set:$space to "yes")(set:$bonus to (either:"space","shift"))]]}
-
-
-:: quicktime pleasure button reward {"position":"969,5908","size":"100,100"}
-{
-(set:$se to "pleasure")(display:"play sound")(set:$slut_word to (either:"MMM","Nnngh","Ungh","Mmm","Mmmmm","Ngh") + (either:"!","!!","...","-"))
-(replace:?space)[](replace:?shift)[](if:$select is $bonus)[(set:$pleasure_bonus to $pleasure_bonus + 2)(set:$icon to "💦💦")](else:)[(set:$pleasure_bonus to 1)(set:$icon to "💦")]
-(replace:?space)[(print:"
-")<mark>(print:$icon) $slut_word (print:$icon)</mark>]
-(replace:?shift)[<mark>(print:$icon) $slut_word (print:$icon)</mark>(print:"
-")(display:"real time pleasure gain")(display:"update your pleasure")]
-}
-
-
-:: quicktime pleasure button space {"position":"739,5908","size":"100,100"}
-{(if:$space is "yes")[(if:$bonus is "space")[(set:$icon to "💦💦")](else:)[(set:$icon to "💦")]|space>[(print:"
-")<mark>(text-style:"rumble")[(link:$icon)[(set:$button to "normal")(set:$select to "space")(display:"quicktime pleasure button reward")]]</mark>]]}
-
-
 :: Dredd party test {"position":"19438,2530","size":"100,100"}
 (set:$bar_party to (dm:"times",0))(set:$protection to (dm:"active","false",
 "loaded",0,"have",0))(set:$events to (a:))(set:$her_name to "Gabbie")(set:$your_name to $bar_dance's "stripper name")(set:$temp_pill to (dm:
@@ -20551,27 +20176,6 @@ Double-click this passage to edit it.
 }
 
 
-:: quicktime energy button space {"position":"745,6020","size":"100,100"}
-{(if:$space is "yes")[(if:$bonus is "space")[(set:$icon to "⚡⚡")](else:)[(set:$icon to "⚡")]|space>[(print:"
-")<mark>(text-style:"rumble")[(link:$icon)[(set:$button to "normal")(set:$select to "space")(display:"quicktime energy button reward")]]</mark>]]}
-
-
-:: quicktime energy button shift {"position":"853,6015","size":"100,100"}
-{(if:$space is "yes")[(if:$bonus is "shift")[(set:$icon to "⚡⚡")](else:)[(set:$icon to "⚡")]|shift>[<mark>(text-style:"rumble")[(link:$icon)[(set:$button to "normal")(set:$select to "shift")(display:"quicktime energy button reward")]]</mark>(print:"
-")]]}
-
-
-:: quicktime energy button reward {"position":"965,6015","size":"100,100"}
-{
-(set:$se to "pleasure")(display:"play sound")(set:$slut_word to (either:"BREATHE","BREATHE DEEPLY","STRENGTH RECOVERED","DEEP BREATHS") + (either:"!","!!","..."))
-(replace:?space)[](replace:?shift)[](if:$select is $bonus)[(set:$energy_bonus to $energy_bonus + 2)(set:$icon to "⚡⚡")](else:)[(set:$energy_bonus to 1)(set:$icon to "⚡")]
-(replace:?space)[(print:"
-")<mark>(print:$icon) $slut_word (print:$icon)</mark>]
-(replace:?shift)[<mark>(print:$icon) $slut_word (print:$icon)</mark>(print:"
-")](display:"real time energy gain")
-}
-
-
 :: real time energy gain {"position":"596,5030","size":"100,100"}
 {
 
@@ -20581,10 +20185,6 @@ Double-click this passage to edit it.
 (if:$energy is $max_energy)[(set:$quicktime_params's "points" to $quicktime_params's "points to win")]
 
 }
-
-
-:: energy check spacebar {"position":"570,5833","size":"100,100"}
-{(if:$energy > 0)[(if:$correct > 5 and (random:1,7) is 1)[(set:$space to "yes")(set:$bonus to (either:"space","shift"))]](else:)[(if:$correct > 5 and (random:1,9) is 1)[(set:$space to "yes")(set:$bonus to (either:"space","shift"))]]}
 
 
 :: skill check bonuses {"position":"461,5368","size":"100,100"}
@@ -40469,26 +40069,6 @@ You groan as you feel her natural tits jiggling and flopping on your back, as Da
 <div class='options'><span class='chromatic'>(if:$result is "pass")[(either:"Edge success!","Now he'll last longer.")](else:)[(either:"Edge failure.","His pleasure still increased.")]</span></div>
 (display:"workout sex next")
 }
-
-
-:: quicktime choice {"position":"1397,4914","size":"100,100"}
-{
-(set:$good to (either:"up","down"))
-(if:$good is "up")[(set:$up_choice to "SHIFT: " + $good_choice)](else:)[(set:$up_choice to "SHIFT: " + $bad_choice)]
-(if:$good is "down")[(set:$down_choice to "SPACEBAR: " + $good_choice)](else:)[(set:$down_choice to "SPACEBAR: " + $bad_choice)]
-(replace:?directions)[|shift>[(link:$up_choice)[(if:$good is "up")[(display:"quicktime choice good")](else:)[(display:"quicktime choice bad")]]
-|space>[(link:$down_choice)[(if:$good is "down")[(display:"quicktime choice good")](else:)[(display:"quicktime choice bad")]]]]]
-
-(set:$interrupts to $interrupts - 1)
-}
-
-
-:: quicktime choice good {"position":"1392,5025","size":"100,100"}
-{(set:$text to "good")(replace:?directions)[<mark>(display:$quicktime_params's "interrupt passage")</mark>](live:2.5s)[(display:"buttons correct")(stop:)]}
-
-
-:: quicktime choice bad {"position":"1389,5137","size":"100,100"}
-{(set:$text to "bad")(replace:?directions)[<mark>(display:$quicktime_params's "interrupt passage")</mark>](live:2.5s)[(display:"buttons incorrect")(stop:)]}
 
 
 :: workout sex satisfy him {"position":"5060,8468","size":"100,100"}

@@ -1,0 +1,155 @@
+:: quicktime gain xp calc {"position":"470,5262","size":"100,100"}
+{
+  (set:$current_skill's level to (min:(max:it, 1), 10))
+  
+  (set:$level_up to "false")
+  (unless:$skill_check is "random")[
+    (set:$current_skill's xp to it + $gain)
+    
+    (set:$next_level to (min:$current_skill's level + 1,10))
+    (unless:$current_skill's level > 9)[
+      (if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[
+        (set:$message_2 to (either:"Skill increase!","Skill up!"))
+        (set:$level_up to "true")
+        (set:$current_skill's level to $next_level)
+        (set:$se to "skill up")
+        (set:$next_level to $current_skill's level + 1)
+        (display:"play sound")
+      ]
+      
+      (unless:$current_skill's level > 9)[
+        (if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[
+          (set:$message_2 to (either:"Skill increase! (+2)","Skill up! (+2)"))
+          (set:$level_up to "double")
+          (set:$current_skill's level to $next_level)
+          (set:$next_level to $current_skill's level + 1)
+          (after:time + 0.5s)[
+            (display:"play sound")
+          ]
+        ]
+        
+        (unless:$current_skill's level > 9)[
+          (if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[
+            (set:$message_2 to (either:"Skill increase! (+3)","Skill up! (+3)"))
+            (set:$level_up to "triple")
+            (set:$current_skill's level to $next_level)
+            (set:$next_level to $current_skill's level + 1)
+            (after:time + 1s)[
+              (display:"play sound")
+            ]
+          ]
+          
+          (unless:$current_skill's level > 9)[
+            (if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[
+              (set:$message_2 to (either:"Skill increase! (+4)","Skill up! (+4)"))
+              (set:$level_up to "quadruple")
+              (set:$current_skill's level to $next_level)
+              (set:$next_level to $current_skill's level + 1)
+              (after:time + 1.5s)[
+                (display:"play sound")
+              ]
+            ]
+          ]
+          
+          (if:$skill_check is "sexy dance bar")[
+            (replace:?score)[{
+              (text-style:"fade-in-out")[
+                <span class='shadow'>$message</span>
+              ]
+            }]
+          ](else:)[
+            (replace:?score)[{
+              |tooltip>[
+                (text-style:"fade-in-out")[
+                  <span class='shadow'>
+                    $message
+                    (unless:$level_up is "false")[
+                      <br/>
+                      (color:"Bisque")[$message_2]
+                    ]
+                  </span>
+                ]
+                |tooltiptext>[
+                  (set:_levels to (cond:
+                    $level_up is "true", "(+1)",
+                    $level_up is "double", "(+2)",
+                    $level_up is "triple", "(+3)",
+                    $level_up is "quadruple", "(+4)",
+                    ""
+                  ))
+                  $skill_name: (print:$current_skill's level) _levels
+                  
+                  (unless:$current_skill's level > 9)[
+                    <br/>
+                    (meter: bind $current_skill's xp, $current_skill's level of $current_skill's "xp to level", "X", (text:$current_skill's level of $current_skill's "xp to level" - $current_skill's xp) + " XP to level " + (text:$next_level), #F2D2BD)
+                  ]
+                ]
+              ]
+            }]
+          ]
+        ]
+      ]
+    ]
+  ]
+}
+
+
+:: quicktime gain xp {"position":"467,5151","size":"100,100"}
+{
+  (set:$gain_base to (cond:
+    $method is "skill check", 5,
+    $game_type is "quicktime", (ceil:(min:(max:($timer / 2.5),5),20)),
+    (ceil:(min:(max:(($quicktime_params's "time" - $timer) / 3),5),20))
+  ))
+  (set:$gain to (ceil:$gain_base * $score_multiplier))
+
+  (unless:$method is "skill check")[
+    (if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[
+      (set:$gain to (floor:$gain * 1.5))
+    ]
+  ]
+
+  (set:_gainXP to (macro: str-type _skillName, str-type _xpName, dm-type _talent, codehook-type _set, [
+    (set:$skill_name to _skillName)
+    (set:$message to "+$gain _xpName XP
+($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
+    (set:$current_skill to _talent)
+    (display:"quicktime gain xp calc")
+    _set
+  ]))
+
+  (if:$skill_check is "bj")[
+    (_gainXP: "BJ skill", "blowjob", $blowjob_talent, [(set:$blowjob_talent to $current_skill)])
+  ](else-if:$skill_check is "titfuck")[
+    (_gainXP: "titfuck skill", "titfuck", $titfuck_talent, [(set:$titfuck_talent to $current_skill)])
+  ](else-if:$skill_check is "handjob")[
+    (_gainXP: "Handjob skill", "handjob", $handjob_talent, [(set:$handjob_talent to $current_skill)])
+  ](else-if:$skill_check is "female masturbation")[
+    (_gainXP: "Masturbation skill", "masturbation", $female_masturbation_talent, [(set:$female_masturbation_talent to $current_skill)])
+  ](else-if:$skill_check is "girl pleasure")[
+    (_gainXP: "Female pleasure skill", "female pleasure", $pleasuring_girls_talent, [(set:$pleasuring_girls_talent to $current_skill)])
+  ](else-if:$skill_check is "orgasm control")[
+    (_gainXP: "Orgasm control skill", "orgasm control", $orgasm_control, [(set:$orgasm_control to $current_skill)])
+  ](else-if:$skill_check is "arousal denial")[
+    (_gainXP: "Willpower", "willpower", $arousal_denial, [(set:$arousal_denial to $current_skill)])
+  ](else-if:$skill_check is "gag reflex")[
+    (_gainXP: "Gag reflex skill", "gag reflex", $gag_reflex, [(set:$gag_reflex to $current_skill)])
+  ](else-if:$skill_check is "passive sex")[
+    (_gainXP: "Passive sex skill", "passive sex", $sub_sex_talent, [(set:$sub_sex_talent to $current_skill)])
+  ](else-if:$skill_check is "active sex")[
+    (_gainXP: "Active sex skill", "active sex", $dom_sex_talent, [(set:$dom_sex_talent to $current_skill)])
+  ](else-if:$skill_check is "male masturbation")[
+    (_gainXP: "Male masturbation skill", "masturbation", $male_masturbation_talent, [(set:$male_masturbation_talent to $current_skill)])
+
+  ](else-if:$skill_check is "sexy dance bar")[
+    (if:$method is "skill check")[
+      (display:"bar dance quicktime reward skill check")
+    ]
+    (set:$skill_name to "Dancing skill")
+    (set:$message to "💵 +$" + (text:$bar_dance's "money earned") + " 💵")(set:$message to $message + " 😈 +$slut_amount sluttiness 😈")
+    (set:$current_skill to $sexy_dancing_bar_talent)
+    (display:"quicktime gain xp calc")
+    (set:$sexy_dancing_bar_talent to $current_skill)
+  ]
+}
+

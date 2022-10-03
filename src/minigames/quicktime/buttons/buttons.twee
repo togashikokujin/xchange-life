@@ -1,0 +1,186 @@
+:: quicktime buttons {"position":"113,5489","size":"100,100"}
+<div class='options'>{
+  [
+    (replace:?right_options)[(print:"
+")(link:"Play minigame")[(replace:?right_options)[](if:$type is "bj")[(if:(datanames:$npc) contains "cockimg")[(replace:?right_options)[(print:"<img class='greyborder' src='" + (text:$npc's "cockimg") + "' width='100%' height=auto>")]]](set:$method to "minigame")
+(replace:?challenge_text)[(if:$type is "bj" or $type is "satisfy")[(if:(datanames:$quicktime_params) contains "target")[(set:$time_target to $quicktime_params's "target")](else:)[(set:$time_target to 25)](color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(if:$type is "satisfy")[Make this last at least $time_target seconds.](else:)[(either:"Make this last at least $time_target seconds.","Make this last at least $time_target seconds.","Go slow enough to make this last at least $time_target seconds.")](if:(random:1,6) is 1)[ (either:"It isn't a race...","Slow and steady wins the race.")]</span>]]](if:$type is "group handjob")[(if:(datanames:$quicktime_params) contains "target")[(set:$time_target to $quicktime_params's "target")](else:)[(set:$time_target to 25)](color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(either:"Make this handjob last at least $time_target seconds.","Stroke them for at least $time_target seconds.")</span>]]](if:$type is "masturbate")[(set:$time_target to 30)(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(either:"Last $time_target seconds, and you'll cum harder.","Last at least $time_target seconds to cum harder.","Last at least $time_target seconds, and you'll cum harder.")(if:(random:1,6) is 1)[ (either:"No need to rush.","This is your time...","You're on your own clock...")]</span>]]](else-if:(datanames:$quicktime_params) contains "objective text")[(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>(print:$quicktime_params's "objective text")</span>]]]]
+(replace:?directions)[(unless:(a:"try to cum","recover","stripping") contains $type)[<mark>**Use your arrow keys (or WASD) in 3... (after:time + 1s)[2... (after:time + 1s)[1...]]**</mark>](else:)[<mark>**Use your arrow keys (or WASD), and watch for bonuses!**</mark>](if:$type is "stripping")[(print:"
+
+")
+<mark>💵 Press the **SPACEBAR** when you see money. 💵</mark>(print:"
+")
+<mark>😈 Hit **SHIFT** instead to (either:"SLUT IT UP","BE A HO","REALLY SHAKE IT","BE SUPER SLUTTY") and double that $$$! 😈</mark>](if:$type is "try to cum")[(print:"
+
+")
+<mark>Press **SPACEBAR** or **SHIFT** to gain extra pleasure when you see 💦 icons!(print:"
+")SPACEBAR: lower option(print:"
+")SHIFT: upper option</mark>](if:$type is "recover")[(print:"
+
+")
+<mark>Press **SPACEBAR** or **SHIFT** to gain extra stamina when you see ⚡ icons!(print:"
+")SPACEBAR: lower option(print:"
+")SHIFT: upper option</mark>]](unless:(a:"try to cum","recover","stripping") contains $type)[(live:3s)[(replace:?directions)[{(display:"quicktime next sequence")}](display:"quicktime timer")(stop:)]](else:)[(replace:?right_options)[(link:"Begin")[(set:$minigame_played to "true")(replace:?directions)[{(display:"quicktime next sequence")}](display:"quicktime timer")]]]](print:"
+")(display:"quicktime skill check")(if:$minigame_skip is "Skippable Minigames: On")[
+(link:"Skip (win)")[(replace:?right_options)[](set:$next to $quicktime_params's "result passage")(set:$result to "pass")(display:"change screen")]
+(link:"Skip (lose)")[(replace:?right_options)[](set:$next to $quicktime_params's "result passage")(set:$result to "fail")(display:"change screen")]]]
+  ]<directions|
+}</div>
+
+
+:: quicktime next sequence {"position":"220,5026","size":"100,100"}
+{
+  (set:$correct_dir to $index of $quicktime_params's "sequence")
+  (display:"buttons")
+  (set:$index to (cond:
+    it is $length, 1,
+    it + 1
+  ))
+}
+
+
+:: buttons {"position":"118,5375","size":"100,100"}
+{
+  (set:_buttonDir to (macro: str-type _correctDir, [
+    (set:$space to "no")
+    (set:_topButton to "")
+    (set:_bottomButton to "")
+    (unless:_correctDir is "off")[
+      (if:$type is "stripping")[
+        (display:"bar dance check spacebar")
+        (set:_topButton to "quicktime slut button")
+        (set:_bottomButton to "quicktime money button")
+      ](else-if:$type is "try to cum")[
+        (display:"pleasure check spacebar")
+        (set:_topButton to "quicktime pleasure button shift")
+        (set:_bottomButton to "quicktime pleasure button space")
+      ](else-if:$type is "recover")[
+        (display:"energy check spacebar")
+        (set:_topButton to "quicktime energy button shift")
+        (set:_bottomButton to "quicktime energy button space")
+      ]
+    ]
+    (set:_buttonIcon to (macro: str-type _dir, [
+      (out:)[{
+        (link-rerun:"<img src='img/ui/buttons/64button" + (cond: _correctDir is _dir, "2", "1") + _dir + ".png' width=64px height=64px>")[
+          (set:$dir to _dir)
+          (display: (cond: _correctDir is _dir, "buttons correct", "buttons incorrect"))
+        ]
+      }] 
+    ]))
+    (replace:?directions)[{
+      <span class='borderless'>
+        (unless:_topButton is "")[(display:_topButton)]
+        |up>[(_buttonIcon:"up")]
+        <br/>
+        |left>[(_buttonIcon:"left")]
+        |down>[(_buttonIcon:"down")]
+        |right>[(_buttonIcon:"right")]
+        (unless:_bottomButton is "")[(display:_bottomButton)]
+      </span>
+    }]
+    (out:)[]
+  ]))
+
+  (set:$last_dir to $dir)
+  (set:$dir to "none")
+  (_buttonDir:"off")
+  (after:time + 50)[
+    (if:$interrupts > 0 and (($index % 17) is $interrupt_mod))[
+      (set:$text to "options")
+      (display:$quicktime_params's "interrupt passage")
+      (display:"quicktime choice")
+    ](else:)[
+      (_buttonDir:$correct_dir)
+    ]
+  ]
+}
+
+
+:: buttons none {"position":"223,5268","size":"100,100"}
+{
+  (set:$dir to "none")
+  (replace:?directions)[{
+    <span class='borderless'>
+      |up>[(link-repeat:"<img src='img/ui/buttons/64button1up.png'; width=64px; height=auto>")[(set:$dir to "up")(display:"buttons incorrect")]]
+      <br/>
+      |left>[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=64px; height=auto>")[(set:$dir to "left")(display:"buttons incorrect")]]
+      |down>[(link-repeat:"<img src='img/ui/buttons/64button1down.png'; width=64px; height=auto>")[(set:$dir to "down")(display:"buttons incorrect")]]
+      |right>[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=64px; height=auto>")[(set:$dir to "right")(display:"buttons incorrect")]]
+    </span>
+  }]
+  (after:time + 0.8s)[(if:$dir is "none")[(display:"buttons correct")]]
+}
+
+
+:: buttons correct {"position":"124,5719","size":"100,100"}
+{
+  (set:$correct to $correct + 1)
+  (set:$prev_combo to $combo)
+  (set:$old_dir to $dir)
+  (set:$combo to (min:10, (ceil:($correct + 1) / 4)))
+  (set:$quicktime_params's "points" to it + ($combo + 2) * $gain_amount / 3)
+  (if:$correct % 2 is 0)[
+    (set:$se to "quicktime correct " + (text:$combo) + " A")
+  ](else:)[
+    (set:$se to "quicktime correct " + (text:$combo) + " B")
+  ]
+  (display:"play sound")
+  (if:$combo > $prev_combo and $combo > 1 and $combo < 11)[
+    (set:$se to "quicktime combo " + (text:$combo))
+    (display:"play sound")
+  ]
+  (if:(datanames:$quicktime_params) contains "real time his pleasure")[
+    (if:$timer % 7 is 0)[
+      (set:$gain to 1)
+      (set:$his_pleasure to (min:$his_pleasure + $gain,$his_pleasure_threshold))
+      (display:"update his pleasure")
+    ]
+  ]
+  (replace:?score_bar)[{
+    (set:_pointsToWin to $quicktime_params's "points to win")
+    (set:_points to $quicktime_params's "points")
+    <script>GE.updateStats(_pointsToWin, _points);</script>
+  }]
+  (set:$font_size to "font-size:" + (cond:
+    $combo is 10, "4vmin",
+    "1." + (text:$combo) + "em"
+  ))
+  (replace:?score)[{
+    (css:$font_size)[
+      <mark>
+        (if:$combo < 10)[
+          Combo: $correct ((text:$combo)x)
+        ](else:)[
+          (text-style:"shudder")[Combo: $correct ((text:$combo)x) (MAX)]
+        ]
+      </mark>
+    ]
+  }]
+  (display:"quicktime check")
+  (if:$quicktime is "running")[
+    (display:"quicktime next sequence")
+  ]
+}
+
+
+:: buttons incorrect {"position":"127,5832","size":"100,100"}
+{
+  (set:$se to "quicktime incorrect")
+  (display:"play sound")
+  (set:$quicktime_params's "points" to $quicktime_params's "points" - ($gain_amount*3))
+  (replace:?score_bar)[{
+    (set:_pointsToWin to $quicktime_params's "points to win")
+    (set:_points to $quicktime_params's "points")
+    <script>GE.updateStats(_pointsToWin, _points);</script>
+  }]
+  (replace:?score)[{
+    <mark>❌COMBO LOST!❌</mark>
+  }]
+  (after:time + 0.25s)[(replace:?score)[]]
+  (display:"quicktime check")
+  (if:$quicktime is "running")[
+    (display:"quicktime next sequence")
+  ]
+  (set:$correct to 0)
+}
+

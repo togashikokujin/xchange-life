@@ -1,0 +1,51 @@
+:: quicktime choice {"position":"1397,4914","size":"100,100"}
+{
+  (set:$good to (either:"up","down"))
+  (set:$up_choice to "SHIFT: " + (cond:$good is "up", $good_choice, $bad_choice))
+  (set:$down_choice to "SPACEBAR: " + (cond:$good is "down", $good_choice, $bad_choice))
+  (replace:?directions)[{
+    |shift>[
+      (link:$up_choice)[
+        (display:"quicktime choice " + (cond:$good is "up", "good", "bad"))
+      ]
+    ]
+    <br/>
+    |space>[
+      (link:$down_choice)[
+        (display:"quicktime choice " + (cond:$good is "down", "good", "bad"))
+      ]
+    ]
+  }]
+
+  (set:$interrupts to $interrupts - 1)
+}
+
+
+:: quicktime choice good {"position":"1392,5025","size":"100,100"}
+{
+  (set:$text to "good")
+  (replace:?directions)[{
+    <mark>
+      (display:$quicktime_params's "interrupt passage")
+    </mark>
+  }]
+  (after:time + 2.5s)[
+    (display:"buttons correct")
+  ]
+}
+
+
+:: quicktime choice bad {"position":"1389,5137","size":"100,100"}
+{
+  (set:$text to "bad")
+  (replace:?directions)[{
+    <mark>
+      (display:$quicktime_params's "interrupt passage")
+    </mark>
+  }]
+  (after:time + 2.5s)[
+    (display:"buttons incorrect")
+  ]
+}
+
+

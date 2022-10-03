@@ -1,0 +1,98 @@
+:: quicktime initialize {"position":"229,4911","size":"100,100"}
+{
+  (set:$dontcum to "finished")
+  (set:$quicktime to "over")
+  (set:$minigame_played to "false")
+  (set:$combo to 1)
+  (set:$interrupt_mod to (random:10,16))
+  (if:(datanames:$quicktime_params) contains "interrupt passage")[
+    (set:$interrupts to $quicktime_params's "interrupt count")
+  ](else:)[
+    (set:$interrupts to 0)
+  ]
+  (set:$game_type to "quicktime")
+  (if:(datanames:$quicktime_params) contains "skill check")[
+    (set:$skill_check to $quicktime_params's "skill check")
+    (if:(datanames:$quicktime_params) contains "skill difficulty")[
+      (set:$skill_difficulty to $quicktime_params's "skill difficulty")
+    ](else:)[
+      (set:$skill_difficulty to 50)
+    ]
+  ](else:)[
+    (set:$skill_check to "random")
+    (set:$skill_difficulty to 50)
+  ]
+
+  (set:$double_time to "false")
+  (set:$quicktime_params's "sequence" to $quicktime_params's "sequence" - (a:"none"))
+  <div class="game_header">
+    (set:_vid to "<video src='img/" + $quicktime_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")
+    (print:_vid)
+    (set:$correct to 0)
+    (set:$response_time to "none")
+    (set:$type to "none")
+    (if:(datanames:$quicktime_params) contains "type")[
+      (if:"type" of $quicktime_params is "bj")[
+        (set:$type to "bj")
+        (if:$sex_loop is 0)[
+          (display:"blowjob sounds")
+        ]
+        (display:"play sex loop")
+      ](else-if:"type" of $quicktime_params is "massage")[
+        (set:$type to "massage")
+      ](else-if:"type" of $quicktime_params is "masturbate")[
+        (set:$type to "masturbate")
+      ](else-if:"type" of $quicktime_params is "stripping")[
+        (set:$type to "stripping")
+      ](else-if:type of $quicktime_params is "try to cum")[
+        (display:"play sex loop")
+        (set:$type to "try to cum")
+        (set:$pleasure_bonus to 0)
+      ](else-if:type of $quicktime_params is "recover")[
+        (display:"play sex loop")
+        (set:$type to "recover")
+        (set:$energy_bonus to 0)
+      ](else-if:type of $quicktime_params is "satisfy")[
+        (set:$type to "satisfy")
+      ]
+    ](else:)[
+      (set:$type to "null")
+    ]
+    (set:$responding to "false")
+    (set:$timer to 0)
+    (set:$quicktime to "running")
+    (set:$timer_loss to 1)
+    (set:$gain_amount to 1)
+    (set:$correct_dir to "none")
+    (set:$length to length of ($quicktime_params's "sequence"))
+    (set:$index to 1)
+    <div class="game_header_text">
+      |challenge_text>[]
+      [
+        (display:"quicktime buttons")
+      ]<arrows|
+    </div>
+  </div>
+  <div class="options"></div>
+  [
+    (set:_toWin to $quicktime_params's "points to win")
+    (set:_points to $quicktime_params's "points")
+    <script>GE.updateStats(_toWin, _points);</script>
+  ]<score_bar|
+  <div id="win-bar">
+    <div class='bar' style='background: repeating-linear-gradient(
+               45deg,
+               rgba(255, 255, 255, 0.9),
+               rgba(255, 255, 255, 0.9) 40px,
+               rgba(255, 255, 255, 1) 40px,
+               rgba(255, 255, 255, 1) 80px
+               );'></div>
+  </div>
+  <table cellpadding="0" cellspacing="0">
+    <tr>
+      <div class="options">
+        []<score|
+      </div>
+    </tr>
+  </table>
+}
