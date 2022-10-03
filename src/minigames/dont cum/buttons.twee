@@ -2,57 +2,53 @@
 {
   (set:_leftButton to (cond: $dir < 0, "64button2left.png", "64button1left.png"))
   (set:_rightButton to (cond: $dir > 0, "64button2right.png", "64button1right.png"))
+  (set:_pressButton to (macro: num-type _dir, [
+    (set:$dir to _dir)
+    (if:$points > 99 or $points < 1)[
+      (set:$result to "fail")
+    ]
+    (if:$rhythm_check is "true")[
+      ($dontCumUpdatePoints: $points + $dir)
+      (replace:?directions)[{
+        (if:$quicktime_params's "interrupts" > 0 and (random:1,10) is 1 and $points < 65 and $points > 35)[
+          (css:"font-size:3vmin")[
+            <span class='chromatic'>
+              (display:$quicktime_params's "interrupt passage")
+            </span>
+          ]
+          (set:$dir to 0)
+          (after: time + 2.5s)[
+            (replace:?directions)[(display:"dont cum buttons")]
+          ]
+          (set:$quicktime_params's "interrupts" to $quicktime_params's "interrupts" - 1)
+        ](else:)[
+          (display:"dont cum buttons")
+        ]
+      }]
+    ](else:)[
+      (replace:?directions)[{
+        (css:"font-size:3vmin")[
+          <span class='chromatic'>Too fast!</span>
+        ]
+        (set:$dir to 0)
+        (after: time + 1s)[
+          (replace:?directions)[(display:"dont cum buttons")]
+        ]
+      }]
+    ]
+    (set:$rhythm_check to "false")
+    (after: time + (ceil:$quicktime_params's "rhythm" * 0.75))[
+      (set:$rhythm_check to "true")
+    ]
+  ]))
   |left>[
-    (link-repeat:"<img src='img/ui/buttons/" + _leftButton + "'; width=64px; height=auto>")[
-      (set:$dir to -15)
-      (display:"dont cum button press")
+    (link-rerun:"<img src='img/ui/buttons/" + _leftButton + "'; width=64px; height=auto>")[
+      (_pressButton: -17)
     ]
   ]
   |right>[
-    (link-repeat:"<img src='img/ui/buttons/" + _rightButton + "'; width=64px; height=auto>")[
-      (set:$dir to 15)
-      (display:"dont cum button press")
+    (link-rerun:"<img src='img/ui/buttons/" + _rightButton + "'; width=64px; height=auto>")[
+      (_pressButton: 17)
     ]
-  ]
-}
-
-
-:: dont cum button press {"position":"346,4408","size":"100,100"}
-{
-  (if:$points > 99 or $points < 1)[
-    (set:$result to "fail")
-  ]
-  (if:$rhythm_check is "true")[
-    ($dontCumUpdatePoints: $points + $dir)
-    (replace:?directions)[{
-      (if:$quicktime_params's "interrupts" > 0 and (random:1,10) is 1 and $points < 65 and $points > 35)[
-        (css:"font-size:3vmin")[
-          <span class='chromatic'>
-            (display:$quicktime_params's "interrupt passage")
-          </span>
-        ]
-        (set:$dir to 0)
-        (after: time + 2.5s)[
-          (replace:?directions)[(display:"dont cum buttons")]
-        ]
-        (set:$quicktime_params's "interrupts" to $quicktime_params's "interrupts" - 1)
-      ](else:)[
-        (display:"dont cum buttons")
-      ]
-    }]
-  ](else:)[
-    (replace:?directions)[{
-      (css:"font-size:3vmin")[
-        <span class='chromatic'>Too fast!</span>
-      ]
-      (set:$dir to 0)
-      (after: time + 1s)[
-        (replace:?directions)[(display:"dont cum buttons")]
-      ]
-    }]
-  ]
-  (set:$rhythm_check to "false")
-  (after: time + (ceil:$quicktime_params's "rhythm" * 0.75))[
-    (set:$rhythm_check to "true")
   ]
 }

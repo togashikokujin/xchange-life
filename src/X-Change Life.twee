@@ -46015,46 +46015,6 @@ src='img/npc/family/stepsis/alexia/house/on bed.jpg' width=100% height=auto></di
 {<mark>(set:$lubrication to (min:$lubrication + $gain,10))(set:$gain to 0) Lubrication: (if:$lubrication is 10)[💧 FULLY LUBRICATED 💧](else:)[💧(if:$gain > 1)[💧](if:$gain > 2)[💧](if:$gain > 3)[💧](if:$gain > 4)[💧](if:$gain > 5)[💧](if:$gain > 6)[💧](if:$gain > 7)[💧](if:$gain > 8)[💧](if:$gain > 9)[💧]](display:$stats_refresh)</mark>}
 
 
-:: bonus area left {"position":"565,4407","size":"100,100"}
-{(set:$bonus_area to "left")(replace:?score_bar)[{(set:_duration to ($quicktime_params's "rhythm"*15))(print:'<div id="win-bar" width=50% style="background-repeat:no-repeat;background-image:linear-gradient(90deg, rgba(144, 238, 144, 0) 0%,rgba(144, 238, 144, 0.9),rgba(144, 238, 144, 0.9),rgba(144, 238, 144, 0) 100%);background-size:' + (text:$width) +'%;background-position-x:left; animation: gradient-left ' + (text:_duration) + 'ms ease infinite;"><div class="bar" style="background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 40px, rgba(255, 255, 255, 1) 40px,
-rgba(255, 255, 255, 1) 80px);"></div></div>')}]}
-
-
-:: bonus area check {"position":"678,4182","size":"100,100"}
-{
-(if:$bonus_timer is 0)[
-
-(if:$bonus_area is "none")[(if:$type is "oral")[(set:$modifier to $npc's "oral skill")](else:)[(set:$modifier to $npc's "cockfatness")](set:$width to $modifier * 3 + 17)(set:$modifier to ((-33+$width)/2))(display:(either:"bonus area left","bonus area funky"))]
-
-]
-(set:$bonus_timer to $bonus_timer + 1)
-(if:$bonus_timer > 14)[(set:$bonus_timer to 1)]
-
-(unless:$bonus_area is "none")[(if:$bonus_area is "left")[(set:$min to $bonus_timer of
-(a:1,12,33,48,59,63,66,66,55,35,18,7,3,1))
-(set:$max to $bonus_timer of
-(a:33,45,67,82,93,97,100,100,89,69,52,41,37,35))]
-(if:$bonus_area is "funky")[(set:$min to $bonus_timer of
-(a:35,45,49,50,31,20,18,50,67,50,1,1,27,35))
-(set:$max to $bonus_timer of
-(a:66,76,81,82,62,50,50,81,99,81,33,33,59,66))]
-(set:$min to $min - $modifier)(set:$max to $max + $modifier)
-
-(if:$points >= ($min + ($width/3)) and $points <= ($max-($width/3)))[(set:$bonus to "extra")](else-if:$points >= $min and $points <= $max)[(set:$bonus to "true")](else:)[(set:$bonus to "false")]]
-}
-
-
-:: oral bonus {"position":"683,4412","size":"100,100"}
-{(set:$threshold to 60 + ($quicktime_params's "rhythm" * -0.045))
-
-(set:$bonus_count to $bonus_count + 2)
-(if:$bonus is "true")[(set:$bonus_count to $bonus_count + 10)]
-(if:$bonus is "extra")[(set:$bonus_count to $bonus_count + 20)]
-(if:$bonus_count > $threshold)[(set:$bonus_count to 0)(set:$your_pleasure to (min:$your_pleasure + 1,10))(set:$lubrication to (min:$lubrication + 1,10))]
-(display:"update your pleasure")
-}
-
-
 :: lubrication meter {"position":"2464,1482","size":"100,100"}
 |tooltip>[(print:'<tr><td style="width:540px; padding:0.25vmin;background-repeat:no-repeat;background-image:linear-gradient(90deg, rgba(255, 182, 193, 1) 0%,rgba(255, 182, 193, 1) 100%);background-size:' + (text:(round:($lubrication/10) * 100)) +'%;background-position-x:left;text-align:center" data-raw="">' + (text:$lubrication) +' 💧</td></tr>')|tooltiptext>[Lubrication: $lubrication/10
 How easy it will be to take (print:$npc's "name")'s cock inside you.]]
@@ -46120,23 +46080,6 @@ How humiliating...(if:$orgasms > 0)[(set:$character's "arousal" to 0)(display:"r
 "interrupts",3
 ))(set:$scene's "events" to $scene's "events" + (a:"get fucked"))
 (set:$next to "dont cum initialize")(display:"change screen")(display:"play ambience")]
-
-
-:: transactional sex bonus {"position":"678,4525","size":"100,100"}
-{
-(set:$threshold to 75 + ($quicktime_params's "rhythm" * -0.045))
-
-(set:$bonus_count to $bonus_count + (ceil:$npc's cockrating/2))
-
-(if:$bonus is "true")[(set:$bonus_count to $bonus_count + 20)]
-(if:$bonus is "extra")[(set:$bonus_count to $bonus_count + 40)]
-(if:$character's "side effects" contains "Submissive pleasure")[(set:$bonus_count to $bonus_count * (ceil:$bonus_count * 1.25))]
-(if:$bonus_count > $threshold + ($orgasms * 15))[(set:$bonus_count to 0)(set:$your_pleasure to (min:$your_pleasure + 1,10))(set:$lubrication to (min:$lubrication + 1,10))]
-(set:$his_pleasure_count to $his_pleasure_count + 7)(if:$orgasms > 0)[(set:$his_pleasure_count to $his_pleasure_count + 5)](if:$orgasms > 1)[(set:$his_pleasure_count to $his_pleasure_count + 3)]
-(if:$beg_creampie is "true")[(set:$his_pleasure_count to $his_pleasure_count + 15)]
-(if:$his_pleasure_count >= $threshold)[(set:$his_pleasure_count to 0)(set:$his_pleasure to (min:$his_pleasure + 1,$his_pleasure_threshold))(display:"update his pleasure")]
-(display:"update your pleasure")
-}
 
 
 :: sex transactional result {"position":"7244,1008","size":"100,100"}
@@ -46363,11 +46306,6 @@ He cums all over your butt.
 ]
 
 (set:$img to "<video src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")}
-
-
-:: bonus area funky {"position":"563,4513","size":"100,100"}
-{(set:$bonus_area to "funky")(replace:?score_bar)[{(set:_duration to ($quicktime_params's "rhythm"*15))(print:'<div id="win-bar" width=50% style="background-repeat:no-repeat;background-image:linear-gradient(90deg, rgba(144, 238, 144, 0) 0%,rgba(144, 238, 144, 0.9),rgba(144, 238, 144, 0.9),rgba(144, 238, 144, 0) 100%);background-size:' + (text:$width) +'%;background-position-x:left; animation: gradient-funky ' + (text:_duration) + 'ms ease infinite;"><div class="bar" style="background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 40px, rgba(255, 255, 255, 1) 40px,
-rgba(255, 255, 255, 1) 80px);"></div></div>')}]}
 
 
 :: sex transactional grope react {"position":"8039,695","size":"100,100"}
