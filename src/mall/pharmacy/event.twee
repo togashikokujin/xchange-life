@@ -1,0 +1,411 @@
+:: event shop deal {"position":"12014,3698","size":"100,100"}
+{
+  (display:"sex tracks")
+  (set:_opener to (either:
+    "Ok, here's the deal.",
+    "How about this?",
+    "Here's the deal...",
+    "Don't tell anyone, but... what if"
+  ))
+  (set:_closer to (either:
+    "And you suck me off.",
+    "And then you give me a blowjob - right here, right now."
+  ))
+  "_opener I give you a 50% discount on the pill, but you take it right now. _closer"
+  <div class='options'>
+    (link:"Ok...")[
+      (replace:?screen)[{
+        (either:"The clerk pops out the pink pill from its wrapper, and presses it between your lips.")
+        (set:$character's "money" to $character's "money" - (ceil:$price/2))
+        (display:"refresh stats")
+        <br/>
+        (set:$select to "Basic")
+        (set:$take_card_disabled to "event shop deny card")
+        (display:"take pill")
+        (set:$next to "event shop deal accept")
+      }]
+    ]
+    (link:"No way!")[
+      (set:$next to "X-Change Pharmacy")
+      (display:"next")
+    ]
+  </div>
+}
+
+
+:: event shop deal accept {"position":"12016,3814","size":"100,100"}
+{
+  (display:"sex tracks")
+  (print:"<img class='greyborder' src='img/scenes/generic/sex/pre/bwc/" + (either:"bj 1","bj 2","bj 3") + ".jpg' width=100% height=auto>")
+  (set:$se to "unzip")
+  (display:"play sound")
+  (set:_comment to $character's "id" of (dm:
+    "alina","Damn, you're PRETTY now. Fuck, that's a face, fit for a model. But you'd rather suck cocks to earn money, huh?",
+    "mia","Damn, those tits are PRIME. Nothing like a blonde with big tits, seriously. Really a girl-next-door kind of look.",
+    "cassidy","Holy fuck, those TITS! I was NOT expecting them to be so fucking huge. God-damn!",
+    "ella","Holy shit, those are some cow tits you got, haha. You better find yourself a bra soon - if you walk around with those flopping around, I'm not the last guy you're gonna have to suck off.",
+    "jade","Mmm mmm mmm. Damn, your face looks a little dumb, but those TITS. Really big, for an asian. Haha.",
+    "jia","No tits, huh? Damn, that's quite an ass though. You should find some tight pants to show it off...",
+    "liya","Fuck, those are some nice tits. And you're absolutely gorgeous. Let me guess, you're eastern European or something? Ah, who cares, you got nice tits, is all I'm trying to say.",
+    "lana","Fuck, you look like a TOTAL bimbo, hahaha. Like, your face looks DUMB. And those LIPS - damn, am I lucky or what, you're gonna be wrapping them around my cock.",
+    "rae","Oh my god, you're tiny now. Haha. You got a really sultry face - tell me, do you feel like a slut now? Either way, you're gonna in a minute.",
+    "scarlit","Fuck now THAT'S an ass. Not to be racist, but I was really hoping you were gonna have a big ass."))
+  (set:_command to (either:
+    "Now suck.",
+    "Now, on your knees.",
+    "Now, kneel down.",
+    "Alright now, on your knees.",
+    "Ok now, on your knees - don't worry, this won't take long - my balls haven't been drained a while."))
+  (set:_thought to $character's "id" of (dm:
+    "alina","*What a tool.*",
+    "cassidy","*Yeah, these are gigantic. Gotta put on a bra later...*",
+    "ella","*He's not wrong, these are seriously gonna weigh me down.*",
+    "jade","*What an asshole!
+
+    ...do I really look dumb?*",
+    "jia","*Asshole.*",
+    "liya","*Damn, these tits ARE nice. The perfect size. It sucks that he's the first guy who gets to see them...*",
+    "lana","*Do I really look dumb?*",
+    "rae","*Geez, he's a jerk.*",
+    "mia","*Me, a 'girl next door...'*",
+    "scarlit","*Not to be racist. That's exactly what racists say. Do I really have to blow him?*"))
+  (set:_option to (either:
+    "Get to work.",
+    "Obey.",
+    "Fine.",
+    "Be a good girl."))
+  "_comment _command"
+  <br/><br/>
+  _thought
+  <br/>
+  <div class='options'>
+    (link:_option)[{
+      (set:$variant to (random:1,2))
+      (if:$variant is 1)[
+        (set:$img to "scenes/characters/" + $character's "id" + "/bj/transactional " + (text:(random:1,5)) + ".mp4")
+      ](else:)[
+        (if:(a:"scarlit","ella","cassidy") contains $character's "id")[
+          (set:$img to "scenes/generic/sex/bj/" + (either:"clothed 1","dark 1","dark 2") + ".mp4")
+        ](else:)[
+          (set:$img to "scenes/generic/sex/bj/" + (either:"clothed 1","light 1","light 2") + ".mp4")
+        ]
+      ]
+      (replace:?portrait)[{
+        (print:"<img class='border' src='img/characters/bj/bwc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+      }]
+      (set:$stats's "blowjobs given" to $stats's "blowjobs given" + 1)
+
+      (set:$quicktime_params to (dm:
+        "difficulty","medium",
+        "type","bj",
+        "skill check","bj",
+        "skill check difficulty",50,
+        "victory","He loves how eager you are.",
+        "defeat","*It's just so big...*",
+        "points to win",30,
+        "points",10,
+        "sequence",(a:"up","down","up","down","up","up","none","down","up","down","left","right"),
+        "quicktime timer",1,
+        "result passage","event shop deal finish",
+        "backdrop",$img
+      ))
+
+      (set:$quicktime_params's "sequence" to (a:"up","down","up","down","up","up","none","down","up","down","left","right"))
+
+      (set:$quicktime_params's "sequence" to (a:"up","left","right","down","up","down","up","down","none"))
+
+      (set:$quicktime_params's "sequence" to (a:"up","down","right","left","up","up","none","down","up","down","left","right"))
+      (if:$img is "scenes/characters/alina/bj/transactional 1.mp4" or $img is "scenes/characters/alina/bj/transactional 2.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"none","none","down","down","down","up","up","down","up","down","up","down","up","down","up","down","up"))
+      ](else-if:$img is "scenes/characters/angela/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"down","up","down","up","right","left","right","left","right","right","none","none"))
+      ](else-if:$img is "scenes/characters/cassidy/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"down","up","down","up","down","left","up","right","down","up","down","up"))
+      ](else-if:$img is "scenes/characters/ella/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"down","up","down","down","down","left","right","up","down","up","down","up","down","down"))
+      ](else-if:$img is "scenes/characters/jade/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"right","right","left","right","up","down","left","none","none","left","down","up","down","right","left","right","left"))
+      ](else-if:$img is "scenes/characters/jia/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"up","down","up","down","up","down","up","down","up","down","left","right","none"))
+      ](else-if:$img is "scenes/characters/lana/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"up","left","right","down","up","down","up","down","none"))
+      ](else-if:$img is "scenes/characters/liya/bj/transactional.mp4")[
+        (set:$quicktime_params's "sequence" to (a:"up","down","right","left","up","up","none","down","up","down","left","right"))
+      ]
+
+      (set:$next to "quicktime initialize")
+      (display:"change screen")
+    }]
+  </div>
+}
+
+
+:: event shop deal finish {"position":"12011,4056","size":"100,100"}
+{
+  (set:$minigame to (dm:
+    "difficulty",7,
+    "babe type","clothed",
+    "cock type","nsfw",
+    "masculinity level",60,
+    "reason 1","You just sucked a guy's cock off for a *discount*.",
+    "reason 2","How does it feel, getting your face covered in cum?",
+    "reason 3","You're walking around with some dude's cum on your face.",
+    "afterwards","shop deal end"))
+  (if:$stats's "sex as girl" is 0)[
+    (display:"event shop deal finish offer sex")
+  ](else:)[
+    (set:$song to 0)
+    (display:"play song")
+    (set:$se to "cum moan " + $character's "id")
+    (display:"play sound")
+    (if:$result is "pass")[
+      (either:
+        "He lets out a loud grunt, and proceeds to ejaculate in your face.",
+        "You feel his cock twitch in your mouth, just before he pulls back and erupts all over your face.",
+        "He moans, before exploding all over your face.",
+        "He groans and blows his load in your face.",
+        "He moans. You taste the salt of his precum, just before he nuts all over your pretty face.")
+    ](else:)[
+      (set:_pushOff to (either:
+        "Impatient, he pushes you off.",
+        "He sighs, and pushes you off of his cock."))
+      (set:_jerkIt to (either:
+        "Jerking himself furiously, he proceeds to cum in your face.",
+        "You're then unceremoniously given a heavy facial.",
+        "He brings himself to climax, coming in close to nut all over your pretty face."))
+      _pushOff _jerkIt
+    ]
+    <br/><br/>
+    (set:$character's "status" to "cum")
+    (set:$npc_cum to $npc's "sex name")
+    
+    (if:$variant is 1)[
+      (set:$img to "<video src='img/scenes/generic/sex/cum/" + (either:"facial 1","facial 2") + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+      (print:$img)
+    ](else:)[
+      (print:"<video src='img/scenes/characters/" + $character's "id" + "/cum/facial 1.mp4' autoplay='' loop='' muted='' playsinline/>")
+    ]
+    (replace:?portrait)[{
+      (print:"<img class='border' src='img/characters/cum/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+    }]
+    <br/>
+    (set:_groan to (either:"Ugh...","Nnngh...","Uggh..."))
+    (set:_splutter to (either:"Bluh","Spllf"))
+    (set:_modifier to (either:
+      "as his jizz oozes down your face",
+      "through the warm faceful",
+      "through the gross, sticky face-painting",
+      "as the hot, sticky man-cream runs down your delicate features"))
+    "_groan _splutter," you (either:"whimper","gasp") _modifier.
+    <br/><br/>
+    (if:$result is "pass")[
+      "That was pretty good," the clerk says. "Really earned your discount." He offers you a towel.
+    ](else:)[
+      (set:$character's "money" to 0)
+      (display:"refresh stats")
+      "That was pretty sub-par," the clerk says. "So I won't be giving you THAT steep of a discount. I'll just take whatever else you have on you."
+    ]
+    (set:$gain to 2)
+    (display:"gain arousal")
+    <div class='options'>
+      (if:$result is "pass")[
+        (link:"Clean Yourself Up")[
+          (set:$minigame to (dm:
+            "difficulty",7,
+            "babe type","clothed",
+            "cock type","nsfw",
+            "masculinity level",65,
+            "reason 1","You just sucked a guy's cock off for a *discount*.",
+            "reason 2","Did you ENJOY sucking the pharmacist's cock?",
+            "reason 3","You'll do anything for a little price reduction, you slut.",
+            "afterwards","shop deal end"))
+          (set:$character's "status" to "female")
+          (display:"refresh portrait")
+        ]
+      ]
+      (set:$next to "Go shopping")
+      (display:"masculinity crisis link")
+    </div>
+  ]
+}
+
+
+:: shop deal end {"position":"12233,4276","size":"100,100"}
+{
+  (set:$next to "Go shopping")
+  (display:"next")
+}
+
+
+:: event shop deal finish offer sex {"position":"12126,4056","size":"100,100"}
+{
+  The pharmacist pushes you off his cock. You sit back, sputtering. 
+  <br/><br/>
+  "You know..." he says, flashing the trading card. "You could earn this, if you want. If you let me fuck you. I love deflowering X-Change virgins, hahaha."
+  <br/>
+  <div class='options'>
+    (link:"Ok")[
+      (set:$next to "event shop deal finish sex insert")
+      (display:"change screen")
+    ]
+    (link:"No")[
+      (set:$next to "event shop deal finish offer sex refuse finish")
+      (display:"change screen")
+    ]
+  </div>
+}
+
+
+:: event shop deal finish sex insert {"position":"12126,4171","size":"100,100"}
+{
+  (set:$npc's "sex name" to "the X-Change Pharmacist")
+  (display:"sex doggy transactional")
+  (replace:?portrait)[{
+    (print:"<img class='border' src='img/characters/sex/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+  }]
+  (if:$character's "race" is "black")[
+    (if:(random:1,2) is 1)[
+      (print:"<video src='img/scenes/generic/sex/pre/insert/bwc doggy b.mp4' autoplay='' loop='' muted='' playsinline/>")
+    ](else:)[
+      (print:"<video src='img/scenes/generic/sex/pre/insert/bwc doggy w.mp4' autoplay='' loop='' muted='' playsinline/>")
+    ]
+  ](else:)[
+    (print:"<img class='greyborder' src='img/scenes/characters/" + $character's "id" + "/sex/doggy/transactional insert " + (text:(random:1,4)) + ".jpg' width=100% height=auto>")
+  ]
+  (set:$position to "doggy")
+  (display:"sex insertion")
+  (display:"play sound")
+  <div class='options'>
+    (link:"Get fucked.")[
+      (set:$next to "event shop deal finish sex fuck")
+      (display:"change screen")
+    ]
+  </div>
+}
+
+
+:: event shop deal finish sex fuck {"position":"12121,4281","size":"100,100"}
+{
+  (if:(random:1,2) is 1)[
+    (display:"doggy sounds")
+  ](else:)[
+    (set:$sex_loop to "sex loop")
+  ]
+  (display:"play sex loop")
+  (print:$img)
+  (set:$timer to (random:60,90))
+  (set:$next to "event shop deal finish offer sex accept finish")
+  (display:"wait while being fucked")
+}
+
+
+:: event shop deal finish offer sex accept finish {"position":"12013,4285","size":"100,100"}
+{
+  (set:$minigame to (dm:
+    "difficulty",7,
+    "babe type","clothed",
+    "cock type","nsfw",
+    "masculinity level",50,
+    "reason 1","You just got FUCKED. Think about that.",
+    "reason 2","How did it feel, getting filled up with cream like a donut?",
+    "reason 3","You look cute with cum leaking out of your pussy.",
+    "afterwards","shop deal end"))
+  The pharmacist grunts behind you. "I'm gonna give you a nice big creampie! Don't worry - since it's just a Basic, you won't get pregnant."
+
+  (display:"sex creampie image")
+  (set:$sex_loop to 0)
+  (display:"play sex loop")
+  (set:$se to "cum moan " + $character's "id")
+  (display:"play sound")
+  (display:"sex creampie")
+  (print:$img)
+  (set:$events to $events + (a:"sex creampie"))
+  (set:$character's "status" to "female")
+  (display:"refresh portrait")
+  (set:$card_inventory to $card_inventory + (a:$card_select))
+  He pulls out, and cum leaks down your legs. Was this stupid trading card really worth losing your female virginity?
+  <br/><br/>
+  (set:$gain to 4)(display:"gain arousal")
+  <br/><br/>
+  "Thanks for your business, please cum again," he winks at you as you get dressed. 
+  <div class='options'>
+    (set:$next to "Go shopping")
+    (display:"masculinity crisis link")
+  </div>
+}
+
+
+:: event shop deal finish offer sex refuse finish {"position":"12011,4168","size":"100,100"}
+{
+  (set:$song to 0)
+  (display:"play song")
+  (set:$se to "cum moan " + $character's "id")
+  (display:"play sound")
+  (set:$minigame to (dm:
+    "difficulty",7,
+    "babe type","clothed",
+    "cock type","nsfw",
+    "masculinity level",60,
+    "reason 1","You just sucked a guy's cock off for a *discount*.",
+    "reason 2","How does it feel, getting your face covered in cum?",
+    "reason 3","You're walking around with some dude's cum on your face.",
+    "afterwards","shop deal end"))
+  (set:_facial to (either:
+    "He proceeds to cum in your face.",
+    "You're then unceremoniously given a heavy facial.",
+    "He brings himself to climax, coming in close to nut all over your pretty face."))
+  "Fine, be that way," he says, starting to jerk his cock. "Ungrateful bitch." _facial
+  (set:$character's "status" to "cum")
+  (set:$npc_cum to $npc's "sex name")
+	<br/><br/>
+  (if:$variant is 1)[
+    (set:$img to "<video src='img/scenes/generic/sex/cum/" + (either:"facial 1","facial 2") + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+    (print:$img)
+  ](else:)[
+    (print:"<video src='img/scenes/characters/" + $character's "id" + "/cum/facial 1.mp4' autoplay='' loop='' muted='' playsinline/>")
+  ]
+  (replace:?portrait)[{
+    (print:"<img class='border' src='img/characters/cum/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")
+  }]
+  (set:_groan to (either:"Ugh","Nnngh","Uggh"))
+  (set:_splutter to (either:"Bluh","Spllf"))
+  (set:_verb to (either:"whimper","gasp"))
+  (set:_modifier to (either:
+    "as his jizz oozes down your face",
+    "through the warm faceful",
+    "through the gross, sticky face-painting",
+    "as the hot, sticky man-cream runs down your delicate features"))
+  "_groan... _splutter," you _verb _modifier.
+  <br/><br/>
+  (if:$result is "pass")[
+    "(either:"That beej was pretty good, at least,")" the clerk says. "(either:"Really earned your discount.")" He offers you a towel.
+  ](else:)[
+    (set:$character's "money" to 0)
+    (display:"refresh stats")
+    "(either:"That BJ was pretty sub-par, honestly,")" the clerk says. "(either:"So I won't be giving you THAT steep of a discount. I'll just take whatever else you have on you.")"
+  ]
+  <br/><br/>
+  (set:$gain to 2)
+  (display:"gain arousal")
+  <br/><br/>
+  <div class='options'>
+    (if:$result is "pass")[
+      (link:"Clean Yourself Up")[
+        (set:$minigame to (dm:
+          "difficulty",7,
+          "babe type","clothed",
+          "cock type","nsfw",
+          "masculinity level",65,
+          "reason 1","You just sucked a guy's cock off for a *discount*.",
+          "reason 2","Did you ENJOY sucking the pharmacist's cock?",
+          "reason 3","You'll do anything for a little price reduction, you slut.",
+          "afterwards","shop deal end"))
+        (set:$character's "status" to "female")
+        (display:"refresh portrait")
+      ]
+    ]
+    (set:$next to "Go shopping")
+    (display:"masculinity crisis link")
+  </div>
+}
+

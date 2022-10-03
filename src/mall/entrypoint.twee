@@ -1,0 +1,48 @@
+:: Go shopping {"position":"11806,2806","size":"100,100"}
+{
+  (set:$current_location to "Paradise Mall")
+  (set:$location_params to (dm:
+    "name","Paradise Mall",
+    "location pic","<img class='greyborder' src='img/places/mall/" + (text:(random:1,31)) + ".jpg' width=100% height=auto>",
+    "intro passage","mall intro",
+    "crowded","yes",
+    "sleaze",0,
+    "ambience","mall muffled ambience",
+    "options passage","mall options",
+    "changing location name","the women's bathroom",
+    "changing location pic","<img class='greyborder' src='img/places/mall/bathroom.jpg' width=100% height=auto>",
+    "bj location passage","mall bj room",
+    "bj location name","an empty supply room",
+    "bj location pic",(either:"<video src='img/places/mall/back room 1.mp4' autoplay='' loop='' muted='' playsinline/>","<video src='img/places/mall/back room 2.mp4' autoplay='' loop='' muted='' playsinline/>"),
+    "sex location passage","mall sex room",
+    "sex location name","an empty supply room",
+    "sex location pic",(either:"<video src='img/places/mall/back room 1.mp4' autoplay='' loop='' muted='' playsinline/>","<video src='img/places/mall/back room 2.mp4' autoplay='' loop='' muted='' playsinline/>"),
+    "location refresh","location and time and inventory",
+    "tags",(a:"clean"),
+    "home","Go shopping",
+    "home option","Go back to mall"))
+  (set:$take_card_disabled to 0)
+  (set:$ambience to "mall ambience")
+  (display:"play ambience")
+  (if:(a:"stepsis mall shoplift") contains $tagalong and (length of $places_visited) > (random:2,4))[
+    (display:$tagalong)
+  ](else-if:$tagalong is "stepsis mall tease" and $character's "gender" is "female")[
+    (display:"stepsis mall tease")
+  ](else:)[
+    (set:$song to $mall_song)
+    (newtrack:(text:$mall_song),"./aud/music/mall/" + $mall_song + ".mp3")
+    (display:"play song")
+    (set:$current_location to "Paradise Mall")
+    [(display:"character status")]<status|
+    <div class='center_screen' data-simplebar>
+      [
+        (print:"<img class='greyborder' src='img/places/mall/" + (text:(random:1,8)) + ".jpg' width=100% height=auto>")
+        (display:"location event")
+      ]<screen|
+    </div>
+    <div class='top_right' data-simplebar>
+      []<right_screen|
+    </div>
+  ]
+}
+

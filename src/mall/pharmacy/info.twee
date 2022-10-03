@@ -1,0 +1,71 @@
+:: what is xchange {"position":"1075,1514","size":"100,100"}
+{
+  (set:_text to "Hey there! Welcome to X-Change™: the temporary, fast-acting, gender-swapping pill.
+
+Endlessly imitated, our competitors still cannot match our proprietary technology. On X-Change™, you are still *you* - we have not tampered with your DNA. 
+
+As such, both your male and female identities are registered at birth in government databases, using our advanced genetic forecasting. This way, you don't have to worry about losing your job and bank account just because you changed your gender! 
+
+Please be reminded that the use of X-Change™ products is currently illegal in all 50 states, due to the federal passage of Proposition 12. Please restrict your usage of pills to Summer City, which retains its status as an autonomous zone exempt from Prop 12.
+
+Use the arrows on the right to see renders of your forecasted transformation!
+")
+  <table width=100%; height=90%>
+    <tbody>
+      <tr class='computer_screen'>
+        <td>
+          <div class='top_left_half'>
+            (color:"#AFE1AF")[
+              _text
+              <div class='options'>
+                (link:"Exit")[
+                  (set:$next to "X-Change Pharmacy")
+                  (display:"next")
+                ]
+              </div>
+            ]
+          </div>
+          (display:"tg cartoon")
+        </td>
+      </tr>
+    </tbody>
+  </table>
+}
+
+
+:: tg cartoon {"position":"1283,105","size":"100,100"}
+{
+  (set:_updateCartoon to [
+    (replace:?image)[{(t8n:"blur")[(print:"<img src='img/scenes/characters/" + $character's "id" + "/tg/" + (text:$index) +".png' width=60% height=auto>")]}]
+  ])
+  (set:_hoverImage to (macro: str-type _img, str-type _imgHover, codehook-type _hook, [
+    (out:)[{
+      (link-rerun:"<img src='" + _img + "' width=50px height=auto onmouseover=this.src='" + _imgHover + "' onmouseout=this.src='" + _img + "' />")[
+        (display:"click")
+        _hook
+      ]
+    }]
+  ]))
+  (set:$index to 1)
+  <div class='top_right_half'>
+    <div class='centered'>
+      []<image|
+      <br/>
+      <span class='borderless'>
+        |left>[{
+          (_hoverImage: "img/ui/buttons/64button1left.png", "img/ui/buttons/64button2left.png", [
+            (set:$index to (cond:it < 2, 5, it - 1))
+            _updateCartoon
+          ])
+        }]
+        |right>[{
+          (_hoverImage: "img/ui/buttons/64button1right.png", "img/ui/buttons/64button2right.png", [
+            (set:$index to (cond:it > 4, 1, it + 1))
+            _updateCartoon
+          ])
+        }]
+      </span>
+    </div>
+  </div>
+  _updateCartoon
+}

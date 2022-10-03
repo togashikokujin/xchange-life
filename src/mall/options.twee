@@ -1,0 +1,52 @@
+:: mall options {"position":"11695,2910","size":"100,100"}
+{
+  <div class='options'>
+    [
+      (link:"X-Change Pharmacy")[
+        (set:$places_visited to $places_visited + (a:"pharmacy"))
+        (set:$next to "X-Change Pharmacy")
+        (display:"next")
+      ]
+      (link:"Serendipity Comics")[
+        (set:$places_visited to $places_visited + (a:"comics"))
+        (set:$next to "serendipity")
+        (display:"next")
+      ]
+      (link:"Shop for Clothes")[
+        (set:$places_visited to $places_visited + (a:"clothes shopping"))
+        (set:$next to "clothes shopping")
+        (display:"next")
+      ]
+      (link:"Jitters Cafe")[
+        (set:$places_visited to $places_visited + (a:"jitters"))
+        (set:$next to "jitters")
+        (display:"next")
+      ]
+      (link:"Radio Shack")[
+        (set:$next to "Radio Shack")
+        (display:"next")
+      ]
+      (link:"Salon")[
+        (set:$next to "Hair Salon")
+        (display:"next")
+      ]
+      (if:$character's "gender" is "female")[
+        (link:"Loiter")[
+          (display:"location event refresh")
+        ]
+      ]
+      (link:"Leave")[
+        (display:"exit mall")
+      ]
+    ]<choices|
+  </div>
+}
+
+
+:: mall intro {"position":"11914,2808","size":"100,100"}
+(either:
+  "Paradise Mall is bustling, as always.",
+  "It smells like commerce in here.",
+  "The long halls of Paradise Mall echo with footsteps."
+) 
+
