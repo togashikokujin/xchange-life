@@ -1,0 +1,129 @@
+<tw-passagedata pid="645" name="dont cum initialize" tags="" position="119,4163" size="100,100">{
+  (set:$dontcum to &quot;active&quot;)
+  (set:$minigame_played to &quot;false&quot;)
+  (set:$timer to 1)
+  (set:$win_type to &quot;You win!&quot;)
+  (set:$lose_type to &quot;You lose...&quot;)
+  (set:$bonus_count to 0)
+  (set:$his_pleasure_count to 0)
+  (set:$bonus to &quot;false&quot;)
+  (set:$bonus_area to &quot;none&quot;)
+  (set:$bonus_timer to 0)
+  (set:$correct to 10)
+  (if:(datanames:$quicktime_params) contains &quot;type&quot;)[
+    (set:$type to $quicktime_params&#39;s &quot;type&quot;)
+    (if:$type is &quot;oral&quot; or $type is &quot;transactional sex&quot;)[
+      (set:$lose_type to (either:&quot;You can&#39;t control your moans&quot;,&quot;You moan loudly&quot;,&quot;You moan&quot;,&quot;You whimper&quot;,&quot;You squeal&quot;) + &quot;...&quot;)
+    ]
+  ](else:)[
+    (set:$type to &quot;none&quot;)
+  ]
+  (if:(datanames:$quicktime_params) contains &quot;media&quot;)[
+    (set:$media to $quicktime_params&#39;s &quot;media&quot;)
+  ](else:)[
+    (set:$media to &quot;video&quot;)
+  ]
+  (if:$quicktime_difficulty is &quot;Quicktime Difficulty: Hardcore&quot;)[
+    (if:$quicktime_params&#39;s &quot;interrupts&quot; &gt; 0)[
+      (set:$quicktime_params&#39;s &quot;interrupts&quot; to $quicktime_params&#39;s &quot;interrupts&quot; * 3)
+    ]
+  ]
+  (set:$game_type to &quot;dont cum&quot;)
+  (if:(datanames:$quicktime_params) contains &quot;skill check&quot;)[
+    (set:$skill_check to $quicktime_params&#39;s &quot;skill check&quot;)
+    (if:(datanames:$quicktime_params) contains &quot;skill difficulty&quot;)[
+      (set:$skill_difficulty to $quicktime_params&#39;s &quot;skill difficulty&quot;)
+    ](else:)[
+      (set:$skill_difficulty to 50)
+    ]
+  ](else:)[
+    (set:$skill_check to &quot;random&quot;)
+    (set:$skill_difficulty to 50)
+  ]
+
+  (set:$result to &quot;clear previous&quot;)
+  (set:$rhythm_check to &quot;true&quot;)
+  (set:$ai_direction to (either:&quot;up&quot;,&quot;down&quot;))
+  (set:$points to 50)
+  (set:$timer to $quicktime_params&#39;s &quot;time&quot;)
+  &lt;div class=&quot;game_header&quot;&gt;
+    (if:$media is &quot;picture&quot;)[
+      (print:&quot;&lt;img class=&#39;greyborder&#39; src=&#39;img/&quot; + $quicktime_params&#39;s &quot;backdrop&quot; + &quot;&#39; width=100% height=auto&gt;&quot;)
+    ](else:)[
+      (print:&quot;&lt;video src=&#39;img/&quot; + $quicktime_params&#39;s &quot;backdrop&quot; + &quot;&#39; autoplay=&#39;&#39; loop=&#39;&#39; muted=&#39;&#39; playsinline/&gt;&quot;)
+    ]
+    &lt;div class=&quot;game_header_text&quot;&gt;
+      &lt;span class=&#39;shadow&#39;&gt;
+        (color:&quot;#f9ced5&quot;)[
+          |timer&gt;[
+            (css:&quot;font-size:5vmin&quot;)[
+              (print:$quicktime_params&#39;s &quot;objective&quot;)
+            ]
+            &lt;br/&gt;&lt;br/&gt;
+            (if:$type is &quot;oral&quot; or $type is &quot;transactional sex&quot;)[
+              This minigame type is processing intensive, so if you&#39;re on a mobile device (or an old PC) I recommend you use a skill check. You&#39;ll get the best performance using Chrome.
+            ]
+          ]
+        ]
+      &lt;/span&gt;
+      &lt;br/&gt;
+      []&lt;score_bar|
+      []&lt;arrows|
+      (replace:?right_options)[{
+        (link:&quot;Play minigame&quot;)[
+          (set:$minigame_played to &quot;true&quot;)
+          (display:&quot;quicktime right image&quot;)
+          (replace:?score_bar)[{
+            &lt;div id=&quot;win-bar&quot; width=50%&gt;{
+              &lt;div class=&#39;bar&#39; style=&#39;background: repeating-linear-gradient(
+                 45deg,
+                 rgba(255, 255, 255, 0.9),
+                 rgba(255, 255, 255, 0.9) 40px,
+                 rgba(255, 255, 255, 1) 40px,
+                 rgba(255, 255, 255, 1) 80px
+                 );&#39;&gt;&lt;/div&gt;
+            }&lt;/div&gt;
+            (live:0.5s)[
+              (print: &quot;&lt;script&gt;GE.updateStats(100,50);&lt;/script&gt;&quot;)
+              (stop:)
+            ]
+            (stop:)
+          }]
+          (set:$result to &quot;none&quot;)
+          (replace:?arrows)[{
+            &lt;span class=&#39;borderless&#39;&gt;
+              (display:&quot;dont cum begin message&quot;)
+            &lt;/span&gt;
+            (link:&quot;Begin&quot;)[
+              (set:$method to &quot;minigame&quot;)
+              (display:&quot;dont cum begin&quot;)
+            ]
+          }]
+        ]
+        (display:&quot;quicktime skill check&quot;)
+        (if:$minigame_skip is &quot;Skippable Minigames: On&quot;)[
+          (link:&quot;Skip (win)&quot;)[
+            (set:$dontcum to &quot;finished&quot;)
+            (display:&quot;quicktime right image&quot;)
+            (set:$next to $quicktime_params&#39;s &quot;result passage&quot;)
+            (set:$result to &quot;pass&quot;)
+            (display:&quot;change screen&quot;)
+          ]
+          (link:&quot;Skip (lose)&quot;)[
+            (set:$dontcum to &quot;finished&quot;)
+            (display:&quot;quicktime right image&quot;)
+            (set:$next to $quicktime_params&#39;s &quot;result passage&quot;)
+            (set:$result to &quot;fail&quot;)
+            (display:&quot;change screen&quot;)
+          ]
+        ]
+      }]
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;options&quot;&gt;&lt;/div&gt;
+  &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;/tr&gt;&lt;/table&gt;
+  &lt;div class=&#39;options&#39;&gt;[]&lt;score|&lt;/div&gt;
+  (set:$sex_loop to $quicktime_params&#39;s &quot;sex loop&quot;)
+  (display:&quot;play sex loop&quot;)
+}</tw-passagedata>

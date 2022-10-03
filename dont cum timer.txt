@@ -1,0 +1,70 @@
+<tw-passagedata pid="650" name="dont cum timer" tags="" position="350,4300" size="100,100">{
+  (set:$rhythm to $quicktime_params&#39;s rhythm)
+  (live:$rhythm)[
+    (if:$result is &quot;fail&quot;)[
+      (stop:)
+    ]
+    (if:(datanames:$quicktime_params) contains &quot;type&quot;)[
+      (if:$quicktime_params&#39;s &quot;type&quot; is &quot;big load&quot;)[
+        (set:$se to &quot;squirt &quot; + (text:(random:1,3)))
+        (display:&quot;play sound&quot;)
+      ]
+    ]
+    (if:$timer &lt; 1)[
+      (set:$result to &quot;pass&quot;)
+      (display:&quot;dont cum win&quot;)
+      (stop:)
+    ](else-if:$points &gt; 99 or $points &lt; 1 or $result is &quot;fail&quot;)[
+      (set:$result to &quot;fail&quot;)
+      (display:&quot;dont cum lose&quot;)
+      (stop:)
+    ](else-if:$type is &quot;transactional sex&quot; and $his_pleasure &gt;= $his_pleasure_threshold)[
+      (set:$win_type to &quot;He cums...&quot;)
+      (set:$result to &quot;pass&quot;)
+      (display:&quot;dont cum win&quot;)
+      (stop:)
+    ](else-if:($type is &quot;oral&quot; or $type is &quot;transactional sex&quot;) and $your_pleasure &gt;= 10)[
+      (set:$win_type to (either:&quot;You cum...&quot;,&quot;You have an orgasm...&quot;))
+      (if:$orgasms &gt; 0)[
+        (set:$win_type to &quot;You cum again!&quot;)
+      ]
+      (replace:?timer)[]
+      (set:$result to &quot;pass&quot;)
+      (display:&quot;dont cum win&quot;)
+      (stop:)
+      (replace:?timer)[]
+    ](else:)[
+      (display:&quot;dont cum change&quot;)
+    ]
+  ]
+  (unless:$type is &quot;transactional sex&quot;)[
+    (live:1s)[
+      (if:$result is &quot;clear previous&quot;)[
+        (stop:)
+      ]
+      (if:$result is &quot;fail&quot;)[
+        (stop:)
+      ]
+      (if:$result is &quot;pass&quot;)[
+        (stop:)
+      ]
+      (if:$points &gt; 99 or $points &lt; 1 or $result is &quot;fail&quot;)[
+        (set:$result to &quot;fail&quot;)
+        (stop:)
+      ]
+      (replace:?timer)[{
+        (set:$timer to $timer-1)
+        (css:&quot;font-size:5em&quot;)[$timer]
+      }]
+      (if:$timer&lt;0)[
+        (stop:)
+      ]
+      (unless:$dontcum is &quot;active&quot;)[
+        (replace:?timer)[]
+        (stop:)
+      ]
+    ]
+  ](else:)[
+    (replace:?timer)[]
+  ]
+}</tw-passagedata>

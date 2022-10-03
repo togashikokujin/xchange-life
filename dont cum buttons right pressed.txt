@@ -1,0 +1,14 @@
+<tw-passagedata pid="653" name="dont cum buttons right pressed" tags="" position="118,4522" size="100,100">{
+  |left&gt;[
+    (link-repeat:&quot;&lt;img src=&#39;img/ui/buttons/64button1left.png&#39;; width=64px; height=auto&gt;&quot;)[
+      (set:$dir to -17)
+      (display:&quot;dont cum button press&quot;)
+    ]
+  ]
+  |right&gt;[
+    (link-repeat:&quot;&lt;img src=&#39;img/ui/buttons/64button2right.png&#39;; width=64px; height=auto&gt;&quot;)[
+      (set:$dir to 17)
+      (display:&quot;dont cum button press&quot;)
+    ]
+  ]
+}</tw-passagedata>

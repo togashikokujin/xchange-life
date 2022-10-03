@@ -1,0 +1,50 @@
+<tw-passagedata pid="651" name="dont cum change" tags="" position="458,4295" size="100,100">{
+  (if:$dontcum is &quot;active&quot;)[
+    (if:$type is &quot;oral&quot; or $type is &quot;transactional sex&quot;)[
+      (display:&quot;bonus area check&quot;)
+    ]
+
+    (if:$quicktime_difficulty is &quot;Quicktime Difficulty: Hardcore&quot;)[](else:)[]
+
+    (set:$change to 10 - (ceil:5 * ($timer / $quicktime_params&#39;s &quot;time&quot;)))
+
+    (if:$ai_direction is &quot;up&quot;)[
+      (set:$points to $points + $change)
+    ](else:)[
+      (set:$points to $points - $change)
+    ]
+    &lt;script&gt;GE.updateStats(100,$points);&lt;/script&gt;
+    (if:$points &lt; 75 and $points &gt; 25)[
+      (if:(random:1,10) is 1)[
+        (if:$ai_direction is &quot;up&quot;)[
+          (set:$ai_direction to &quot;down&quot;)
+        ](else:)[
+          (set:$ai_direction to &quot;up&quot;)
+        ]
+      ]
+    ](else-if:$points &gt; 65)[
+      (set:$ai_direction to &quot;up&quot;)
+    ](else-if:$points &lt; 36)[
+      (set:$ai_direction to &quot;down&quot;)
+    ]
+
+    (if:$result is &quot;fail&quot;)[
+      (if:$points &lt; 50)[
+        (set:$points to 0)
+      ](else:)[
+        (set:$points to 100)
+      ]
+      &lt;script&gt;GE.updateStats(100,$points);&lt;/script&gt;
+      (replace:?directions)[&lt;span class=&#39;shadow&#39;&gt;You lose!&lt;/span&gt;]
+      (stop:)
+    ]
+    (if:$type is &quot;oral&quot;)[
+      (display:&quot;oral bonus&quot;)
+    ]
+    (if:$type is &quot;transactional sex&quot;)[
+      (display:&quot;transactional sex bonus&quot;)
+    ]
+  ](else:)[
+    (stop:)
+  ]
+}</tw-passagedata>
