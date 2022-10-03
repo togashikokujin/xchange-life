@@ -8295,19 +8295,6 @@ Alexia's *surprisingly* good at this. You arch your back and groan as she jerks 
 <div class='options'>(link:"Next")[(display:"advance time")]</div>
 
 
-:: event shop deny card {"position":"12126,3804","size":"100,100"}
-(set:$card_select to (either:"rare","uncommon"))(display:"trading card draw")There's an X-Change Trading Card in the X-Change pill package. (if:$trading_card's "rarity" is "uncommon")[And it's an uncommon!](else:)[And it's a rare!]
-
-The Pharmacist looks at it, grinning. "This is worth about $(print:$trading_card's "value"). I'm keeping it, you're only getting the pill! Heh, making my investment back already..." 
-
-(color:"#4a2424")[Card ID: #(print:$trading_card's "id")/60(print:$trading_card's "img")
-Card name: *(print:$trading_card's "name")*(if:$trading_card's "type" is "foil")[ **(foil)**]
-Card set: (print:(upperfirst:$trading_card's "set"))
-Card rarity: (print:(upperfirst:$trading_card's "rarity"))]
-
-<div class='options'>(link:"Fine")[(replace:?status)[(display:"character status")](display:"change screen")]</div>
-
-
 :: stepsis shoplifting finish end {"position":"9910,1801","size":"100,100"}
 (display:"advance time")
 

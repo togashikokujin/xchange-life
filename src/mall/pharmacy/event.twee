@@ -409,3 +409,26 @@
   </div>
 }
 
+
+:: event shop deny card {"position":"12126,3804","size":"100,100"}
+{
+  (set:$card_select to (either:"rare","uncommon"))
+  (display:"trading card draw")
+  There's an X-Change Trading Card in the X-Change pill package. And it's a(cond:$trading_card's "rarity" is "uncommon", "n uncommon", " rare")!
+  <br/><br/>
+  The Pharmacist looks at it, grinning. "This is worth about $(print:$trading_card's "value"). I'm keeping it, you're only getting the pill! Heh, making my investment back already..." 
+  <br/><br/>
+  (color:"#4a2424")[
+    Card ID: #(print:$trading_card's "id")/60(print:$trading_card's "img")<br/>
+    Card name: *(print:$trading_card's "name")*(if:$trading_card's "type" is "foil")[ **(foil)**]<br/>
+    Card set: (print:(upperfirst:$trading_card's "set"))<br/>
+    Card rarity: (print:(upperfirst:$trading_card's "rarity"))
+  ]
+  <div class='options'>
+    (link:"Fine")[
+      (replace:?status)[(display:"character status")]
+      (display:"change screen")
+    ]
+  </div>
+}
+
