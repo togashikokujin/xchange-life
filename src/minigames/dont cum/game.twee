@@ -1,0 +1,257 @@
+:: dont cum initialize {"position":"119,4163","size":"100,100"}
+{
+  (set:$dontCumUpdatePoints to (macro: num-type _points, [
+    (set:$points to _points)
+    (out:)[
+      <script>GE.updateStats(100,$points);</script>
+    ]
+  ]))
+  (set:$dontcum to "active")
+  (set:$minigame_played to "false")
+  (set:$timer to 1)
+  (set:$win_type to "You win!")
+  (set:$lose_type to "You lose...")
+  (set:$bonus_count to 0)
+  (set:$his_pleasure_count to 0)
+  (set:$bonus to "false")
+  (set:$bonus_area to "none")
+  (set:$bonus_timer to 0)
+  (set:$correct to 10)
+  (if:(datanames:$quicktime_params) contains "type")[
+    (set:$type to $quicktime_params's "type")
+    (if:$type is "oral" or $type is "transactional sex")[
+      (set:$lose_type to (either:"You can't control your moans","You moan loudly","You moan","You whimper","You squeal") + "...")
+    ]
+  ](else:)[
+    (set:$type to "none")
+  ]
+  (if:(datanames:$quicktime_params) contains "media")[
+    (set:$media to $quicktime_params's "media")
+  ](else:)[
+    (set:$media to "video")
+  ]
+  (if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[
+    (if:$quicktime_params's "interrupts" > 0)[
+      (set:$quicktime_params's "interrupts" to $quicktime_params's "interrupts" * 3)
+    ]
+  ]
+  (set:$game_type to "dont cum")
+  (if:(datanames:$quicktime_params) contains "skill check")[
+    (set:$skill_check to $quicktime_params's "skill check")
+    (if:(datanames:$quicktime_params) contains "skill difficulty")[
+      (set:$skill_difficulty to $quicktime_params's "skill difficulty")
+    ](else:)[
+      (set:$skill_difficulty to 50)
+    ]
+  ](else:)[
+    (set:$skill_check to "random")
+    (set:$skill_difficulty to 50)
+  ]
+
+  (set:$result to "clear previous")
+  (set:$rhythm_check to "true")
+  (set:$ai_direction to (either:"up","down"))
+  (set:$points to 50)
+  (set:$timer to $quicktime_params's "time")
+  <div class="game_header">
+    (if:$media is "picture")[
+      (print:"<img class='greyborder' src='img/" + $quicktime_params's "backdrop" + "' width=100% height=auto>")
+    ](else:)[
+      (print:"<video src='img/" + $quicktime_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")
+    ]
+    <div class="game_header_text">
+      <span class='shadow'>
+        (color:"#f9ced5")[
+          |timer>[
+            (css:"font-size:5vmin")[
+              (print:$quicktime_params's "objective")
+            ]
+            <br/><br/>
+            (if:$type is "oral" or $type is "transactional sex")[
+              This minigame type is processing intensive, so if you're on a mobile device (or an old PC) I recommend you use a skill check. You'll get the best performance using Chrome.
+            ]
+          ]
+        ]
+      </span>
+      <br/>
+      []<score_bar|
+      []<arrows|
+      (replace:?right_options)[{
+        (link:"Play minigame")[
+          (set:$minigame_played to "true")
+          (display:"quicktime right image")
+          (replace:?score_bar)[{
+            <div id="win-bar" width=50%>{
+              <div class='bar' style='background: repeating-linear-gradient(
+                 45deg,
+                 rgba(255, 255, 255, 0.9),
+                 rgba(255, 255, 255, 0.9) 40px,
+                 rgba(255, 255, 255, 1) 40px,
+                 rgba(255, 255, 255, 1) 80px
+                 );'></div>
+            }</div>
+            (live:0.5s)[
+              ($dontCumUpdatePoints: 50)
+              (stop:)
+            ]
+            (stop:)
+          }]
+          (set:$result to "none")
+          (replace:?arrows)[{
+            <span class='borderless'>
+              (display:"dont cum begin message")
+            </span>
+            (link:"Begin")[
+              (set:$method to "minigame")
+              (display:"dont cum begin")
+            ]
+          }]
+        ]
+        (display:"quicktime skill check")
+        (if:$minigame_skip is "Skippable Minigames: On")[
+          (link:"Skip (win)")[
+            (set:$dontcum to "finished")
+            (display:"quicktime right image")
+            (set:$next to $quicktime_params's "result passage")
+            (set:$result to "pass")
+            (display:"change screen")
+          ]
+          (link:"Skip (lose)")[
+            (set:$dontcum to "finished")
+            (display:"quicktime right image")
+            (set:$next to $quicktime_params's "result passage")
+            (set:$result to "fail")
+            (display:"change screen")
+          ]
+        ]
+      }]
+
+    </div>
+  </div>
+  <div class="options"></div>
+  <table cellpadding="0" cellspacing="0"><tr></tr></table>
+  <div class='options'>[]<score|</div>
+  (set:$sex_loop to $quicktime_params's "sex loop")
+  (display:"play sex loop")
+}
+
+
+:: dont cum begin {"position":"219,4298","size":"100,100"}
+(replace:?directions)[(set:$dir to 0)(display:"dont cum buttons")](display:"dont cum timer")
+
+
+:: dont cum timer {"position":"350,4300","size":"100,100"}
+{
+  (set:$rhythm to $quicktime_params's rhythm)
+  (live:$rhythm)[
+    (if:$result is "fail")[
+      (stop:)
+    ]
+    (if:(datanames:$quicktime_params) contains "type")[
+      (if:$quicktime_params's "type" is "big load")[
+        (set:$se to "squirt " + (text:(random:1,3)))
+        (display:"play sound")
+      ]
+    ]
+    (if:$timer < 1)[
+      (set:$result to "pass")
+      (display:"dont cum win")
+      (stop:)
+    ](else-if:$points > 99 or $points < 1 or $result is "fail")[
+      (set:$result to "fail")
+      (display:"dont cum lose")
+      (stop:)
+    ](else-if:$type is "transactional sex" and $his_pleasure >= $his_pleasure_threshold)[
+      (set:$win_type to "He cums...")
+      (set:$result to "pass")
+      (display:"dont cum win")
+      (stop:)
+    ](else-if:($type is "oral" or $type is "transactional sex") and $your_pleasure >= 10)[
+      (set:$win_type to (either:"You cum...","You have an orgasm..."))
+      (if:$orgasms > 0)[
+        (set:$win_type to "You cum again!")
+      ]
+      (replace:?timer)[]
+      (set:$result to "pass")
+      (display:"dont cum win")
+      (stop:)
+      (replace:?timer)[]
+    ](else:)[
+      (display:"dont cum change")
+    ]
+  ]
+  (unless:$type is "transactional sex")[
+    (live:1s)[
+      (if:$result is "clear previous")[
+        (stop:)
+      ]
+      (if:$result is "fail")[
+        (stop:)
+      ]
+      (if:$result is "pass")[
+        (stop:)
+      ]
+      (if:$points > 99 or $points < 1 or $result is "fail")[
+        (set:$result to "fail")
+        (stop:)
+      ]
+      (replace:?timer)[{
+        (set:$timer to $timer-1)
+        (css:"font-size:5em")[$timer]
+      }]
+      (if:$timer<0)[
+        (stop:)
+      ]
+      (unless:$dontcum is "active")[
+        (replace:?timer)[]
+        (stop:)
+      ]
+    ]
+  ](else:)[
+    (replace:?timer)[]
+  ]
+}
+
+
+:: dont cum change {"position":"458,4295","size":"100,100"}
+{
+  (if:$dontcum is "active")[
+    (if:$type is "oral" or $type is "transactional sex")[
+      (display:"bonus area check")
+    ]
+
+    (if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[](else:)[]
+
+    (set:$change to 10 - (ceil:5 * ($timer / $quicktime_params's "time")))
+
+    ($dontCumUpdatePoints: (cond: $ai_direction is "up", $points + $change, $points - $change))
+    (if:$points < 75 and $points > 25)[
+      (if:(random:1,10) is 1)[
+        (if:$ai_direction is "up")[
+          (set:$ai_direction to "down")
+        ](else:)[
+          (set:$ai_direction to "up")
+        ]
+      ]
+    ](else-if:$points > 65)[
+      (set:$ai_direction to "up")
+    ](else-if:$points < 36)[
+      (set:$ai_direction to "down")
+    ]
+
+    (if:$result is "fail")[
+      ($dontCumUpdatePoints: (cond: $points < 50, 0, 100))
+      (replace:?directions)[<span class='shadow'>You lose!</span>]
+      (stop:)
+    ]
+    (if:$type is "oral")[
+      (display:"oral bonus")
+    ]
+    (if:$type is "transactional sex")[
+      (display:"transactional sex bonus")
+    ]
+  ](else:)[
+    (stop:)
+  ]
+}
+

@@ -1,0 +1,18 @@
+:: dont cum begin message {"position":"99,4300","size":"100,100"}
+{
+  <div class='options'>
+    [
+      <span class='shadow'>
+        **Press the arrow keys repeatedly to keep the bar from filling OR emptying, (print:$quicktime_params's "timing message")**
+        (if:$type is "oral")[
+          Keep the bar inside the GREEN window to maximize your pleasure.
+        ]
+        (if:$type is "transactional sex")[
+          (display:"transactional sex bonus")
+          Keep the bar inside the GREEN window to maximize your pleasure.
+        ]
+      </span>
+    ]<directions|
+  </div>
+}
+

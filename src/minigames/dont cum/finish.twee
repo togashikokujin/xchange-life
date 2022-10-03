@@ -1,0 +1,39 @@
+:: dont cum lose {"position":"329,4525","size":"100,100"}
+{
+  (display:"dont cum finish")
+  ($dontCumUpdatePoints: (cond: $points > 50, 100, 0))
+  (replace:?right_options)[{
+    (link:$lose_type)[
+      (set:$result to "fail")
+      (set:$next to $quicktime_params's "result passage")
+      (display:"change screen")
+    ]
+  }]
+}
+
+
+:: dont cum win {"position":"450,4525","size":"100,100"}
+{
+  (display:"dont cum finish")
+  (replace:?right_options)[{
+    (link:$win_type)[
+      (set:$result to "pass")
+      (set:$next to $quicktime_params's "result passage")
+      (display:"change screen")
+    ]
+  }]
+}
+
+
+:: dont cum finish {"position":"571,4525","size":"100,100"}
+{
+  (set:$dontcum to "finished")
+  (live:0.5s)[
+    (replace:?score_bar)[]
+    (replace:?arrows)[]
+    (display:"quicktime gain xp")
+    (stop:)
+  ]
+  (stop:)
+  (replace:?timer)[(stop:)]
+}
