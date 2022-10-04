@@ -18516,32 +18516,6 @@ D20 roll:(print:" ")<span class='shadow'>[]<dice|</span>
 }
 
 
-:: quicktime skill check result {"position":"467,5035","size":"100,100"}
-{
-(set:$timer to 30)
-(if:$game_type is "dont cum")[(replace:?timer)[]]
-(set:$method to "skill check")
-
-(set:$roll to (random:1,20))
-(set:$needed to (20 - (floor:$percentage_chance*0.2)) + 1)
-(if:$needed is 0)[(set:$needed to 1)](if:$needed > 20)[(set:$needed to 20)]
-(if:$skill_check is "sexy dance bar")[(print:"
-")]
-(color:"#e27087")[(if:$needed is 20)[You need to roll a 20.](else-if:$needed is 1)[As long as you don't roll a 1, you're good.](else:)[(either:"You need to roll a $needed or higher to succeed.","You need at least a $needed...","You need a $needed or higher to pass...","Gotta roll at least a $needed.")]](print:"
-")
-D20 roll:(print:" ")<span class='shadow'>[]<dice|</span>
-(replace:?dice)[$roll]
-(display:"quicktime gain xp")(print:"
-")(if:$roll >= $needed)[(if:$game_type is "quicktime")[(replace:?score_bar)[(print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: $quicktime_params's "points to win")
-+ ");")]](set:$result to "pass")(if:$skill_check is ("female masturbation" or $skill_check is "male masturbation") and $needed > ($roll - 5))[(set:$result to "fail time")](either:"You win!","Nice!","You got it!")](else:)[(if:$game_type is "quicktime")[(replace:?score_bar)[(print: "<script>GE.updateStats(" + 
-(text: $quicktime_params's "points to win") + "," + (text: 0)
-+ ");")]](set:$result to "fail")(if:($needed - $roll < 2))[(either:"You fail, just barely...","So close!","Almost!","Too bad, that was close!")](else:)[(either:"You lose.","Too low.","You fail.")]](print:"
-")(display:"skill check bonuses")(link:"Next")[(replace:?right_options)[(if:$skill_check is "sexy dance bar")[(display:"bar dance sidebar")]](set:$next to $quicktime_params's "result passage")(display:"change screen")]
-
-}
-
-
 :: initialize sex skills {"position":"1415,796","size":"100,100"}
 {
 (print:'

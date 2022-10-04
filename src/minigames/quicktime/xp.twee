@@ -119,9 +119,9 @@
 ($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
     (set:$current_skill to _talent)
     (display:"quicktime gain xp calc")
-    (out:)[
+    (out:)[{
       _set
-    ]
+    }]
   ]))
 
   (if:$skill_check is "bj")[
