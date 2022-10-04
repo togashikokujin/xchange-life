@@ -1,0 +1,9 @@
+:: quicktime right image {"position":"792,4526","size":"100,100"}
+{
+  (if:$type is "transactional sex")[
+    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+  ](else:)[
+    (replace:?right_options)[]
+  ]
+}
+

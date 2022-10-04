@@ -1,0 +1,9 @@
+:: quicktime bj sequence randomize {"position":"226,5385","size":"100,100"}
+{
+  (set:_afterwards to (shuffled:"up","down","up","down","none","up","down","up","down","up","down","none","up","left","right"))
+  (set:_previous to (shuffled:"up","down","up","down","none","up","down","up","down","up","down","none","up","left","right"))
+
+  (set:"sequence" of $quicktime_params to _previous + "sequence" of $quicktime_params + _afterwards)
+}
+
+

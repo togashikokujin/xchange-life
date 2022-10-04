@@ -7638,19 +7638,6 @@ you do your best to smile as he drains his balls across your face. You remind yo
 (if:$pill_taken is "Breeder" and ($orgasm_type is "breeder"))[(set:$orgasms to $orgasms + 1)(set:$today_events to $today_events + (a:"orgasm"))](else-if:$pill_taken is "Breeder" and not ($protection's "active" is "true"))[](else:)[(set:$orgasms to $orgasms + 1)(set:$today_events to $today_events + (a:"orgasm"))](if:$status's "status" is "sexually frustrated" or $status's "status" is "very sexually frustrated" and $character's "arousal" is 0 or $today_events contains "orgasm")[(display:"reset status")]]}
 
 
-:: quicktime bj sequence randomize {"position":"226,5385","size":"100,100"}
-{
-
-
-(set:_afterwards to (shuffled:"up","down","up","down","none","up","down","up","down","up","down","none","up","left","right"))
-(set:_previous to (shuffled:"up","down","up","down","none","up","down","up","down","up","down","none","up","left","right"))
-
-
-(set:"sequence" of $quicktime_params to _previous + "sequence" of $quicktime_params + _afterwards)
-
-}
-
-
 :: stepsis shoplifting propose {"position":"9580,578","size":"100,100"}
 "Heh, so you can be reasonable," the mall cop snickers, walking up behind you and sniffing you. "MM, you smell good. What's your name?" 
 
@@ -46122,13 +46109,6 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 :: update his satisfaction {"position":"3055,1156","size":"100,100"}
 {
 (replace:?his_satisfaction)[(display:"his satisfaction meter")]
-}
-
-
-:: quicktime right image {"position":"792,4526","size":"100,100"}
-{
-(if:$type is "transactional sex")[
-(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")]](else:)[(replace:?right_options)[]]
 }
 
 
