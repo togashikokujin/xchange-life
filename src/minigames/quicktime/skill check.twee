@@ -1,0 +1,123 @@
+:: quicktime skill check {"position":"463,4919","size":"100,100"}
+{
+  (set:$clamp to (macro: num-type _value, num-type _min, num-type _max, [(out-data:(min:(max:_min, _value), _max))]))
+
+  (set:_high_percentage to (dm:
+    1,30,
+    2,35,
+    3,45,
+    4,50,
+    5,60,
+    6,70,
+    7,80,
+    8,85,
+    9,90,
+    10,95))
+  (set:_low_percentage to (dm:
+    1,15,
+    2,30,
+    3,40,
+    4,50,
+    5,60,
+    6,70,
+    7,80,
+    8,85,
+    9,90,
+    10,95))
+
+  (set:_check to (macro: num-type _percentage_chance, str-type _use_skill, [
+    (set:$percentage_chance to _percentage_chance)
+    (out:)[{
+      (link:_use_skill + " (" + (text:_percentage_chance) + "%)")[
+        (replace:?arrows)[]
+        (replace:?challenge_text)[]
+
+        (replace:?right_options)[{
+          (set:$se to "dice")
+          (display:"play sound")
+          (display:"quicktime skill check result")
+        }]
+      ]
+    }]
+  ]))
+
+  (set:_skill_check to (macro: num-type _skill_level, dm-type _percentage, str-type _use_skill, [
+    (set:$percentage_chance to _skill_level of _percentage)
+    (set:_difficulty_mod to (100-$skill_difficulty))
+    (unless:$percentage_chance is 50)[
+      (set:$percentage_chance to ($clamp:(ceil:(_difficulty_mod + $percentage_chance + $percentage_chance)/3), 5, 95))
+    ]
+    (if:$percentage_chance < 56 and $percentage_chance > 44)[
+      (set:$percentage_chance to 50)
+    ]
+
+    (out:)[{
+      (_check: $percentage_chance, _use_skill)
+    }]
+  ]))
+
+  (if:$skill_check is "bj")[
+    (set:$blowjob_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $blowjob_talent's level, _high_percentage, "Use your BJ skills")
+
+  ](else-if:$skill_check is "fitness")[
+    (set:$character's "effective fitness" to ($clamp: it, 1, 10))
+    (_skill_check: $character's "effective fitness", _high_percentage, "Fitness check")
+
+  ](else-if:$skill_check is "titfuck")[
+    (set:$titfuck_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $titfuck_talent's level, _high_percentage, "Titfuck skill check")
+
+  ](else-if:$skill_check is "handjob")[
+    (set:$handjob_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $handjob_talent's level, _high_percentage, "Use your handjob skills")
+
+  ](else-if:$skill_check is "female masturbation")[
+    (set:$female_masturbation_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $female_masturbation_talent's level, _high_percentage, "Use your female masturbation skills")
+
+  ](else-if:$skill_check is "girl pleasure")[
+    (set:$pleasuring_girls_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $pleasuring_girls_talent's level, _high_percentage, "Female pleasure skill check")
+
+  ](else-if:$skill_check is "orgasm control")[
+    (set:$orgasm_control's level to ($clamp: it, 1, 10))
+    (_skill_check: $orgasm_control's level, _high_percentage, "Orgasm control skill check")
+
+  ](else-if:$skill_check is "arousal denial")[
+    (set:$arousal_denial's level to ($clamp: it, 1, 10))
+    (_skill_check: $arousal_denial's level, _high_percentage, "Rely on your willpower")
+
+  ](else-if:$skill_check is "gag reflex")[
+    (set:$gag_reflex's level to ($clamp: it, 1, 10))
+    (_skill_check: $gag_reflex's level, _low_percentage, "Rely on your gag reflex")
+
+  ](else-if:$skill_check is "sexy dance bar")[
+    (set:$slut_amount to 0)
+    (set:$sexy_dancing_bar_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $sexy_dancing_bar_talent's level, _low_percentage, "Insta-Strip™ dance skills")
+
+  ](else-if:$skill_check is "passive sex")[
+    (set:$sub_sex_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $sub_sex_talent's level, _high_percentage, "Passive sex skill check")
+
+  ](else-if:$skill_check is "active sex")[
+    (set:$dom_sex_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $dom_sex_talent's level, _high_percentage, "Active sex skill check")
+
+  ](else-if:$skill_check is "male masturbation")[
+    (set:$male_masturbation_talent's level to ($clamp: it, 1, 10))
+    (_skill_check: $male_masturbation_talent's level, _high_percentage, "Use your male masturbation skills")
+
+  ](else-if:$skill_check is "random")[
+    (set:_luck_text to (either:
+      "Leave it to chance",
+      "Let Lady Luck decide",
+      "Let fate decide",
+      "Leave it to chance",
+      "Let the dice decide",
+      "Rely on luck"))
+    (_check: 100 - $skill_difficulty, _luck_text + " 🎲")
+  ]
+}
+

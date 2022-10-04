@@ -96,10 +96,14 @@
 
 :: quicktime gain xp {"position":"467,5151","size":"100,100"}
 {
+  (set:_time to $timer)
+  (if:$quicktime_params contains "time")[
+    (set:_time to $quicktime_params's "time")
+  ]
   (set:$gain_base to (cond:
     $method is "skill check", 5,
     $game_type is "quicktime", (ceil:(min:(max:($timer / 2.5),5),20)),
-    (ceil:(min:(max:(($quicktime_params's "time" - $timer) / 3),5),20))
+    (ceil:(min:(max:((_time - $timer) / 3),5),20))
   ))
   (set:$gain to (ceil:$gain_base * $score_multiplier))
 
@@ -109,37 +113,49 @@
     ]
   ]
 
-  (set:_gainXP to (macro: str-type _skillName, str-type _xpName, dm-type _talent, codehook-type _set, [
-    (set:$skill_name to _skillName)
-    (set:$message to "+$gain _xpName XP
+  (set:_gain_xp to (macro: str-type _skill_name, str-type _xp_name, dm-type _talent, codehook-type _set, [
+    (set:$skill_name to _skill_name)
+    (set:$message to "+$gain _xp_name XP
 ($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
     (set:$current_skill to _talent)
     (display:"quicktime gain xp calc")
-    _set
+    (out:)[
+      _set
+    ]
   ]))
 
   (if:$skill_check is "bj")[
-    (_gainXP: "BJ skill", "blowjob", $blowjob_talent, [(set:$blowjob_talent to $current_skill)])
+    (_gain_xp: "BJ skill", "blowjob", $blowjob_talent, [(set:$blowjob_talent to $current_skill)])
+
   ](else-if:$skill_check is "titfuck")[
-    (_gainXP: "titfuck skill", "titfuck", $titfuck_talent, [(set:$titfuck_talent to $current_skill)])
+    (_gain_xp: "titfuck skill", "titfuck", $titfuck_talent, [(set:$titfuck_talent to $current_skill)])
+
   ](else-if:$skill_check is "handjob")[
-    (_gainXP: "Handjob skill", "handjob", $handjob_talent, [(set:$handjob_talent to $current_skill)])
+    (_gain_xp: "Handjob skill", "handjob", $handjob_talent, [(set:$handjob_talent to $current_skill)])
+
   ](else-if:$skill_check is "female masturbation")[
-    (_gainXP: "Masturbation skill", "masturbation", $female_masturbation_talent, [(set:$female_masturbation_talent to $current_skill)])
+    (_gain_xp: "Masturbation skill", "masturbation", $female_masturbation_talent, [(set:$female_masturbation_talent to $current_skill)])
+
   ](else-if:$skill_check is "girl pleasure")[
-    (_gainXP: "Female pleasure skill", "female pleasure", $pleasuring_girls_talent, [(set:$pleasuring_girls_talent to $current_skill)])
+    (_gain_xp: "Female pleasure skill", "female pleasure", $pleasuring_girls_talent, [(set:$pleasuring_girls_talent to $current_skill)])
+
   ](else-if:$skill_check is "orgasm control")[
-    (_gainXP: "Orgasm control skill", "orgasm control", $orgasm_control, [(set:$orgasm_control to $current_skill)])
+    (_gain_xp: "Orgasm control skill", "orgasm control", $orgasm_control, [(set:$orgasm_control to $current_skill)])
+
   ](else-if:$skill_check is "arousal denial")[
-    (_gainXP: "Willpower", "willpower", $arousal_denial, [(set:$arousal_denial to $current_skill)])
+    (_gain_xp: "Willpower", "willpower", $arousal_denial, [(set:$arousal_denial to $current_skill)])
+
   ](else-if:$skill_check is "gag reflex")[
-    (_gainXP: "Gag reflex skill", "gag reflex", $gag_reflex, [(set:$gag_reflex to $current_skill)])
+    (_gain_xp: "Gag reflex skill", "gag reflex", $gag_reflex, [(set:$gag_reflex to $current_skill)])
+
   ](else-if:$skill_check is "passive sex")[
-    (_gainXP: "Passive sex skill", "passive sex", $sub_sex_talent, [(set:$sub_sex_talent to $current_skill)])
+    (_gain_xp: "Passive sex skill", "passive sex", $sub_sex_talent, [(set:$sub_sex_talent to $current_skill)])
+
   ](else-if:$skill_check is "active sex")[
-    (_gainXP: "Active sex skill", "active sex", $dom_sex_talent, [(set:$dom_sex_talent to $current_skill)])
+    (_gain_xp: "Active sex skill", "active sex", $dom_sex_talent, [(set:$dom_sex_talent to $current_skill)])
+
   ](else-if:$skill_check is "male masturbation")[
-    (_gainXP: "Male masturbation skill", "masturbation", $male_masturbation_talent, [(set:$male_masturbation_talent to $current_skill)])
+    (_gain_xp: "Male masturbation skill", "masturbation", $male_masturbation_talent, [(set:$male_masturbation_talent to $current_skill)])
 
   ](else-if:$skill_check is "sexy dance bar")[
     (if:$method is "skill check")[
