@@ -132,8 +132,10 @@
   (if:(datanames:$quicktime_params) contains "real time his pleasure")[
     (if:$timer % 7 is 0)[
       (set:$gain to 1)
-      (set:$his_pleasure to (min:$his_pleasure + $gain,$his_pleasure_threshold))
-      (display:"update his pleasure")
+      (if:$his_pleasure < $his_pleasure_threshold)[
+        (set:$his_pleasure to (min:$his_pleasure + $gain,$his_pleasure_threshold))
+        (display:"update his pleasure")
+      ]
     ]
   ]
   (replace:?score_bar)[{
