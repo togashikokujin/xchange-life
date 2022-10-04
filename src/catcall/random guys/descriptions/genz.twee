@@ -1,0 +1,207 @@
+:: random guy description genz {"position":"2631,156","size":"100,100"}
+{
+  (set:$npc's "hands" to (either:"smooth","youthful"))
+  (set:"first name" of $npc to (either:
+    "Noah","Liam","Oliver","Elijah","Lucas","Mason","Levi","James","Asher","Mateo","Aiden","Benjamin","Logan","Henry","Ethan",
+    "Wyatt","Leo","Leriel","Eero","Jack","Grayson","Jackson","Sebastian","Carter","William","Daniel","Owen","Julian","Lincoln",
+    "Ezra","Michael","Alexander","Samuel","Hudson","Jacob","Luke","Jayden","David","Maverick","Josiah","Matthew","Elias","Jaxon",
+    "Isaiah","Eli","Kai","Joseph","John","Anthony","Luca","Adam","Ezekiel","Thomas","Caleb","Channing","Lark","Karter","Beckett",
+    "Cash","Jax","Zayden","Kingston","Maddox","Brantley","Bentley"))
+  (if:(random:1,4) is 1)[
+    (set:wealth of $npc to (random:1,10))
+  ](else:)[
+    (set:wealth of $npc to (random:1,4))
+  ]
+(set:$guy to (either:"guy","dude","guy","dude","guy","fellow","boy"))
+(if:$npc's age < 20)[(set:$guy to (either:"dude","guy","fellow","teen","teenager","teen","boy"))](else:)[(set:$guy to (either:"dude","guy","fellow","twenty-something"))]
+(if:$npc's img is "img/npc/guys/generated/genz/bad/1.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"chubby $guy","annoying $guy"))
+(set:$npc's "description" to (either:"an ugly $guy","a frumpy-looking $guy","an annoying-looking $guy"))
+(set:$npc's tags to $npc's tags + (a:"chubby","nerd","annoying"))
+(set:$npc's looks to 3)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/2.jpg")[
+(set:$npc's "unfamiliar name" to (either:"annoying blonde $guy","blonde $guy with glasses","chubby $guy with classes","nerdy-looking blonde $guy"))
+(set:$npc's "description" to (either:"a $guy who's smiling too much","an annoyingly happy-looking dude","a chubby $guy with a high-pitched voice"))
+(set:$npc's tags to $npc's tags + (a:"nerd"))
+(set:$npc's looks to 3)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/3.jpg")[
+(set:$npc's "unfamiliar name" to (either:"mousey-looking $guy",$guy + " with a slightly creepy face"))
+(set:$npc's "description" to (either:"a skinny fuckboy","a skinny, mousey-looking $guy"))
+(set:$npc's tags to $npc's tags + (a:"fuckboy"))
+(set:$npc's looks to 4)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/4.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"sunglasses-wearing fuckboy","fuckboy with a Gen-Z mop top"))
+(set:$npc's "description" to (either:"a $guy with sunglasses","a $guy wearing sunglasses","a short $guy with sunglasses"))
+(set:$npc's tags to $npc's tags + (a:"fuckboy","short"))
+(set:$npc's looks to 4)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/5.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"chubby $guy","pudgy $guy"))
+(set:$npc's "description" to (either:"a chubby $guy with glasses","an annoying-looking nerd"))
+(set:$npc's tags to $npc's tags + (a:"chubby","annoying"))
+(set:$npc's looks to 4)
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/6.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"skinny $guy","tall $guy with curly hair"))
+(set:$npc's "description" to (either:"a tall, pale $guy","a bored-looking $guy"))
+(set:$npc's tags to $npc's tags + (a:"tall"))
+(set:$npc's looks to 5)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/7.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"smug-looking $guy","already-balding $guy"))
+(set:$npc's "description" to (either:"a $guy with bushy eyebrows","a $guy with a smug expression"))
+(set:$npc's tags to $npc's tags + (a:"skinny","smug"))
+(set:$npc's looks to 5)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/8.jpg")[
+
+(set:$npc's "race" to "latin")
+(set:$npc's "unfamiliar name" to (either:"nerd","nerdy $guy","annoying-looking geek"))
+(set:$npc's "description" to (either:"a guy who looks like the definition of the word 'geek'","a skinny geek"))
+(set:$npc's tags to $npc's tags + (a:"skinny","nerd","annoying"))
+(set:$npc's looks to 4)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/9.jpg")[
+
+(set:$npc's "race" to "asian")
+(set:$npc's "unfamiliar name" to (either:"nerd","chubby nerd","chubby asian $guy"))
+(set:$npc's "description" to (either:"an asian $guy with glasses","an asian $guy with rosy cheeks and glasses"))
+(set:$npc's tags to $npc's tags + (a:"nerd","chubby"))
+(set:$npc's looks to 4)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/bad/10.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"annoying-looking $guy with glasses",$guy + " with glasses"))
+(set:$npc's "description" to "an annoying-looking guy")
+(set:$npc's tags to $npc's tags + (a:"annoying"))
+(set:$npc's looks to 4)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/1.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:$guy + " with glasses",$guy + " with flowing hair and glasses"))
+(set:$npc's "description" to (either:"a $guy with glasses","a smug-looking $guy with glasses and flowing hair"))
+(set:$npc's tags to $npc's tags + (a:"nerd","smug"))
+(set:$npc's looks to 5)
+
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/2.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"brown-haired $guy","smiling $guy"))
+(set:$npc's "description" to (either:"a $guy who looks like he smiles too much","a chill-looking $guy"))
+(set:$npc's looks to 5)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/3.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"ginger","ginger with glasses"))
+(set:$npc's "description" to (either:"a $guy with red hair and glasses","a $guy with red hair and glasses"))
+(set:$npc's tags to $npc's tags + (a:"nerd"))
+(set:$npc's looks to 5)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/4.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:$guy + " with messy hair","smelly-looking $guy"))
+(set:$npc's "description" to (either:"a $guy with messy brown hair","a $guy with messy hair and bushy eyebrows"))
+(set:$npc's looks to 6)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/5.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"blonde bearded $guy","bearded $guy"))
+(set:$npc's "description" to (either:"a guy with red hair and sad eyes","a normal-looking guy"))
+(set:$npc's looks to 5)
+(set:$npc's tags to $npc's tags + (a:"beard"))
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/6.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"relaxed-looking $guy","tan $guy"))
+(set:$npc's "description" to (either:"a very relaxed-looking $guy","chill $guy"))
+(set:$npc's looks to 6)
+(set:$npc's "race" to "latin")
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/7.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"summery $guy","blonde $guy"))
+(set:$npc's "description" to (either:"a $guy with blow-dried blonde hair","a $guy with bleach-blonde hair","a tan $guy with blonde hair"))
+(set:$npc's tags to $npc's tags + (a:"cool"))
+(set:$npc's looks to 8)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/8.jpg")[
+
+(set:$npc's "race" to "latin")
+(set:$npc's "unfamiliar name" to (either:"latino hipster","hipster guy with glasses",$guy + " with glasses"))
+(set:$npc's "description" to (either:"a $guy dressed like a hipster","a $guy with glasses"))
+(set:$npc's looks to 6)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/9.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"tough-looking $guy",$guy + " with a blonde mop-top"))
+(set:$npc's "description" to (either:"a sporty-looking $guy","a $guy who looks like a highschool bully"))
+(set:$npc's tags to $npc's tags + (a:"bully","jock"))
+(set:$npc's looks to 6)
+](else-if:$npc's img is "img/npc/guys/generated/genz/lad/10.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"smug-looking $guy","freckled $guy"))
+(set:$npc's "description" to (either:"a $guy who looks a bit annoying","a freckled $guy with red hair"))
+(set:$npc's tags to $npc's tags + (a:"annoying","smug"))
+(set:$npc's looks to 4)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/1.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"total chad","blonde-haired $guy"))
+(set:$npc's "description" to (either:"a $guy with a leonine mane","a blonde-haired, blue-eyed $guy"))
+(set:$npc's tags to $npc's tags + (a:"chad","jock"))
+(set:$npc's looks to 10)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/2.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"jock","tough-looking $guy"))
+(set:$npc's "description" to (either:"a confident $guy","a muscular $guy"))
+(set:$npc's tags to $npc's tags + (a:"jock","bully"))
+(set:$npc's looks to 8)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/3.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"typical gen-Z guy","guy with a mop top"))
+(set:$npc's "description" to (either:"a guy with a mop top","a grinning $guy"))
+(set:$npc's tags to $npc's tags + (a:"fuckboy","bully"))
+(set:$npc's looks to 7)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/4.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"brown-haired $guy","$blue-eyed $guy","nice-looking guy"))
+(set:$npc's "description" to (either:"an intense-looking guy","a guy who looks very intense"))
+(set:$npc's tags to $npc's tags + (a:"nice"))
+(set:$npc's looks to 8)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/5.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:$guy + " with yellow glasses","fuckboy"))
+(set:$npc's "description" to (either:"a guy with a white t-shirt and yellow glasses","an interesting-looking $guy"))
+(set:$npc's tags to $npc's tags + (a:"fuckboy"))
+(set:$npc's looks to 9)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/6.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"black-haired $guy","jock"))
+(set:$npc's "description" to (either:"a mean-looking $guy","a muscular $guy"))
+(set:$npc's tags to $npc's tags + (a:"chad","jock","bully"))
+(set:$npc's looks to 9)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/7.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"redhead","mop-topped redhead"))
+(set:$npc's "description" to (either:"a $guy with a flaming mop of red hair","a $guy with a mega crop of hair"))
+(set:$npc's tags to $npc's tags + (a:"nice","hipster"))
+(set:$npc's looks to 8)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/8.jpg")[
+
+(set:$npc's "unfamiliar name" to (either:"guy with dark hair","dark-haired $guy"))
+(set:$npc's "description" to (either:"a $guy with a mysterious expression","a handsome $guy"))
+(set:$npc's tags to $npc's tags + (a:"chad"))
+(set:$npc's looks to 10)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/9.jpg")[
+(set:$npc's "race" to "latin")
+(set:$npc's "unfamiliar name" to (either:"chad","charming $guy"))
+(set:$npc's "description" to (either:"a tan, unshaven $guy","a $guy with a lot of stubble"))
+(set:$npc's tags to $npc's tags + (a:"chad","beard","charming"))
+(set:$npc's looks to 8)
+](else-if:$npc's img is "img/npc/guys/generated/genz/chad/10.jpg")[
+
+(set:$npc's "race" to "latin")
+(set:$npc's "unfamiliar name" to (either:"black-haired guy","guy with black hair"))
+(set:$npc's "description" to (either:"a guy with black hair","a black-haired guy"))
+(set:$npc's tags to $npc's tags + (a:"chad"))
+(set:$npc's looks to 7)
+]
+
+}

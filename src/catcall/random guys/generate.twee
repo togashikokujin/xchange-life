@@ -1,0 +1,339 @@
+:: generate random guy {"position":"2629,41","size":"100,100"}
+{
+  (set:$min_age to (num: 1st of (str-find: (p-many: digit), $min_npc_age)))
+  (set:$max_age to (num: 1st of (str-find: (p-many: digit), $max_npc_age)))
+  (set:_age to (cond: (random:1,2) is 1, (random:$min_age, 30), (random:$min_age, $max_age)))
+  (set:_age to 32)
+  (set:_agecat to (cond:
+    _age < 20, "late teens",
+    _age < 25, "early twenties",
+    _age < 30, "twenties",
+    _age < 40, "thirties",
+    _age < 50, "forties",
+    "fifties"
+  ))
+  (set:_generation to (cond: _age < 24, "genz", _age < 38, "millenial", "genx"))
+  (set:_type to (either:"chad","bad","lad"))
+  (set:_variant to (random:1,10))
+  (set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + (text:_variant) + ".jpg")
+  (set:_index to (random:1,140))
+  (if:$cock_database is 0)[
+    <script>console.log("No cock database!");</script>
+  ]
+
+  (set:$npc to (dm:
+    "tags", (a:),
+    "events", (a:),
+    "race", "white",
+    "stamina", (random:8,15),
+    "oral skill", (random:1,10),
+    "kissing style", "normal",
+    "alternate names", (a:),
+    "alternate possessive names", (a:),
+    "favorite color", (either:"red","white","black","yellow","purple","pink","orange"),
+    "favorite style", (either:"classy","slutty","cute","casual","sexy"),
+    "age", _age,
+    "agecat", _agecat,
+    "generation", _generation,
+    "type", _type,
+    "img", _img,
+    "last name", (either:"Smith","Johnson","Williams","Brown","Jones","Miller","Davis","Wilson","Thomas","Taylor","Moore","Jackson","Martin","Lee","White",
+      "Harris","Clark","Lewis","Wright","King","Hill","Hall","Green","Adams","Nelson","Baker","Campbell","Mitchell","Roberts","Phillips","Evans"),
+    "preference", (either:"ass","tits")
+  ) + (nth:_index, ...$cock_database))
+
+  (if:_agecat is "late teens")[
+    (set:"alternate names" of $npc to it + (a:"he","the teen"))
+    (set:"alternate possessive names" of $npc to it + (a:"his","the teen's"))
+  ](else-if:_agecat is "fifties")[
+    (set:"alternate names" of $npc to it + (a:"he","the old guy"))
+    (set:"alternate possessive names" of $npc to it + (a:"his","the old guy's"))
+  ]
+
+  (display:(text:"random guy description " + generation of $npc))
+
+  (set:name of $npc to (cond:_age > 35, "Mr. " + "last name" of $npc, "first name" of $npc))
+  (set:$npc's "unfamiliar name" to (upperfirst:it))
+
+  (set:intellect of $npc to (random:1,10))
+  (if:$npc's tags contains "fuckboy" or $npc's tags contains "jock")[
+    (set:intellect of $npc to (random:1,5))
+    (set:$npc's "kissing style" to "aggressive")
+  ]
+  (if:$npc's tags contains "nerd")[
+    (set:intellect of $npc to (random:5,10))
+  ]
+
+  (set:fitness of $npc to (random:1,10))
+  (if:$npc's tags contains "nerd" or $npc's tags contains "chubby")[
+    (set:fitness of $npc to (random:1,5))
+  ]
+  (if:$npc's tags contains "jock" or $npc's tags contains "chad")[
+    (set:fitness of $npc to (random:5,10))
+  ]
+  (if:fitness of $npc > 8)[
+    (set:$npc's tags to it + (a:"jock"))
+  ]
+  (set:$npc's "sex name" to (upperfirst:$npc's "name"))
+
+  (unless:$npc's "race" is "white")[
+    (display:"generate random guy racial name")
+  ]
+
+  (if:length of $npc's "tags" is 0)[
+    (set:$npc's tags to it + (a:(either:"selfish","nice","unremarkable","cool")))
+  ]
+  (if:$npc's "tags" contains "fuckboy")[
+    (set:$npc's tags to it + (a:"selfish"))
+  ]
+  (if:$npc's "tags" contains "bully" or $npc's "tags" contains "smug")[
+    (set:$npc's tags to it + (a:"selfish"))
+  ]
+
+  (set:$npc's "personality" to (random:1,10))
+  (if:$npc's "tags" contains "cool")[
+    (set:$npc's "personality" to (random:5,8))
+  ]
+  (if:$npc's "tags" contains "charming")[
+    (set:$npc's "personality" to (random:5,8))
+    (set:$npc's "alternate names" to it + (a:"he","the charming guy"))
+    (set:$npc's "alternate possessive names" to it + (a:"his","the charming guy's"))
+  ]
+  (if:$npc's "tags" contains "jock")[
+    (set:$npc's "personality" to (random:5,8))
+  ]
+  (if:$npc's "tags" contains "selfish")[
+    (set:$npc's "personality" to (random:1,6))
+  ]
+  (if:$npc's "tags" contains "annoying")[
+    (set:$npc's "personality" to (random:1,5))
+  ]
+  (if:$npc's "tags" contains "unremarkable")[
+    (set:$npc's "personality" to (random:4,6))
+  ]
+  (if:$npc's "tags" contains "creepy")[
+    (set:$npc's "personality" to (random:1,5))
+  ]
+  (if:$npc's "tags" contains "fuckboy" or $npc's "tags" contains "bully")[
+    (set:$npc's "personality" to (random:1,6))
+  ]
+  (if:$npc's "tags" contains "nice")[
+    (set:$npc's "personality" to (random:5,10))
+  ]
+  (if:$npc's "tags" contains "gentleman")[
+    (set:$npc's "personality" to (random:7,10))
+    (set:$npc's "alternate names" to it + (a:"he","the gentleman"))
+    (set:$npc's "alternate possessive names" to it + (a:"his","the gentleman's"))
+  ]
+
+  (if:$npc's wealth > 7 and $npc's personality > 5)[
+    (set:$npc's "personality" to it - 1)
+  ]
+  (if:$npc's wealth > 8 and $npc's personality > 5)[
+    (set:$npc's "personality" to it - 1)
+  ]
+  (if:$npc's wealth > 9 and $npc's personality > 5)[
+    (set:$npc's "personality" to it - 1)
+  ]
+  (if:$npc's generation is "genx" and $npc's personality < 7)[
+    (set:$npc's personality to it + 1)
+  ]
+  (if:$npc's generation is "genz" and $npc's personality > 2)[
+    (set:$npc's personality to it - 1)
+  ]
+
+  (set:$npc's "hygiene" to (random:1,10))
+  (if:$npc's "tags" contains "chubby")[
+    (set:$npc's "hygiene" to (random:1,6))
+    (set:$npc's "hands" to (either:"pudgy","chubby"))
+    (set:$npc's "alternate names" to it + (a:"he","the chubby guy"))
+    (set:$npc's "alternate possessive names" to it + (a:"his","the chubby guy's"))
+  ]
+  (if:$npc's "tags" contains "charming")[
+    (set:$npc's "hygiene" to (random:5,8))
+    (set:$npc's "kissing style" to "dominant")
+  ]
+  (if:$npc's "tags" contains "chad")[
+    (set:$npc's "kissing style" to "dominant")
+    (set:$npc's "hygiene" to (random:3,7))
+    (set:$npc's "hands" to (either:"strong","firm","manly"))
+    (set:$npc's "alternate names" to it + (a:"he","the chad"))
+    (set:$npc's "alternate possessive names" to it + (a:"his","the chad's"))
+  ]
+  (if:$npc's "tags" contains "nerd")[
+    (set:$npc's "hygiene" to (random:1,7))
+    (set:$npc's "hands" to (either:"clammy","sweaty","soft"))
+    (set:$npc's "kissing style" to (either:"weak","slobber","normal"))
+    (set:$npc's "alternate names" to it + (a:"he","the nerd"))
+    (set:$npc's "alternate possessive names" to it + (a:"his","the nerd's"))
+  ]
+  (if:$npc's "tags" contains "gentleman")[
+    (set:$npc's "hygiene" to (random:5,10))
+    (set:$npc's "hands" to (either:"firm","smooth","graceful","gentlemanly"))
+  ]
+  (if:$npc's "tags" contains "smells good")[
+    (set:$npc's "hygiene" to (random:7,10))
+  ]
+  (if:$npc's "tags" contains "smelly")[
+    (set:$npc's "hygiene" to (random:1,3))
+    (set:$npc's "hands" to (either:"clammy","sweaty"))
+    (set:$npc's "kissing style" to "gross")
+  ]
+  (if:$npc's "personality" > 7 or $npc's tags contains "gentleman" or $npc's tags contains "charming")[
+    (set:$npc's "kissing style" to "passionate")
+  ]
+  (if:$npc's "fitness" < 3 and (random:1,2) is 1)[
+    (set:$npc's "kissing style" to "weak")
+  ]
+  (if:$npc's "hygiene" < 3 and (random:1,2) is 1)[
+    (set:$npc's "kissing style" to "gross")
+  ]
+
+  (display:"guy breath update")
+}
+
+
+:: build cock database [startup]
+(set:$cock_database to (altered:_cock via (dm: "cock", pos, "cockimg", "img/minigame/masculinity/cocks/bwc/" + (text:pos) + ".jpg", 
+  ...(interlaced: (a:"ballsdesc","cockdesc","tipdesc","cockrating","cockfatness","cocklength","ballsize"), _cock)),
+  (a: "tight", "long", "smooth", 7, 7, 10, 5),
+  (a: "twitching", "veiny", "shiny", 6, 8, 10, 6),
+  (a: "hefty", "veiny", "mushroom-shaped", 9, 9, 10, 6),
+  (a: "huge", "veiny", "flared", 4, 6, 7, 10),
+  (a: "smooth", "veiny", "purple", 9, 6, 10, 6),
+  (a: "giant", "uncut", "uncircumcised", 10, 8, 10, 7),
+  (a: "big", "veiny", "round", 8, 8, 10, 8),
+  (a: "full-looking", "veiny", "bulbous", 8, 7, 10, 7),
+  (a: "heavy", "fat", "triangular", 9, 10, 8, 6),
+  (a: "dangling", "medium-sized", "wide", 5, 6, 8, 10),
+  (a: "big", "veiny", "sculpted", 8, 7, 10, 7),
+  (a: "saggy", "curved", "slender", 9, 6, 10, 9),
+  (a: "smooth", "veiny", "uncircumcised", 7, 7, 8, 6),
+  (a: "wrinkly", "massive", "chunky", 10, 10, 10, 6),
+  (a: "smooth", "curved", "sculptural", 8, 8, 9, 6),
+  (a: "hairy", "curved", "fat", 10, 8, 10, 7),
+  (a: "shaved", "veiny", "flared", 8, 6, 8, 6),
+  (a: "shaved", "veiny", "pink", 8, 9, 10, 6),
+  (a: "big", "red", "big, bloated", 10, 10, 10, 8),
+  (a: "butt-shaped", "red", "precum-dripping", 6, 9, 9, 8),
+  (a: "dangling", "veiny", "helmet-shaped", 8, 7, 7, 8),
+  (a: "hairy", "veiny", "mushroom-shaped", 7, 8, 7, 7),
+  (a: "bloated", "smooth", "triangular", 7, 7, 8, 6),
+  (a: "bloated", "uncut", "uncircumcised", 5, 7, 6, 6),
+  (a: "dangling", "smooth", "mushroom-shaped", 5, 6, 6, 10),
+  (a: "red", "fat", "red, bulbous", 10, 10, 10, 8),
+  (a: "hefty", "fat", "sculpted", 10, 9, 9, 5),
+  (a: "smooth", "smooth", "smooth, red", 8, 6, 7, 5),
+  (a: "dangling", "uncut", "uncircumcised", 7, 8, 8, 8),
+  (a: "hairy", "smooth", "mushroom-shaped", 10, 9, 10, 6),
+  (a: "massive", "veiny", "fat, red", 6, 8, 6, 6),
+  (a: "hairy", "fat", "thick", 7, 10, 7, 7),
+  (a: "bloated", "veiny", "shiny, uncircumcised", 9, 9, 10, 7),
+  (a: "hairy", "curved", "flared", 10, 9, 10, 6),
+  (a: "tight", "uncut", "triangular", 6, 7, 8, 6),
+  (a: "wrinkly", "wrinkly", "red, stubby", 6, 6, 5, 8),
+  (a: "hairy", "veiny", "dark purple", 7, 6, 6, 6),
+  (a: "tight", "smooth", "precum-drooling", 6, 6, 7, 10),
+  (a: "dark-colored", "smooth", "snub-nosed", 6, 7, 6, 6),
+  (a: "dangling", "veiny", "mushroom-shaped", 10, 9, 10, 6),
+  (a: "full-looking", "veiny", "stubby", 7, 6, 7, 10),
+  (a: "big, smooth", "massive", "torpedo-shaped", 10, 8, 10, 10),
+  (a: "hairy", "veiny", "chubby", 5, 6, 5, 8),
+  (a: "hairy, wrinkly", "veiny", "purple", 8, 10, 8, 9),
+  (a: "wrinkly", "curved", "dark-colored", 9, 7, 9, 6),
+  (a: "dangling", "veiny", "slender", 7, 5, 8, 5),
+  (a: "pendulous", "veiny", "precum-dripping", 5, 6, 5, 10),
+  (a: "big, smooth", "smooth", "dome-shaped", 7, 8, 8, 6),
+  (a: "giant", "fat", "triangular", 7, 9, 9, 9),
+  (a: "big, smooth", "curved", "shiny", 8, 7, 9, 7),
+  (a: "hairy", "curved", "upwards-jutting", 10, 10, 10, 7),
+  (a: "hairy", "fat", "smooth, red", 9, 8, 10, 7),
+  (a: "hairy", "fat", "triangular", 6, 8, 9, 8),
+  (a: "wrinkly", "curved", "sculpted", 7, 7, 7, 7),
+  (a: "hairy", "uncut", "pointy, red", 6, 8, 6, 7),
+  (a: "massive, veiny", "fat", "flared", 10, 10, 10, 10),
+  (a: "wrinkly", "smooth", "smooth", 10, 9, 10, 8),
+  (a: "dangling", "veiny", "angry red", 10, 9, 10, 7),
+  (a: "tight", "smooth", "aerodynamic", 6, 6, 7, 8),
+  (a: "lopsided", "pale", "shiny, red", 8, 7, 8, 7),
+  (a: "hefty", "veiny", "dark-colored", 6, 6, 6, 5),
+  (a: "wrinkly", "veiny", "mushroom-shaped", 10, 6, 10, 5),
+  (a: "smooth", "veiny", "torpedo-shaped", 10, 7, 9, 7),
+  (a: "full-looking", "veiny", "flared", 9, 7, 7, 8),
+  (a: "red", "uncut", "red, uncircumcised", 10, 8, 10, 8),
+  (a: "hairy", "veiny", "triangular", 8, 6, 8, 8),
+  (a: "hairy", "veiny", "fat", 8, 9, 7, 7),
+  (a: "hefty", "fat", "smooth, wide", 9, 9, 10, 6),
+  (a: "wrinkled", "red", "triangular", 6, 5, 5, 5),
+  (a: "red", "veiny", "triangular, red", 10, 8, 10, 8),
+  (a: "bloated", "red", "slender, oval-shaped", 9, 8, 6, 8),
+  (a: "tight", "fat", "upturned", 9, 10, 7, 8),
+  (a: "heavy", "curved", "pale, sculpted", 10, 8, 10, 5),
+  (a: "tight", "veiny", "helmet-shaped", 8, 10, 8, 4),
+  (a: "dangling", "veiny", "smooth", 10, 7, 10, 10),
+  (a: "dangling", "fat", "pale, pointy", 10, 8, 9, 9),
+  (a: "pendulous", "veiny", "pointy, purple", 10, 7, 10, 10),
+  (a: "hairy", "equine", "smooth, shiny", 10, 8, 10, 8),
+  (a: "heavy", "thick", "hefty", 7, 9, 10, 10),
+  (a: "smooth", "uncut", "red, uncircumcised", 8, 7, 7, 8),
+  (a: "red", "red", "angry red", 10, 8, 8, 10),
+  (a: "dangling", "long", "sculpted", 10, 7, 9, 10),
+  (a: "shiny, smooth", "red", "shiny", 10, 7, 7, 8),
+  (a: "heavy", "fat", "angular", 8, 9, 10, 5),
+  (a: "heavy", "meaty", "domed", 8, 6, 5, 7),
+  (a: "dangling", "veiny", "helmet-shaped", 10, 7, 10, 10),
+  (a: "dangling", "veiny", "shiny, flared", 7, 6, 6, 8),
+  (a: "dangling", "fat", "smooth, red", 10, 8, 10, 7),
+  (a: "bloated", "veiny", "fat", 10, 8, 10, 6),
+  (a: "hairy", "veiny", "sculpted", 9, 10, 7, 6),
+  (a: "hairy", "thick", "wide-brimmed", 10, 9, 8, 4),
+  (a: "hefty", "stubby", "red, precum-drooling", 7, 5, 5, 5),
+  (a: "smooth", "thick", "helmet-shaped", 7, 6, 8, 8),
+  (a: "heavy", "uncut", "uncircumcised", 8, 6, 6, 6),
+  (a: "tight", "veiny", "precum-drooling", 8, 7, 6, 3),
+  (a: "dangling", "veiny", "red, mushroom-shaped", 7, 6, 5, 8),
+  (a: "huge", "smooth", "smooth, mushroom-shaped", 7, 7, 7, 4),
+  (a: "heavy", "veiny", "precum-drooling", 10, 6, 8, 6),
+  (a: "hairy", "long", "red, sculpted", 7, 7, 10, 5),
+  (a: "pink", "stubby", "precum-dripping", 2, 3, 3, 8),
+  (a: "wrinkly", "uncut", "uncircumcised", 10, 7, 10, 7),
+  (a: "smooth", "red", "lopsided", 6, 6, 7, 4),
+  (a: "dangling", "veiny", "helmet-shaped", 8, 5, 6, 10),
+  (a: "red", "veiny", "wide-brimmed", 8, 6, 7, 6),
+  (a: "heavy", "veiny", "precum-dripping", 6, 5, 5, 6),
+  (a: "hefty", "veiny", "precum-drooling", 6, 5, 4, 10),
+  (a: "hairy", "curved", "fat, stubby", 9, 8, 10, 9),
+  (a: "wrinkly", "stubby", "precum-drooling", 2, 4, 3, 9),
+  (a: "wrinkly", "veiny", "thick, powerful", 10, 9, 9, 7),
+  (a: "dangling", "stubby", "mushroom-shaped", 2, 5, 5, 10),
+  (a: "smooth", "veiny", "chunky, angular", 10, 10, 10, 8),
+  (a: "heavy", "equine", "precum-drooling", 10, 10, 10, 10),
+  (a: "red", "red", "red, oval-shaped", 7, 6, 6, 4),
+  (a: "hairy", "fat", "uncircumcised", 10, 10, 9, 6),
+  (a: "tight", "veiny", "smooth, sculpted", 10, 8, 10, 5),
+  (a: "hairy", "massive", "red, precum-drooling", 10, 8, 10, 7),
+  (a: "hairy", "veiny", "left-leaning", 10, 9, 8, 5),
+  (a: "hairy", "veiny", "helmet-shaped", 10, 7, 8, 6),
+  (a: "wrinkly", "long", "triangular", 10, 7, 10, 9),
+  (a: "lopsided", "uncut", "uncircumcised, precum-drooling", 1, 3, 2, 5),
+  (a: "hefty", "uncut", "precum-dripping", 2, 5, 3, 7),
+  (a: "hairy", "veiny", "domed", 10, 8, 10, 6),
+  (a: "smooth", "uncut", "shiny, uncircumcised", 10, 10, 9, 7),
+  (a: "wrinkly", "veiny", "mushroom-shaped", 10, 8, 10, 9),
+  (a: "hefty", "fat", "helmet-shaped", 10, 7, 9, 8),
+  (a: "hefty", "uncut", "uncircumcised", 8, 7, 5, 6),
+  (a: "wrinkly", "curved", "helmet-shaped", 9, 7, 8, 8),
+  (a: "heavy", "fat", "round", 10, 8, 7, 10),
+  (a: "dangling", "veiny", "dome-shaped", 10, 7, 10, 10),
+  (a: "smooth", "smooth", "cute, shiny", 2, 3, 3, 4),
+  (a: "fat", "stubby", "precum-drooling", 3, 6, 3, 7),
+  (a: "dangling, lopsided", "veiny", "mushroom-shaped", 5, 5, 4, 10),
+  (a: "wrinkly", "veiny", "angry red", 10, 8, 10, 4),
+  (a: "tight", "fat", "helmet-shaped", 9, 7, 10, 5),
+  (a: "wrinkly", "banana-shaped", "uncircumcised", 10, 10, 8, 7),
+  (a: "smooth", "curved", "mushroom-shaped", 9, 6, 10, 4),
+  (a: "hairy", "dark-colored", "dome-shaped", 7, 5, 5, 6),
+  (a: "hairy", "medium-sized", "precum-drooling", 5, 6, 4, 10),
+  (a: "hairy", "veiny", "purple", 10, 10, 10, 10),
+  (a: "dangling", "veiny", "big, smooth", 10, 8, 8, 9),
+))

@@ -1,0 +1,62 @@
+:: catcall {"position":"1601,1680","size":"100,100"}
+{
+  (display:"generate random guy")
+  (display:"npc screen update")
+  (set:$gain to 0)
+  (if:(random:1,4) is 1)[
+    (set:_guy_desc to (either:"a guy", "some dude") + " in his " + $npc's agecat)
+    (either:"You're approached by _guy_desc.",(upperfirst:_guy_desc) + " approaches you.")
+  ](else:)[
+    (print:(upperfirst:$npc's "description")) (either:"approaches you.","starts chatting you up.","decides to shoot his shot.","approaches you.","approaches.")
+  ]
+  (set:_text to (either:"before","after"))
+  (if:_text is "before")[]
+  (set:$se to "whistle " + (text:(random:1,4)))
+  (display:"play sound")
+  (if:$trigger is "butt")[
+    (display:"catcall butt")
+  ](else-if:$trigger is "breasts")[
+    (display:"catcall breasts")
+  ](else-if:$trigger is "id" or $trigger is "arousal")[
+    (display:"catcall id")
+  ]
+  (if:$pickup is "dirty" or $pickup is "body")[
+    (set:$gain to $gain + 1)
+  ]
+  (if:$npc's looks > 5)[
+    (set:$gain to $gain + 1)
+  ](else-if:$npc's looks < 4)[
+    (set:$gain to $gain - 1)
+  ]
+  (if:$gain > 0)[
+    <div class='options'>
+      (if:$character's "masculinity" > 89)[
+        <mark>
+          (either:
+            "You're too masculine for that to arouse you.",
+            "You don't gain any arousal.",
+            "Your femininity is too low to receive arousal for that.",
+            "That doesn't arouse you.",
+            "That kind of thing doesn't arouse you.",
+            "You don't find that arousing."
+          )
+        </mark>
+      ](else:)[
+        (if:$character's "masculinity" > 79)[
+          (set:$gain to 1)
+        ](else-if:$character's "masculinity" > 59)[
+          (set:$gain to $gain*1)
+        ](else:)[
+          (set:$gain to (floor:$gain*1.5))
+        ]
+        (display:"gain arousal")
+      ]
+    </div>
+  ](else:)[
+    <br/>
+  ]
+  (display:"catcall reaction")
+  (display:"npc screen update")
+}
+
+
