@@ -41,8 +41,8 @@
 :: pleasure check spacebar {"position":"455,5833","size":"100,100"}
 {
   (set:$space to "no")
-  (set:_randomTarget to (cond:$character's "arousal" > 8, 6, 7))
-  (if:$correct > 5 and (random:1,_randomTarget) is 1)[
+  (set:_random_target to (cond:$character's "arousal" > 8, 6, 7))
+  (if:$correct > 5 and (random:1,_random_target) is 1)[
     (set:$space to "yes")
     (set:$bonus to (either:"space","shift"))
   ]

@@ -1,7 +1,7 @@
 :: dont cum lose {"position":"329,4525","size":"100,100"}
 {
   (display:"dont cum finish")
-  ($dontCumUpdatePoints: (cond: $points > 50, 100, 0))
+  ($dont_cum_update_points: (cond: $points > 50, 100, 0))
   (replace:?right_options)[{
     (link:$lose_type)[
       (set:$result to "fail")

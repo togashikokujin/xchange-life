@@ -75,9 +75,9 @@
   </div>
   <div class="options"></div>
   [
-    (set:_toWin to $quicktime_params's "points to win")
+    (set:_points_to_win to $quicktime_params's "points to win")
     (set:_points to $quicktime_params's "points")
-    <script>GE.updateStats(_toWin, _points);</script>
+    <script>GE.updateStats(_points_to_win, _points);</script>
   ]<score_bar|
   <div id="win-bar">
     <div class='bar' style='background: repeating-linear-gradient(

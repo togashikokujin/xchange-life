@@ -35,7 +35,7 @@ Use the arrows on the right to see renders of your forecasted transformation!
 
 :: tg cartoon {"position":"1283,105","size":"100,100"}
 {
-  (set:_updateCartoon to [
+  (set:_update_cartoon to [
     (replace:?image)[{(t8n:"blur")[(print:"<img src='img/scenes/characters/" + $character's "id" + "/tg/" + (text:$index) +".png' width=60% height=auto>")]}]
   ])
   (set:_hoverImage to (macro: str-type _img, str-type _imgHover, codehook-type _hook, [
@@ -55,17 +55,17 @@ Use the arrows on the right to see renders of your forecasted transformation!
         |left>[{
           (_hoverImage: "img/ui/buttons/64button1left.png", "img/ui/buttons/64button2left.png", [
             (set:$index to (cond:it < 2, 5, it - 1))
-            _updateCartoon
+            _update_cartoon
           ])
         }]
         |right>[{
           (_hoverImage: "img/ui/buttons/64button1right.png", "img/ui/buttons/64button2right.png", [
             (set:$index to (cond:it > 4, 1, it + 1))
-            _updateCartoon
+            _update_cartoon
           ])
         }]
       </span>
     </div>
   </div>
-  _updateCartoon
+  _update_cartoon
 }

@@ -86,7 +86,7 @@
 
     (set:$change to 10 - (ceil:5 * ($timer / $quicktime_params's "time")))
 
-    ($dontCumUpdatePoints: (cond: $ai_direction is "up", $points + $change, $points - $change))
+    ($dont_cum_update_points: (cond: $ai_direction is "up", $points + $change, $points - $change))
     (if:$points < 75 and $points > 25)[
       (if:(random:1,10) is 1)[
         (if:$ai_direction is "up")[
@@ -102,7 +102,7 @@
     ]
 
     (if:$result is "fail")[
-      ($dontCumUpdatePoints: (cond: $points < 50, 0, 100))
+      ($dont_cum_update_points: (cond: $points < 50, 0, 100))
       (replace:?directions)[<span class='shadow'>You lose!</span>]
       (stop:)
     ]

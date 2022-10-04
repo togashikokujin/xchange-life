@@ -14,15 +14,15 @@
     (if:$quicktime is "over")[
       (stop:)
     ](else:)[
-      (set:_pointsToWin to $quicktime_params's "points to win")
+      (set:_points_to_win to $quicktime_params's "points to win")
       (set:_multiplier to (cond:
-        $timer >= _pointsToWin * 3, 3,
-        $timer >= _pointsToWin * 1.5, 2,
+        $timer >= _points_to_win * 3, 3,
+        $timer >= _points_to_win * 1.5, 2,
         1
       ))
       (set:$quicktime_params's "points" to it - $timer_loss * _multiplier)
       (set:_points to $quicktime_params's "points")
-      <script>GE.updateStats(_pointsToWin, _points);</script>
+      <script>GE.updateStats(_points_to_win, _points);</script>
       (display:"quicktime check")
     ]
   ]

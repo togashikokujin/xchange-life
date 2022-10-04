@@ -1,14 +1,14 @@
 :: dont cum buttons {"position":"228,4411","size":"100,100"}
 {
-  (set:_leftButton to (cond: $dir < 0, "64button2left.png", "64button1left.png"))
-  (set:_rightButton to (cond: $dir > 0, "64button2right.png", "64button1right.png"))
-  (set:_pressButton to (macro: num-type _dir, [
+  (set:_left_button to (cond: $dir < 0, "64button2left.png", "64button1left.png"))
+  (set:_right_button to (cond: $dir > 0, "64button2right.png", "64button1right.png"))
+  (set:_press_button to (macro: num-type _dir, [
     (set:$dir to _dir)
     (if:$points > 99 or $points < 1)[
       (set:$result to "fail")
     ]
     (if:$rhythm_check is "true")[
-      ($dontCumUpdatePoints: $points + $dir)
+      ($dont_cum_update_points: $points + $dir)
       (replace:?directions)[{
         (if:$quicktime_params's "interrupts" > 0 and (random:1,10) is 1 and $points < 65 and $points > 35)[
           (css:"font-size:3vmin")[
@@ -42,13 +42,13 @@
     ]
   ]))
   |left>[
-    (link-rerun:"<img src='img/ui/buttons/" + _leftButton + "'; width=64px; height=auto>")[
-      (_pressButton: -17)
+    (link-rerun:"<img src='img/ui/buttons/" + _left_button + "'; width=64px; height=auto>")[
+      (_press_button: -17)
     ]
   ]
   |right>[
-    (link-rerun:"<img src='img/ui/buttons/" + _rightButton + "'; width=64px; height=auto>")[
-      (_pressButton: 17)
+    (link-rerun:"<img src='img/ui/buttons/" + _right_button + "'; width=64px; height=auto>")[
+      (_press_button: 17)
     ]
   ]
 }

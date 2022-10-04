@@ -40,42 +40,42 @@
 
 :: buttons {"position":"118,5375","size":"100,100"}
 {
-  (set:_buttonDir to (macro: str-type _correctDir, [
+  (set:_button_dir to (macro: str-type _correct_dir, [
     (set:$space to "no")
-    (set:_topButton to "")
-    (set:_bottomButton to "")
-    (unless:_correctDir is "off")[
+    (set:_top_button to "")
+    (set:_bottom_button to "")
+    (unless:_correct_dir is "off")[
       (if:$type is "stripping")[
         (display:"bar dance check spacebar")
-        (set:_topButton to "quicktime slut button")
-        (set:_bottomButton to "quicktime money button")
+        (set:_top_button to "quicktime slut button")
+        (set:_bottom_button to "quicktime money button")
       ](else-if:$type is "try to cum")[
         (display:"pleasure check spacebar")
-        (set:_topButton to "quicktime pleasure button shift")
-        (set:_bottomButton to "quicktime pleasure button space")
+        (set:_top_button to "quicktime pleasure button shift")
+        (set:_bottom_button to "quicktime pleasure button space")
       ](else-if:$type is "recover")[
         (display:"energy check spacebar")
-        (set:_topButton to "quicktime energy button shift")
-        (set:_bottomButton to "quicktime energy button space")
+        (set:_top_button to "quicktime energy button shift")
+        (set:_bottom_button to "quicktime energy button space")
       ]
     ]
-    (set:_buttonIcon to (macro: str-type _dir, [
+    (set:_button_icon to (macro: str-type _dir, [
       (out:)[{
-        (link-rerun:"<img src='img/ui/buttons/64button" + (cond: _correctDir is _dir, "2", "1") + _dir + ".png' width=64px height=64px>")[
+        (link-rerun:"<img src='img/ui/buttons/64button" + (cond: _correct_dir is _dir, "2", "1") + _dir + ".png' width=64px height=64px>")[
           (set:$dir to _dir)
-          (display: (cond: _correctDir is _dir, "buttons correct", "buttons incorrect"))
+          (display: (cond: _correct_dir is _dir, "buttons correct", "buttons incorrect"))
         ]
       }] 
     ]))
     (replace:?directions)[{
       <span class='borderless'>
-        (unless:_topButton is "")[(display:_topButton)]
-        |up>[(_buttonIcon:"up")]
+        (unless:_top_button is "")[(display:_top_button)]
+        |up>[(_button_icon:"up")]
         <br/>
-        |left>[(_buttonIcon:"left")]
-        |down>[(_buttonIcon:"down")]
-        |right>[(_buttonIcon:"right")]
-        (unless:_bottomButton is "")[(display:_bottomButton)]
+        |left>[(_button_icon:"left")]
+        |down>[(_button_icon:"down")]
+        |right>[(_button_icon:"right")]
+        (unless:_bottom_button is "")[(display:_bottom_button)]
       </span>
     }]
     (out:)[]
@@ -83,14 +83,14 @@
 
   (set:$last_dir to $dir)
   (set:$dir to "none")
-  (_buttonDir:"off")
+  (_button_dir:"off")
   (after:time + 50)[
     (if:$interrupts > 0 and (($index % 17) is $interrupt_mod))[
       (set:$text to "options")
       (display:$quicktime_params's "interrupt passage")
       (display:"quicktime choice")
     ](else:)[
-      (_buttonDir:$correct_dir)
+      (_button_dir:$correct_dir)
     ]
   ]
 }
@@ -139,9 +139,9 @@
     ]
   ]
   (replace:?score_bar)[{
-    (set:_pointsToWin to $quicktime_params's "points to win")
+    (set:_points_to_win to $quicktime_params's "points to win")
     (set:_points to $quicktime_params's "points")
-    <script>GE.updateStats(_pointsToWin, _points);</script>
+    <script>GE.updateStats(_points_to_win, _points);</script>
   }]
   (set:$font_size to "font-size:" + (cond:
     $combo is 10, "4vmin",
@@ -171,9 +171,9 @@
   (display:"play sound")
   (set:$quicktime_params's "points" to $quicktime_params's "points" - ($gain_amount*3))
   (replace:?score_bar)[{
-    (set:_pointsToWin to $quicktime_params's "points to win")
+    (set:_points_to_win to $quicktime_params's "points to win")
     (set:_points to $quicktime_params's "points")
-    <script>GE.updateStats(_pointsToWin, _points);</script>
+    <script>GE.updateStats(_points_to_win, _points);</script>
   }]
   (replace:?score)[{
     <mark>❌COMBO LOST!❌</mark>

@@ -1,6 +1,6 @@
 :: dont cum initialize {"position":"119,4163","size":"100,100"}
 {
-  (set:$dontCumUpdatePoints to (macro: num-type _points, [
+  (set:$dont_cum_update_points to (macro: num-type _points, [
     (set:$points to _points)
     (out:)[
       <script>GE.updateStats(100,$points);</script>
@@ -91,7 +91,7 @@
                  );'></div>
             }</div>
             (after: time + 0.5s)[
-              ($dontCumUpdatePoints: 50)
+              ($dont_cum_update_points: 50)
             ]
             (stop:)
           }]

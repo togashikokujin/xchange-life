@@ -91,19 +91,21 @@
 
 :: bar dance check spacebar {"position":"460,5598","size":"100,100"}
 {
-  (set:_correctTarget to 5)
-  (set:_randomChance to 5)
-  (set:_amount to (macro:[(out-data:(random:1,3))]))
+  (set:_correct_target to 5)
+  (set:_random_target to 5)
+  (set:_amount to 1)
 
   (if:$bar_dance's "style" is "dance close")[
-    (set:_amount to (macro:[(out-data:(either:1,2,2,3,3))]))
+    (set:_amount to (either:1,2,2,3,3))
   ](else-if:$bar_dance's "style" is "jiggle breasts")[
-    (set:_amount to (macro:[(out-data:(either:1,1,1,1,2,3))]))
-    (set:_correctTarget to 2)
-    (set:_randomChance to 3)
+    (set:_amount to (either:1,1,1,1,2,3))
+    (set:_correct_target to 2)
+    (set:_random_target to 3)
+  ](else:)[
+    (set:_amount to (random:1,3))
   ]
 
-  (if:$correct > _correctTarget and (random:1,_randomChance) is 1)[
+  (if:$correct > _correct_target and (random:1,_random_target) is 1)[
     (set:$space to "yes")
     (set:$amount to (_amount:))
   ]
