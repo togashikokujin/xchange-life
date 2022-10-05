@@ -1,0 +1,19 @@
+:: lights out refresh screen {"position":"743,6333","size":"100,100"}
+{
+  (set:_button to (macro: num-type _position, [
+    (set:_icon to (cond:_position of $game_grid is -1, "bad icon", "good icon"))
+    (out:)[{
+      (link-rerun:_icon of $blackjack_params)[
+        (set:$select to _position)
+        (display:"lights out press")
+      ]
+    }]
+  ]))
+  (replace:?game_screen)[
+    (_button:1)(_button:2)(_button:3)<br/>
+    (_button:4)(_button:5)(_button:6)<br/>
+    (_button:7)(_button:8)(_button:9)
+  ]
+}
+
+

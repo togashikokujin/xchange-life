@@ -1,0 +1,36 @@
+:: lights out initialize {"position":"744,6225","size":"100,100"}
+{
+  (set:$style to "lights out")
+  (set:$moves to 0)
+  <div class="game_header">
+    (if:(datanames:$blackjack_params) contains "backdrop type")[
+      (print:$blackjack_params's "backdrop")
+    ](else:)[
+      (print:"<video src='img/" + $blackjack_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")
+    ]
+    <div class="game_header_text">
+      []<game_screen|
+    </div>
+  </div>
+  (replace:?right_options)[{
+    (link:"Play minigame")[
+      (display:"lights out begin")
+    ]
+    <br/>
+    (display:"blackjack skill check link")
+    (if:$minigame_skip is "Skippable Minigames: On")[
+      (link:"Skip (win)")[
+        (set:$next to $blackjack_params's "result passage")
+        (set:$result to "pass")
+        (display:"change screen")
+      ]
+      (link:"Skip (lose)")[
+        (set:$next to $blackjack_params's "result passage")
+        (set:$result to "fail")
+        (display:"change screen")
+      ]
+    ]
+  }]
+  (display:"lights out setup")
+}
+

@@ -1,0 +1,15 @@
+:: lights out begin {"position":"850,6225","size":"100,100"}
+{
+  (display:"lights out refresh screen")
+  (replace:?right_options)[{
+    Moves: |moves>[$moves]/$par
+    <br/><br/>
+    Each (print:$blackjack_params's "bad icon") left on the board will add a $chance% chance of failure.
+    (if:(datanames:$blackjack_params) contains "difficulty factor")[
+      <br/><br/>
+      Difficulty factors: (print:$blackjack_params's "difficulty factor")
+    ]
+  }]
+}
+
+

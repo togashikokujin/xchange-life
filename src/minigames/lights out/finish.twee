@@ -1,0 +1,77 @@
+:: lights out check {"position":"736,6437","size":"100,100"}
+{
+  (set:_fails to (count:$game_grid, -1))
+  (set:$needed to (20 - (floor:(100-$chance*_fails)*0.2) + 2))
+  (if:$needed > 19)[
+    (set:$needed to 20)
+  ]
+  (if:$needed < 2)[
+    (set:$needed to 2)
+  ]
+  (unpack:$blackjack_params into (dm: "good action", _good, "bad action", _bad, "bad icon", _bad_icon))
+  (set:_a to (macro: num-type _value, [
+    (out-data:(cond:(a:8, 11, 18) contains _value, "an ", "a ") + (str:_value))
+  ]))
+  (set:_finish to (macro: bool-type _pass, [
+    (set:$result to (cond: _pass, "pass", "fail")
+    (set:_action to (cond: _pass, "good action", "bad action"))
+    (replace:?game_screen)[
+      (color:"#f9ced5") + (css:"font-size:4vmin")[
+        <span class='shadow'>
+          You (print:_action of $blackjack_params).
+        </span>
+      ]
+    ]
+    (replace:?right_options)[
+      (link:"Next")[
+        (set:$next to $blackjack_params's "result passage")
+        (display:"change screen")
+      ]
+    ]
+    (out:)[]
+  ]))
+  (replace:?game_screen)[
+    (css:"font-size:4vmin")[
+      (color:"#f9ced5")[
+        <span class='shadow'>
+          (if:_fails is 0)[
+            All _bad_icon cleared!
+          ](else:)[
+            (str-repeated:_fails, _bad_icon)
+          ]
+        </span>
+      ]
+      <br/>
+      <mark>
+        (if:$needed > 19)[
+          (if:(random:1,2) is 1)[
+            You need to roll a 20 to _good.
+          ](else:)[
+            (either:"Sorry, but you're", "You're") probably going to _bad. You need to roll a 20.
+          ]
+        ](else-if:$needed < 3)[
+          You're not going to _bad unless you roll a 1 right now.
+        ](else:)[
+          (set:_consequences to (either:"or you'll _bad", "and you'll _good"))
+          Roll at least (_a: $needed), _consequences.
+        ]
+      </mark>
+      <br/>
+      |options>[
+        (link:"Roll d20")[
+          (set:$roll to (random:1,20))
+          (set:$se to "dice")
+          (display:"play sound")
+          (replace:?options)[{
+            (transition:"zoom")[
+              <mark>🎲 You rolled (_a: $roll). 🎲</mark>
+            ]
+          }]
+          (after:time + 1s)[
+            (_finish: $roll >= $needed)
+          ]
+        ]
+      ]
+    ]
+  ]
+}
