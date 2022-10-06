@@ -14,8 +14,8 @@
   ))
   (set:_generation to (cond: _age < 24, "genz", _age < 38, "millenial", "genx"))
   (set:_type to (either:"chad","bad","lad"))
-  (set:_variant to (random:1,10))
-  (set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + (text:_variant) + ".jpg")
+  (set:str-type _variant to (text:(random:1,10)))
+  (set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + _variant + ".jpg")
 
   ($use_global: "$cock_database", "window.GE.cock_database", [{
     (set:$npc to (dm:
@@ -49,6 +49,21 @@
   ]
 
   (display:(text:"random guy description " + _generation))
+
+  ($use_global: '$guy_database', 'window.GE.guy_database', [{
+    (set:_generation_guys to _generation of $guy_database)
+    (set:_npc to _variant of _type of _generation_guys)
+
+    (move:"unfamiliar names" of _npc into _names)
+    (move:"descriptions" of _npc into _descriptions)
+
+    (set:"unfamiliar name" of _npc to (replaced:"$guy", $guy, (either:..._names)))
+    (set:"description" of _npc to (replaced:"$guy", $guy, (either:..._descriptions)))
+    (set:"first name" of _npc to (either:...("first names" of _generation_guys)))
+    (set:"hands" of _npc to (either:...("hands" of _generation_guys)))
+
+    (set:$npc to it + _npc)
+  }])
 
   (set:name of $npc to (cond:_age > 35, "Mr. " + "last name" of $npc, "first name" of $npc))
   (set:$npc's "unfamiliar name" to (upperfirst:it))

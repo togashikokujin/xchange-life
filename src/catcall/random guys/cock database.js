@@ -1,15 +1,15 @@
 var buildCock = function(cocknum, ballsdesc, cockdesc, tipdesc, cockrating, cockfatness, cocklength, ballsize) {
-  return new Map([
-    ["cock", cocknum],
-    ["ballsdesc", ballsdesc],
-    ["cockdesc", cockdesc],
-    ["tipdesc", tipdesc],
-    ["cockrating", cockrating],
-    ["cockfatness", cockfatness],
-    ["cocklength", cocklength],
-    ["ballsize", ballsize],
-    ["cockimg", "img/minigame/masculinity/cocks/bwc/" + cocknum + ".jpg"]
-  ]);
+  return toMap({
+    "cock": cocknum,
+    "ballsdesc": ballsdesc,
+    "cockdesc": cockdesc,
+    "tipdesc": tipdesc,
+    "cockrating": cockrating,
+    "cockfatness": cockfatness,
+    "cocklength": cocklength,
+    "ballsize": ballsize,
+    "cockimg": "img/minigame/masculinity/cocks/bwc/" + cocknum + ".jpg"
+  });
 }
 
 window.GE.cock_database = [

@@ -2106,6 +2106,15 @@ if (typeof module !== 'undefined') {
     module.exports = saveAs;
 }
 /* FileSaver.js - End */
+function toMap(obj) {
+  var mapValues = [];
+
+  for (var name in obj) {
+    mapValues.push([name, obj[name]])
+  }
+
+  return new Map(mapValues)
+}
 
 
 :: character select {"position":"67,469","size":"100,100"}
