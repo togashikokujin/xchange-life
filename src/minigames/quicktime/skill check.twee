@@ -1,7 +1,5 @@
 :: quicktime skill check {"position":"463,4919","size":"100,100"}
 {
-  (set:$clamp to (macro: num-type _value, num-type _min, num-type _max, [(out-data:(min:(max:_min, _value), _max))]))
-
   (set:_high_percentage to (dm:
     1,30,
     2,35,
