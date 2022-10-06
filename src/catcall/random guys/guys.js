@@ -3,36 +3,36 @@ window.GE.guy_database = toMap({
     "bad": toMap({
       "1": toMap({
         "unfamiliar names": [
-          "oily-haired $guy",
-          "brown-haired $guy"
+          "oily-haired _guy",
+          "brown-haired _guy"
         ],
         "descriptions": [
-          "a $guy with glasses",
-          "a $guy with glasses and oily hair"
+          "a _guy with glasses",
+          "a _guy with glasses and oily hair"
         ],
         "tags": ["nerd"],
         "looks": 3
       }),
       "2": toMap({
         "unfamiliar names": [
-          "$guy with a hat",
-          "$guy with a hat and glasses"
+          "_guy with a hat",
+          "_guy with a hat and glasses"
         ],
         "descriptions": [
-          "a $guy with a vaguely annoying expresssion",
-          "a $guy who looks like a bit of a stoner"
+          "a _guy with a vaguely annoying expresssion",
+          "a _guy who looks like a bit of a stoner"
         ],
         "tags": ["hat","glasses","annoying"],
         "looks": 3
       }),
       "3": toMap({
         "unfamiliar names": [
-          "chubby $guy",
-          "nerdy $guy"
+          "chubby _guy",
+          "nerdy _guy"
         ],
         "descriptions": [
-          "a fairly chubby $guy with glasses",
-          "a $guy with glasses and a rotund waist"
+          "a fairly chubby _guy with glasses",
+          "a _guy with glasses and a rotund waist"
         ],
         "tags": ["nerd","chubby"],
         "looks": 2
@@ -51,23 +51,23 @@ window.GE.guy_database = toMap({
       }),
       "5": toMap({
         "unfamiliar names": [
-          "$guy with a mustache",
-          "blue-eyed $guy"
+          "_guy with a mustache",
+          "blue-eyed _guy"
         ],
         "descriptions": [
-          "a $guy with a mustache",
-          "a $guy sporting a faint mustache"
+          "a _guy with a mustache",
+          "a _guy sporting a faint mustache"
         ],
         "looks": 5
       }),
       "6": toMap({
         "unfamiliar names": [
-          "chubby $guy",
-          "creepy $guy"
+          "chubby _guy",
+          "creepy _guy"
         ],
         "descriptions": [
-          "a chubby-looking $guy",
-          "a fairly chubby $guy with a neckbeard"
+          "a chubby-looking _guy",
+          "a fairly chubby _guy with a neckbeard"
         ],
         "tags": ["chubby","beard","nerd"],
         "looks": 3
@@ -99,8 +99,8 @@ window.GE.guy_database = toMap({
       "9": toMap({
         "race": "latin",
         "unfamiliar names": [
-          "tan $guy",
-          "curly-haired $guy"
+          "tan _guy",
+          "curly-haired _guy"
         ],
         "descriptions": [
           "a strangely oily guy",
@@ -111,8 +111,8 @@ window.GE.guy_database = toMap({
       "10": toMap({
         "race": "latin",
         "unfamiliar names": [
-          "oily-haired $guy",
-          "tan $guy"
+          "oily-haired _guy",
+          "tan _guy"
         ],
         "descriptions": [
           "a guy with slick hair",
@@ -129,8 +129,8 @@ window.GE.guy_database = toMap({
           "smiling guy"
         ],
         "descriptions": [
-          "a $guy with slick hair and a confident smile",
-          "a $guy who just exudes confidence"
+          "a _guy with slick hair and a confident smile",
+          "a _guy who just exudes confidence"
         ],
         "tags": ["chad"],
         "looks": 8
@@ -143,32 +143,32 @@ window.GE.guy_database = toMap({
           "total gentleman"
         ],
         "descriptions": [
-          "a $guy with long, curly hair",
-          "a tanned $guy with long black hair"
+          "a _guy with long, curly hair",
+          "a tanned _guy with long black hair"
         ],
         "tags": ["skinny","chad","gentleman"],
         "looks": 10
       }),
       "3": toMap({
         "unfamiliar names": [
-          "smart-looking $guy",
-          "$guy who looks like a tech nerd"
+          "smart-looking _guy",
+          "_guy who looks like a tech nerd"
         ],
         "descriptions": [
           "a guy with a big chin",
-          "a $guy who looks like he's gonna tell you about his NFT project"
+          "a _guy who looks like he's gonna tell you about his NFT project"
         ],
         "tags": ["chad","nerd","smelly"],
         "looks": 7
       }),
       "4": toMap({
         "unfamiliar names": [
-          "purple-haired $guy",
-          "$guy with purple hair"
+          "purple-haired _guy",
+          "_guy with purple hair"
         ],
         "descriptions": [
-          "a $guy with a wry smile and purple hair",
-          "a shortish $guy"
+          "a _guy with a wry smile and purple hair",
+          "a shortish _guy"
         ],
         "tags": ["chad","charming","short"],
         "looks": 6
@@ -188,22 +188,22 @@ window.GE.guy_database = toMap({
       "6": toMap({
         "unfamiliar names": [
           "brown-haired guy",
-          "relaxed $guy"
+          "relaxed _guy"
         ],
         "descriptions": [
           "a guy who looks like he's always calm",
-          "a $guy wearing sunglasses"
+          "a _guy wearing sunglasses"
         ],
         "tags": ["chad"],
         "looks": 7
       }),
       "7": toMap({
         "unfamiliar names": [
-          "blue-eyed $guy",
-          "mean-looking $guy"
+          "blue-eyed _guy",
+          "mean-looking _guy"
         ],
         "descriptions": [
-          "a brown-haired $guy"
+          "a brown-haired _guy"
         ],
         "tags": ["bully"],
         "looks": 7
@@ -211,24 +211,24 @@ window.GE.guy_database = toMap({
       "8": toMap({
         "unfamiliar names": [
           "ginger",
-          "blue-eyed $guy"
+          "blue-eyed _guy"
         ],
         "descriptions": [
           "a blue-eyed ginger",
-          "a $guy with blue eyes"
+          "a _guy with blue eyes"
         ],
         "tags": ["chad","charming"],
         "looks": 9
       }),
       "9": toMap({
         "unfamiliar names": [
-          "bearded $guy",
-          "$guy with a beard",
-          "blue-eyed $guy"
+          "bearded _guy",
+          "_guy with a beard",
+          "blue-eyed _guy"
         ],
         "descriptions": [
           "a tall guy with a beard and blue eyes",
-          "a tall, bearded $guy"
+          "a tall, bearded _guy"
         ],
         "tags": ["chad","jock","beard"],
         "looks": 7
@@ -249,11 +249,11 @@ window.GE.guy_database = toMap({
     "lad": toMap({
       "1": toMap({
         "unfamiliar names": [
-          "bald $guy",
-          "smiling bald $guy"
+          "bald _guy",
+          "smiling bald _guy"
         ],
         "descriptions": [
-          "a smiling bald $guy",
+          "a smiling bald _guy",
           "a clean-cut bald guy"
         ],
         "tags": ["bald","smells good"],
@@ -261,8 +261,8 @@ window.GE.guy_database = toMap({
       }),
       "2": toMap({
         "unfamiliar names": [
-          "balding $guy",
-          "$guy with a scruffy beard"
+          "balding _guy",
+          "_guy with a scruffy beard"
         ],
         "descriptions": [
           "a nicely-dressed guy with scruffy facial hair",
@@ -275,7 +275,7 @@ window.GE.guy_database = toMap({
         "race": "latin",
         "unfamiliar names": [
           "greasy guy",
-          "$guy with soulful eyes"
+          "_guy with soulful eyes"
         ],
         "descriptions": [
           "a guy with a faint mustache and goatee",
@@ -286,13 +286,13 @@ window.GE.guy_database = toMap({
       }),
       "4": toMap({
         "unfamiliar names": [
-          "brown-haired $guy",
+          "brown-haired _guy",
           "normal dude"
         ],
         "descriptions": [
           "a normal-looking guy",
           "a guy with nicely combed hair",
-          "a smiling $guy"
+          "a smiling _guy"
         ],
         "looks": 5
       }),
@@ -303,7 +303,7 @@ window.GE.guy_database = toMap({
         ],
         "descriptions": [
           "a guy who looks easily upset",
-          "a $guy with a scruffy goatee"
+          "a _guy with a scruffy goatee"
         ],
         "tags": ["bully","beard","jock"],
         "looks": 6
@@ -316,7 +316,7 @@ window.GE.guy_database = toMap({
         "descriptions": [
           "a friendly, normal looking guy",
           "a guy with an oily face and a beard",
-          "a $guy with bad B.O."
+          "a _guy with bad B.O."
         ],
         "tags": ["nerd","smelly","beard"],
         "looks": 2
@@ -324,23 +324,23 @@ window.GE.guy_database = toMap({
       "7": toMap({
         "unfamiliar names": [
           "smug-looking guy",
-          "confident $guy"
+          "confident _guy"
         ],
         "descriptions": [
-          "a $guy with a smug smile",
-          "a $guy with a smug grin"
+          "a _guy with a smug smile",
+          "a _guy with a smug grin"
         ],
         "tags": ["fuckboy"],
         "looks": 5
       }),
       "8": toMap({
         "unfamiliar names": [
-          "brown-haired $guy",
+          "brown-haired _guy",
           "dreamer"
         ],
         "descriptions": [
-          "a $guy with a scruffy beard",
-          "a $guy with a scruffy appearance"
+          "a _guy with a scruffy beard",
+          "a _guy with a scruffy appearance"
         ],
         "tags": ["smelly","beard"],
         "looks": 6
@@ -348,12 +348,12 @@ window.GE.guy_database = toMap({
       "9": toMap({
         "race": "asian",
         "unfamiliar names": [
-          "$guy with glasses",
+          "_guy with glasses",
           "respectable guy",
-          "clean-cut $guy"
+          "clean-cut _guy"
         ],
         "descriptions": [
-          "a clean-cut $guy",
+          "a clean-cut _guy",
           "an asian guy"
         ],
         "looks": 6
@@ -366,7 +366,7 @@ window.GE.guy_database = toMap({
         "descriptions": [
           "a normal-looking guy",
           "a guy who looks pretty normal",
-          "a $guy with big eyes and a big smile"
+          "a _guy with big eyes and a big smile"
         ],
         "looks": 5
       })
@@ -384,12 +384,12 @@ window.GE.guy_database = toMap({
       "1": toMap({
         "unfamiliar names": [
           "older guy",
-          "$guy who looks like a dad"
+          "_guy who looks like a dad"
         ],
         "descriptions": [
           "a guy who looks like a typical dad",
           "a nice, daddish-looking guy",
-          "a $guy with a mustache"
+          "a _guy with a mustache"
         ],
         "tags": ["gentleman"],
         "looks": 3
@@ -397,12 +397,12 @@ window.GE.guy_database = toMap({
       "2": toMap({
         "unfamiliar names": [
           "older guy",
-          "$guy who looks like a dad"
+          "_guy who looks like a dad"
         ],
         "descriptions": [
           "a guy who looks like a typical dad",
           "a nice, daddish-looking guy",
-          "a $guy with a mustache"
+          "a _guy with a mustache"
         ],
         "tags": ["gentleman"],
         "looks": 3
@@ -415,7 +415,7 @@ window.GE.guy_database = toMap({
         ],
         "descriptions": [
           "a guy with a beard",
-          "a bearded $guy"
+          "a bearded _guy"
         ],
         "tags": ["beard"],
         "looks": 3
@@ -441,7 +441,7 @@ window.GE.guy_database = toMap({
         ],
         "descriptions": [
           "a guy with a beard",
-          "a bearded $guy with glasses"
+          "a bearded _guy with glasses"
         ],
         "tags": ["beard"],
         "looks": 3
@@ -454,7 +454,7 @@ window.GE.guy_database = toMap({
         ],
         "descriptions": [
           "a guy with a beard",
-          "a bearded $guy with glasses"
+          "a bearded _guy with glasses"
         ],
         "tags": ["beard","bald"],
         "looks": 3
@@ -465,7 +465,7 @@ window.GE.guy_database = toMap({
         ],
         "descriptions": [
           "a man with glasses",
-          "an older $guy with a smile that's way too big"
+          "an older _guy with a smile that's way too big"
         ],
         "tags": ["annoying"],
         "looks": 3
@@ -474,19 +474,19 @@ window.GE.guy_database = toMap({
         "race": "latin",
         "unfamiliar names": [
           "older man",
-          "older $guy"
+          "older _guy"
         ],
         "descriptions": [
-          "a $guy with glasses",
-          "an older $guy with a beard and glasses"
+          "a _guy with glasses",
+          "an older _guy with a beard and glasses"
         ],
         "tags": ["beard"],
         "looks": 2
       }),
       "9": toMap({
         "unfamiliar names": [
-          "pale $guy",
-          "older $guy"
+          "pale _guy",
+          "older _guy"
         ],
         "descriptions": [
           "a pale older man",
@@ -497,7 +497,7 @@ window.GE.guy_database = toMap({
       }),
       "10": toMap({
         "unfamiliar names": [
-          "older $guy"
+          "older _guy"
         ],
         "descriptions": [
           "an older man",
@@ -521,8 +521,8 @@ window.GE.guy_database = toMap({
       }),
       "2": toMap({
         "unfamiliar names": [
-          "middle-aged $guy",
-          "older $guy"
+          "middle-aged _guy",
+          "older _guy"
         ],
         "descriptions": [
           "an older man with messy hair",
@@ -560,7 +560,7 @@ window.GE.guy_database = toMap({
       "5": toMap({
         "unfamiliar names": [
           "middle-aged businessman",
-          "bald $guy"
+          "bald _guy"
         ],
         "descriptions": [
           "an intense older businessman",
@@ -620,7 +620,7 @@ window.GE.guy_database = toMap({
       "10": toMap({
         "unfamiliar names" : [
           "balding guy",
-          "middle-aged $guy"
+          "middle-aged _guy"
         ],
         "descriptions": [
           "a sleazy-looking older man",
@@ -704,7 +704,7 @@ window.GE.guy_database = toMap({
       }),
       "7": toMap({
         "unfamiliar names": [
-          "strange $guy",
+          "strange _guy",
           "older guy with a buzz cut"
         ],
         "descriptions": [
@@ -717,7 +717,7 @@ window.GE.guy_database = toMap({
       "8": toMap({
         "unfamiliar names": [
           "bearded man",
-          "middle-aged $guy"
+          "middle-aged _guy"
         ],
         "descriptions": [
           "a middle-aged man with a beard",
@@ -764,40 +764,40 @@ window.GE.guy_database = toMap({
     "bad": toMap({
       "1": toMap({
         "unfamiliar names": [
-          "chubby $guy",
-          "annoying $guy"
+          "chubby _guy",
+          "annoying _guy"
         ],
         "descriptions": [
-          "an ugly $guy",
-          "a frumpy-looking $guy",
-          "an annoying-looking $guy"
+          "an ugly _guy",
+          "a frumpy-looking _guy",
+          "an annoying-looking _guy"
         ],
         "tags": ["chubby","nerd","annoying"],
         "looks": 3
       }),
       "2": toMap({
         "unfamiliar names": [
-          "annoying blonde $guy",
-          "blonde $guy with glasses",
-          "chubby $guy with glasses",
-          "nerdy-looking blonde $guy"
+          "annoying blonde _guy",
+          "blonde _guy with glasses",
+          "chubby _guy with glasses",
+          "nerdy-looking blonde _guy"
         ],
         "descriptions": [
-          "a $guy who's smiling too much",
+          "a _guy who's smiling too much",
           "an annoyingly happy-looking dude",
-          "a chubby $guy with a high-pitched voice"
+          "a chubby _guy with a high-pitched voice"
         ],
         "tags": ["nerd"],
         "looks": 3
       }),
       "3": toMap({
         "unfamiliar names": [
-          "mousey-looking $guy",
-          "$guy with a slightly creepy face"
+          "mousey-looking _guy",
+          "_guy with a slightly creepy face"
         ],
         "descriptions": [
           "a skinny fuckboy",
-          "a skinny, mousey-looking $guy"
+          "a skinny, mousey-looking _guy"
         ],
         "tags": ["fuckboy"],
         "looks": 4
@@ -808,20 +808,20 @@ window.GE.guy_database = toMap({
           "fuckboy with a Gen-Z mop top"
         ],
         "descriptions": [
-          "a $guy with sunglasses",
-          "a $guy wearing sunglasses",
-          "a short $guy with sunglasses"
+          "a _guy with sunglasses",
+          "a _guy wearing sunglasses",
+          "a short _guy with sunglasses"
         ],
         "tags": ["fuckboy","short"],
         "looks": 4
       }),
       "5": toMap({
         "unfamiliar names": [
-          "chubby $guy",
-          "pudgy $guy"
+          "chubby _guy",
+          "pudgy _guy"
         ],
         "descriptions": [
-          "a chubby $guy with glasses",
+          "a chubby _guy with glasses",
           "an annoying-looking nerd"
         ],
         "tags": ["chubby","annoying"],
@@ -829,24 +829,24 @@ window.GE.guy_database = toMap({
       }),
       "6": toMap({
         "unfamiliar names": [
-          "skinny $guy",
-          "tall $guy with curly hair"
+          "skinny _guy",
+          "tall _guy with curly hair"
         ],
         "descriptions": [
-          "a tall, pale $guy",
-          "a bored-looking $guy"
+          "a tall, pale _guy",
+          "a bored-looking _guy"
         ],
         "tags": ["tall"],
         "looks": 5
       }),
       "7": toMap({
         "unfamiliar names": [
-          "smug-looking $guy",
-          "already-balding $guy"
+          "smug-looking _guy",
+          "already-balding _guy"
         ],
         "descriptions": [
-          "a $guy with bushy eyebrows",
-          "a $guy with a smug expression"
+          "a _guy with bushy eyebrows",
+          "a _guy with a smug expression"
         ],
         "tags": ["skinny","smug"],
         "looks": 5
@@ -855,7 +855,7 @@ window.GE.guy_database = toMap({
         "race": "latin",
         "unfamiliar names": [
           "nerd",
-          "nerdy $guy",
+          "nerdy _guy",
           "annoying-looking geek"
         ],
         "descriptions": [
@@ -870,19 +870,19 @@ window.GE.guy_database = toMap({
         "unfamiliar names": [
           "nerd",
           "chubby nerd",
-          "chubby asian $guy"
+          "chubby asian _guy"
         ],
         "descriptions": [
-          "an asian $guy with glasses",
-          "an asian $guy with rosy cheeks and glasses"
+          "an asian _guy with glasses",
+          "an asian _guy with rosy cheeks and glasses"
         ],
         "tags": ["nerd","chubby"],
         "looks": 4
       }),
       "10": toMap({
         "unfamiliar names": [
-          "annoying-looking $guy with glasses",
-          "$guy with glasses"
+          "annoying-looking _guy with glasses",
+          "_guy with glasses"
         ],
         "descriptions": [
           "an annoying-looking guy"
@@ -895,11 +895,11 @@ window.GE.guy_database = toMap({
       "1": toMap({
         "unfamiliar names": [
           "total chad",
-          "blonde-haired $guy"
+          "blonde-haired _guy"
         ],
         "descriptions": [
-          "a $guy with a leonine mane",
-          "a blonde-haired, blue-eyed $guy"
+          "a _guy with a leonine mane",
+          "a blonde-haired, blue-eyed _guy"
         ],
         "tags": ["chad","jock"],
         "looks": 10
@@ -907,11 +907,11 @@ window.GE.guy_database = toMap({
       "2": toMap({
         "unfamiliar names": [
           "jock",
-          "tough-looking $guy"
+          "tough-looking _guy"
         ],
         "descriptions": [
-          "a confident $guy",
-          "a muscular $guy"
+          "a confident _guy",
+          "a muscular _guy"
         ],
         "tags": ["jock","bully"],
         "looks": 8
@@ -923,15 +923,15 @@ window.GE.guy_database = toMap({
         ],
         "descriptions": [
           "a guy with a mop top",
-          "a grinning $guy"
+          "a grinning _guy"
         ],
         "tags": ["fuckboy","bully"],
         "looks": 7
       }),
       "4": toMap({
         "unfamiliar names": [
-          "brown-haired $guy",
-          "blue-eyed $guy",
+          "brown-haired _guy",
+          "blue-eyed _guy",
           "nice-looking guy"
         ],
         "descriptions": [
@@ -943,24 +943,24 @@ window.GE.guy_database = toMap({
       }),
       "5": toMap({
         "unfamiliar names": [
-          "$guy with yellow glasses",
+          "_guy with yellow glasses",
           "fuckboy"
         ],
         "descriptions": [
           "a guy with a white t-shirt and yellow glasses",
-          "an interesting-looking $guy"
+          "an interesting-looking _guy"
         ],
         "tags": ["fuckboy"],
         "looks": 9
       }),
       "6": toMap({
         "unfamiliar names": [
-          "black-haired $guy",
+          "black-haired _guy",
           "jock"
         ],
         "descriptions": [
-          "a mean-looking $guy",
-          "a muscular $guy"
+          "a mean-looking _guy",
+          "a muscular _guy"
         ],
         "tags": ["chad","jock","bully"],
         "looks": 9
@@ -971,8 +971,8 @@ window.GE.guy_database = toMap({
           "mop-topped redhead"
         ],
         "descriptions": [
-          "a $guy with a flaming mop of red hair",
-          "a $guy with a mega crop of hair"
+          "a _guy with a flaming mop of red hair",
+          "a _guy with a mega crop of hair"
         ],
         "tags": ["nice","hipster"],
         "looks": 8
@@ -980,11 +980,11 @@ window.GE.guy_database = toMap({
       "8": toMap({
         "unfamiliar names": [
           "guy with dark hair",
-          "dark-haired $guy"
+          "dark-haired _guy"
         ],
         "descriptions": [
-          "a $guy with a mysterious expression",
-          "a handsome $guy"
+          "a _guy with a mysterious expression",
+          "a handsome _guy"
         ],
         "tags": ["chad"],
         "looks": 10
@@ -993,11 +993,11 @@ window.GE.guy_database = toMap({
         "race": "latin",
         "unfamiliar names": [
           "chad",
-          "charming $guy"
+          "charming _guy"
         ],
         "descriptions": [
-          "a tan, unshaven $guy",
-          "a $guy with a lot of stubble"
+          "a tan, unshaven _guy",
+          "a _guy with a lot of stubble"
         ],
         "tags": ["chad","beard","charming"],
         "looks": 8
@@ -1019,24 +1019,24 @@ window.GE.guy_database = toMap({
     "lad": toMap({
       "1": toMap({
         "unfamiliar names": [
-          "$guy with glasses",
-          "$guy with flowing hair and glasses"
+          "_guy with glasses",
+          "_guy with flowing hair and glasses"
         ],
         "descriptions": [
-          "a $guy with glasses",
-          "a smug-looking $guy with glasses and flowing hair"
+          "a _guy with glasses",
+          "a smug-looking _guy with glasses and flowing hair"
         ],
         "tags": ["nerd","smug"],
         "looks": 5
       }),
       "2": toMap({
         "unfamiliar names": [
-          "brown-haired $guy",
-          "smiling $guy"
+          "brown-haired _guy",
+          "smiling _guy"
         ],
         "descriptions": [
-          "a $guy who looks like he smiles too much",
-          "a chill-looking $guy"
+          "a _guy who looks like he smiles too much",
+          "a chill-looking _guy"
         ],
         "looks": 5
       }),
@@ -1046,27 +1046,27 @@ window.GE.guy_database = toMap({
           "ginger with glasses"
         ],
         "descriptions": [
-          "a $guy with red hair and glasses",
-          "a $guy with red hair and glasses"
+          "a _guy with red hair and glasses",
+          "a _guy with red hair and glasses"
         ],
         "tags": ["nerd"],
         "looks": 5
       }),
       "4": toMap({
         "unfamiliar names": [
-          "$guy with messy hair",
-          "smelly-looking $guy"
+          "_guy with messy hair",
+          "smelly-looking _guy"
         ],
         "descriptions": [
-          "a $guy with messy brown hair",
-          "a $guy with messy hair and bushy eyebrows"
+          "a _guy with messy brown hair",
+          "a _guy with messy hair and bushy eyebrows"
         ],
         "looks": 6
       }),
       "5": toMap({
         "unfamiliar names": [
-          "blonde bearded $guy",
-          "bearded $guy"
+          "blonde bearded _guy",
+          "bearded _guy"
         ],
         "descriptions": [
           "a guy with red hair and sad eyes",
@@ -1078,24 +1078,24 @@ window.GE.guy_database = toMap({
       "6": toMap({
         "race": "latin",
         "unfamiliar names": [
-          "relaxed-looking $guy",
-          "tan $guy"
+          "relaxed-looking _guy",
+          "tan _guy"
         ],
         "descriptions": [
-          "a very relaxed-looking $guy",
-          "chill $guy"
+          "a very relaxed-looking _guy",
+          "chill _guy"
         ],
         "looks": 6
       }),
       "7": toMap({
         "unfamiliar names": [
-          "summery $guy",
-          "blonde $guy"
+          "summery _guy",
+          "blonde _guy"
         ],
         "descriptions": [
-          "a $guy with blow-dried blonde hair",
-          "a $guy with bleach-blonde hair",
-          "a tan $guy with blonde hair"
+          "a _guy with blow-dried blonde hair",
+          "a _guy with bleach-blonde hair",
+          "a tan _guy with blonde hair"
         ],
         "tags": ["cool"],
         "looks": 8
@@ -1105,34 +1105,34 @@ window.GE.guy_database = toMap({
         "unfamiliar names": [
           "latino hipster",
           "hipster guy with glasses",
-          "$guy with glasses"
+          "_guy with glasses"
         ],
         "descriptions": [
-          "a $guy dressed like a hipster",
-          "a $guy with glasses"
+          "a _guy dressed like a hipster",
+          "a _guy with glasses"
         ],
         "looks": 6
       }),
       "9": toMap({
         "unfamiliar names": [
-          "tough-looking $guy",
-          "$guy with a blonde mop-top"
+          "tough-looking _guy",
+          "_guy with a blonde mop-top"
         ],
         "descriptions": [
-          "a sporty-looking $guy",
-          "a $guy who looks like a highschool bully"
+          "a sporty-looking _guy",
+          "a _guy who looks like a highschool bully"
         ],
         "tags": ["bully","jock"],
         "looks": 6
       }),
       "10": toMap({
         "unfamiliar names": [
-          "smug-looking $guy",
-          "freckled $guy"
+          "smug-looking _guy",
+          "freckled _guy"
         ],
         "descriptions": [
-          "a $guy who looks a bit annoying",
-          "a freckled $guy with red hair"
+          "a _guy who looks a bit annoying",
+          "a freckled _guy with red hair"
         ],
         "tags": ["annoying","smug"],
         "looks": 4

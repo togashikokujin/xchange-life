@@ -1,18 +1,24 @@
 :: create utility macros header [header]
 {
+  (set: $delete_global_variable to (macro: str-type _var_name, [
+    Move the variable into a temp variable that falls out of scope, effectively deleting the variable
+    (out:)[(print: "(move: " + _var_name + " into _temp)")]
+  ]))
+
   (set: $use_global to (macro: str-type _var_name, str-type _js_name, codehook-type _hook, [
     Set the variable to a value so the script tag finds it to create the setter
     Use the script tag to set the variable
     Run the hook that uses the variable
-    Move the variable into a temp variable that falls out of scope, effectively deleting the variable
+    Delete the variable
 
     (out:)[{
       (print: "(set: " + _var_name + " to '')")
       (print: "<script>" + _var_name + " = " + _js_name + "</script>")
       _hook
-      (print: "(move: " + _var_name + " into _temp)")
+      ($delete_global_variable: _var_name)
     }]
   ]))
+
   (set: $clamp to (macro: num-type _value, num-type _min, num-type _max, [(out-data: (min: (max: _value, _min), _max))]))
 }
 

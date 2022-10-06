@@ -48,7 +48,29 @@
     (set:"alternate possessive names" of $npc to it + (a:"his","the old guy's"))
   ]
 
-  (display:(text:"random guy description " + _generation))
+  (set:_guys to (a:"NONE"))
+  (if:_generation is "genx")[
+    (if:(random:1,4) is 1)[
+      (set:wealth of $npc to (random:1,7))
+    ](else:)[
+      (set:wealth of $npc to (random:5,10))
+    ]
+
+    (set:_guys to (a:"man","guy"))
+  ](else-if:_generation is "millenial")[
+    (set:wealth of $npc to (random:1,10))
+
+    (set:_guys to (a:"guy","dude","guy","dude","guy","fellow"))
+  ](else-if:_generation is "genz")[
+    (set: _wealth_cap to (cond: (random:1,4) is 1, 10, 4))
+    (set:wealth of $npc to (random:1,_wealth_cap))
+
+    (set:_guys to (cond:
+      age of $npc < 20, (a:"dude", "guy", "fellow", "teen", "teenager", "teen", "boy"),
+      (a:"dude", "guy", "fellow", "twenty-something")
+    ))
+  ]
+  (set:_guy to (either:..._guys))
 
   ($use_global: '$guy_database', 'window.GE.guy_database', [{
     (set:_generation_guys to _generation of $guy_database)
@@ -57,8 +79,8 @@
     (move:"unfamiliar names" of _npc into _names)
     (move:"descriptions" of _npc into _descriptions)
 
-    (set:"unfamiliar name" of _npc to (replaced:"$guy", $guy, (either:..._names)))
-    (set:"description" of _npc to (replaced:"$guy", $guy, (either:..._descriptions)))
+    (set:"unfamiliar name" of _npc to (replaced:"_guy", _guy, (either:..._names)))
+    (set:"description" of _npc to (replaced:"_guy", _guy, (either:..._descriptions)))
     (set:"first name" of _npc to (either:...("first names" of _generation_guys)))
     (set:"hands" of _npc to (either:...("hands" of _generation_guys)))
 
