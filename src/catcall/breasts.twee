@@ -1,0 +1,188 @@
+:: catcall breasts {"position":"1602,1899","size":"100,100"}
+{
+  (set:$pickup to "body")
+  (set:$tits to (either:"cans","jugs","milkers","tits","boobs","titties"))
+  (set:_catcall to (either:"hey","hey sentence","full"))
+  (if:_catcall is "hey")[
+    (set:_opener to (either:
+      "Ayy girl",
+      "Goddamn",
+      "God-DAMN girl",
+      "Holy shit girl",
+      "Hey girl",
+      "Girl",
+      "Holy fuckkk girl",
+      "Yo bitch",
+      "Excuse me miss"))
+    (set:_comment to "I don't have a line written for this breast size")
+    (if:$character's "breasts" is "C")[
+      (set:_comment to (either:
+        "those are some squeezable titties",
+        "nice tits",
+        "I'd love to motorboat you",
+        "I wouldn't mind squeezing those tits",
+        "I love watching your tits jiggle",
+        "those tits are mesmerizing",
+        "your milkers are just perfect",
+        "those titties would look even better without anything covering em",
+        "I wonder what your face looks like, cause I'll never know - stuck staring at those $tits",
+        "you're so perky, I mean perty, I mean pretty",
+        "your titties are pretties",
+        "you've got a nice rack",
+        "nice rack",
+        "nice cans",
+        "you've got a nice little pair of personalities",
+        "nice jugs",
+        "I bet your smile is even sweeter than your tits, so smile",
+        "those $tits are legendary",
+        "with $tits like those, I bet guys have a hard time keeping eye contact",
+        "your cleavage interests me",
+        "those $tits look so squeezable",
+        "those $tits look heavy, I could hold them for you"))
+    ](else-if:$character's "breasts" is "D")[
+      (set:_comment to (either:
+        "those are some squeezable titties",
+        "nice tits",
+        "I'd love to motorboat those",
+        "I wouldn't mind squeezing those big-ass tits",
+        "I love watching your tits bounce",
+        "those tits are amazing",
+        "your milkers are just perfect",
+        "those big tits would look even better without anything covering em",
+        "I wonder what your face looks like, cause I'll never know - stuck staring at those $tits",
+        "you're so perky, I mean perty, I mean pretty",
+        "your titties are pretties",
+        "you've got a nice rack",
+        "nice rack",
+        "nice cans",
+        "you've got a nice pair of personalities",
+        "nice jugs",
+        "I bet your smile is even sweeter than your tits, so smile",
+        "those $tits are legendary",
+        "with $tits like those, I bet guys have a hard time keeping eye contact",
+        "your cleavage interests me",
+        "those $tits look so squeezable",
+        "those $tits look heavy, I could hold them for you"))
+    ](else-if:$character's "breasts" is "E")[
+      (set:$tits to (either:"cans","jugs","milkers","tits","boobs","titties","udders","bazongas"))
+      (set:_comment to (either:
+        "those are some big ol' titties",
+        "nice udders",
+        "I'd love to motorboat those",
+        "I wouldn't mind squeezing those big-ass $tits",
+        "I love watching your $tits bounce",
+        "those $tits are amazing",
+        "your milkers are just perfect",
+        "those big tits would look even better without anything covering em",
+        "I wonder what your face looks like, cause I'll never know - stuck staring at those $tits",
+        "you're so perky, I mean perty, I mean pretty",
+        "those huge $tits must hurt your back",
+        "you've got a nice rack",
+        "nice rack",
+        "nice cans",
+        "you've got a nice pair of personalities",
+        "nice jugs",
+        "I bet your smile is even sweeter than your tits, so smile",
+        "those $tits are so nice and big",
+        "with $tits like those, I bet guys have a hard time keeping eye contact",
+        "your cleavage interests me",
+        "those $tits look so squeezable",
+        "those $tits look so damn heavy, I could hold them for you",
+        "those $tits are HUGE, I'm in love",
+        "those $tits are gigantic"))
+    ](if:$character's "breasts" is "F")[
+      (set:$tits to (either:"cans","jugs","milkers","tits","boobs","titties","udders","bazongas"))
+      (set:_comment to (either:
+        "those are some big ol' titties",
+        "nice udders",
+        "I'd love to motorboat those",
+        "I wouldn't mind squeezing those big-ass $tits",
+        "I love watching your $tits bounce",
+        "those $tits are amazing",
+        "your milkers are just perfect",
+        "those big tits would look even better without anything covering em",
+        "I wonder what your face looks like, cause I'll never know - stuck staring at those $tits",
+        "you're so perky, I mean perty, I mean pretty",
+        "those huge $tits must hurt your back",
+        "you've got a nice rack",
+        "nice rack",
+        "nice cans",
+        "you've got a nice pair of personalities",
+        "nice jugs",
+        "I bet your smile is even sweeter than your tits, so smile",
+        "those $tits are so nice and big",
+        "with $tits like those, I bet guys have a hard time keeping eye contact",
+        "your cleavage interests me",
+        "those $tits look so squeezable",
+        "those $tits look so damn heavy, I could hold them for you",
+        "those $tits are HUGE, I'm in love",
+        "those $tits are gigantic",
+        "I don't care if your tits are floppy, I love them",
+        "I love those massive $tits",
+        "those gargantuan $tits are totally my jam",
+        "you can tit-fuck easily with that massive rack",
+        "those things are enormous",
+        "it must hurt to walk with $tits that enormous"))
+    ]
+  
+    "_opener, _comment(either:"!",".","!!")"
+  ](else-if:_catcall is "hey sentence")[
+    (set:_opener to (either:
+      "Ayy girl!",
+      "Goddamn, girl!",
+      "Holy shit girl!",
+      "Holy shit!",
+      "Hey you!",
+      "Check this bitch out!",
+      "Yo check this slut out!",
+      "Hey check this bitch out!",
+      "Dayum, girl!",
+      "Damn!"))
+    (set:_comment to (either:
+      "Them's some nice $tits",
+      "Those are some amazing $tits",
+      "You're boobiful",
+      "You're udderly gorgeous",
+      "That's a MILK TRUCK right there",
+      "That's what we call a MILK truck around here",
+      "Those $tits are fire",
+      "That is a nice set o' $tits you got there",
+      "That's a nice pair of $tits you got",
+      "That's a fuckin' nice pair of $tits",
+      "YOU got $tits",
+      "Your $tits... so perfect... so squeezable... MMM",
+      "Did you $tits dial me, because I swear I can hear them calling me",
+      "You have such a nice pair of $tits",
+      "That's a nice pair",
+      "I wanna bury my face between those $tits"))
+
+    "_opener _comment(either:"!",".","!!")"
+  ](else-if:_catcall is "full")[
+    (set:_line to (either:
+      "What a perfect pair of $tits! Would love to have them wrapped around my cock",
+      "I'd love to shove my face a'twixt those $tits",
+      "Nice $tits, girl",
+      "Nice $tits",
+      "Love your big $tits",
+      "Nice $tits",
+      "You're a perfect lil' milk truck with those $tits",
+      "You're just the breast",
+      "Nice $tits, girl",
+      "You're dummy top heavyyyy",
+      "If a guy sees those $tits and doesn't wanna cum inside you, there's something wrong with him",
+      "I like big $tits and I cannot lie",
+      "I'd smack those titties around",
+      "You've got enough milk for my fruit loops",
+      "Hey, nice $tits",
+      "Swiggity switties, damn what nice titties",
+      "You have sexually attractive mammaries",
+      "Excuse me miss, but those $tits could stop a train",
+      "You got a belly to $tits ratio like a damn comic book drawing",
+      "Whoa what the hell, that's a fine pair of $tits",
+      "I wouldn't mind pinching your nipples"))
+
+    "(either:"!",".","!!","...")"
+  ]
+}
+
+

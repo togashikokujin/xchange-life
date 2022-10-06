@@ -4,9 +4,9 @@
   (set:$gain to 0)
   (if:(random:1,4) is 1)[
     (set:_guy_desc to (either:"a guy", "some dude") + " in his " + $npc's agecat)
-    (either:"You're approached by _guy_desc.",(upperfirst:_guy_desc) + " approaches you.")
+    (either:"You're approached by _guy_desc. ",(upperfirst:_guy_desc) + " approaches you. ")
   ](else:)[
-    (print:(upperfirst:$npc's "description")) (either:"approaches you.","starts chatting you up.","decides to shoot his shot.","approaches you.","approaches.")
+    (print:(upperfirst:$npc's "description")) (either:"approaches you. ","starts chatting you up. ","decides to shoot his shot. ","approaches you. ","approaches. ")
   ]
   (set:_text to (either:"before","after"))
   (if:_text is "before")[]

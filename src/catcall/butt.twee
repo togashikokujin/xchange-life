@@ -1,0 +1,92 @@
+:: catcall butt {"position":"1599,1792","size":"100,100"}
+{
+  (set:$pickup to "body")
+  (set:_catcall to (either:"hey","hey sentence","full"))
+  (if:_catcall is "hey")[
+    (set:_opener to (either:
+      "Ayy girl",
+      "Goddamn",
+      "God-DAMN girl",
+      "Holy shit girl",
+      "Hey girl",
+      "Girl",
+      "Holy fuckkk girl",
+      "Yo bitch"))
+    (set:_comment to (either:
+      "I got an extra large sausage right here for them fat buns of yours",
+      "I'd love to shove my face in that fine, pristine ass",
+      "you have an amazing booty",
+      "you're bootiful",
+      "you're a booty angel",
+      "that's some CAKE right there",
+      "you're DUMMY THI-I-ICCC",
+      "you've got a FINE ass",
+      "you've got yourself a FINE ol' booty",
+      "you got yourself a big, fat butt. Me likey",
+      "that's what we call a dump truck",
+      "that's a fat ass",
+      "you got a FAT ASS",
+      "that's a juicy ass you're carrying around"))
+
+    "_opener, _comment(either:"!",".","!!")"
+  ](else-if:_catcall is "hey sentence")[
+    (set:_opener to (either:
+      "Ayy girl!",
+      "Goddamn, girl!",
+      "Holy shit girl!",
+      "Holy shit!",
+      "Hey you!",
+      "Check this bitch out!",
+      "Yo check this slut out!",
+      "Hey check this bitch out!",
+      "Dayum, girl!",
+      "Damn!"))
+    (set:_comment to (either:
+      "Them's some fat buns",
+      "That's an amazing booty",
+      "You're bootiful",
+      "You're a booty angel",
+      "That's some CAKE right there",
+      "That's what we call a dump truck around here",
+      "That's a fat ass",
+      "That is a big fat ass you got there",
+      "That's a nice ass you got",
+      "That's a fuckin' nice ass",
+      "YOU got an ass",
+      "Your ass... so perfect... so nice and round... MMM",
+      "Did you butt dial me, because I swear that ass is calling me",
+      "You have such a nice ass",
+      "That's a nice ass",
+      "I wanna smack that ass"))
+
+    "_opener _comment(either:"!",".","!!")"
+  ](else-if:_catcall is "full")[
+    (set:_line to (either:
+      "What a perfect ass! Would love to hotdog those buns",
+      "I'd love to shove my face in that ass",
+      "Nice ass, girl",
+      "Nice ass",
+      "Love your fat ass",
+      "Nice butt",
+      "Nice dump truck",
+      "That's a big ol' dump truck",
+      "You're bootiful",
+      "Nice ass, girl",
+      "You're dummy thiccccc",
+      "If a guy sees that ass and doesn't wanna cum inside you, there's something wrong with him",
+      "I like big butts and I cannot lie",
+      "I'd hit that ass so hard, if someone pulled me off, they'd become the King of England",
+      "You're thicker than a bowl of oatmeal",
+      "Hey, nice ass",
+      "Swiggity swooty, damn what a booty",
+      "You have sexually attractive hindquarters",
+      "Excuse me miss, but that ass could stop a train",
+      "Excuse me miss, but that caboose could stop a train",
+      "You got a hips to ass ratio like a damn comic book drawing",
+      "Whoa what the hell, that's a fine ass",
+      "I've got a parking space just for that ass",
+      "I wouldn't mind if you sat that big ass down on my lap"))
+    "_line(either:"!",".","!!","...")"
+  ]
+}
+
