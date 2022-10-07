@@ -1,4 +1,4 @@
-:: what is xchange {"position":"1075,1514","size":"100,100"}
+:: what is xchange {"position":"12000,4450","size":"100,100"}
 {
   (set:_text to "Hey there! Welcome to X-Change™: the temporary, fast-acting, gender-swapping pill.
 
@@ -33,7 +33,7 @@ Use the arrows on the right to see renders of your forecasted transformation!
 }
 
 
-:: tg cartoon {"position":"1283,105","size":"100,100"}
+:: tg cartoon {"position":"12100,4450","size":"100,100"}
 {
   (set:_update_cartoon to [
     (replace:?image)[{(t8n:"blur")[(print:"<img src='img/scenes/characters/" + $character's "id" + "/tg/" + (text:$index) +".png' width=60% height=auto>")]}]

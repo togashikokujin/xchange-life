@@ -38,7 +38,7 @@
 }
 
 
-:: event shop deal finish facial
+:: event shop deal finish facial {"position":"12225,4050","size":"100,100"}
 {
   (set:$song to 0)
   (display:"play song")

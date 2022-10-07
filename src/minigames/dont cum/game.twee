@@ -84,7 +84,7 @@
 
     (if:$quicktime_difficulty is "Quicktime Difficulty: Hardcore")[](else:)[]
 
-    (set:$change to 10 - (ceil:5 * ($timer / $quicktime_params's "time")))
+    (set:$change to 15 - (ceil:10 * ($timer / $quicktime_params's "time")))
 
     ($dont_cum_update_points: (cond: $ai_direction is "up", $points + $change, $points - $change))
     (if:$points < 75 and $points > 25)[

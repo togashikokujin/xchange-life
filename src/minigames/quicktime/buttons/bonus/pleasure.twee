@@ -49,7 +49,7 @@
 }
 
 
-:: quicktime pleasure button reward {"position":"969,5908","size":"100,100"}
+:: quicktime pleasure button reward {"position":"975,5900","size":"100,100"}
 {
   (set:$se to "pleasure")
   (display:"play sound")

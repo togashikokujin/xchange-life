@@ -67,9 +67,6 @@
               (print:$quicktime_params's "objective")
             ]
             <br/><br/>
-            (if:$type is "oral" or $type is "transactional sex")[
-              This minigame type is processing intensive, so if you're on a mobile device (or an old PC) I recommend you use a skill check. You'll get the best performance using Chrome.
-            ]
           ]
         ]
       </span>

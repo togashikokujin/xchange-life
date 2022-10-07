@@ -44,9 +44,9 @@
 
 
 :: mall intro {"position":"11914,2808","size":"100,100"}
-(either:
+{(either:
   "Paradise Mall is bustling, as always.",
   "It smells like commerce in here.",
   "The long halls of Paradise Mall echo with footsteps."
-) 
+)}
 

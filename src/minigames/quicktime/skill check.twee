@@ -1,4 +1,4 @@
-:: quicktime skill check {"position":"463,4919","size":"100,100"}
+:: quicktime skill check {"position":"450,4925","size":"100,100"}
 {
   (set:_high_percentage to (dm:
     1,30,

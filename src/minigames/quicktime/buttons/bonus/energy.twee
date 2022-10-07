@@ -58,7 +58,7 @@
       $icon $slut_word $icon
     </mark>
   }]
-  (replace:?shift)[{}
+  (replace:?shift)[{
     <mark>
       $icon $slut_word $icon
     </mark>

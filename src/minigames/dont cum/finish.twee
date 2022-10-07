@@ -25,7 +25,7 @@
 }
 
 
-:: dont cum finish {"position":"571,4525","size":"100,100"}
+:: dont cum finish {"position":"450,4625","size":"100,100"}
 {
   (set:$dontcum to "finished")
   (after: time + 0.5s)[
