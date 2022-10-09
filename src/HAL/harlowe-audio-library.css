@@ -1,0 +1,308 @@
+/**
+ * Harlowe Audio Library (HAL), by Chapel, v2.2.1
+ * for Harlowe 2.1.0 and higher
+ * Released under the Unlicense, and dedicated to the public domain.
+**/
+
+#audio-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100000;
+  background: #e07188
+}
+
+.lds-ring {
+  display: block;
+  position: relative;
+  top: 20%;
+  margin: auto;
+  width: 20em;
+  height: 20em
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 18em;
+  height: 18em;
+  margin: 6px;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  -webkit-animation: lds-ring 1.2s cubic-bezier(.5, 0, .5, 1) infinite;
+  animation: lds-ring 1.2s cubic-bezier(.5, 0, .5, 1) infinite;
+  border-color: #fff transparent transparent transparent
+}
+
+.lds-ring div:nth-child(1) {
+  -webkit-animation-delay: -.45s;
+  animation-delay: -.45s
+}
+
+.lds-ring div:nth-child(2) {
+  -webkit-animation-delay: -.3s;
+  animation-delay: -.3s
+}
+
+.lds-ring div:nth-child(3) {
+  -webkit-animation-delay: -.15s;
+  animation-delay: -.15s
+}
+
+@-webkit-keyframes lds-ring {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0)
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes lds-ring {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0)
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg)
+  }
+}
+
+input#audio-volume {
+  width: 100%;
+  margin: 2em 0
+}
+
+tw-link.partial {
+  width: 25%;
+}
+
+tw-link.story-menu {
+  width: 100%;
+  display: block;
+  font-weight: 400;
+  background: #e07188;
+  font-size: .9em;
+  padding: .2.5vmin 0;
+  color: #111;
+  border: 1px solid #333
+}
+
+tw-link.story-menu.hide {
+  display: none
+}
+
+tw-link.story-menu:hover {
+  opacity: .8
+}
+
+tw-link.story-menu:active {
+  opacity: .6
+}
+
+input[type=range].hal {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 2.25px 0
+}
+
+input[type=range].hal:focus {
+  outline: 0
+}
+
+input[type=range].hal::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 15.5px;
+  cursor: pointer;
+  box-shadow: .4px .4px 1px #4a2424, 0 0 .4px #0d0d0d;
+  background: #111;
+  border-radius: 0;
+  border: 0 solid #010101
+}
+
+input[type=range].hal::-webkit-slider-thumb {
+  box-shadow: 0 0 2.2px rgba(17, 17, 17, .1), 0 0 0 rgba(30, 30, 30, .1);
+  border: 0 solid #fff;
+  height: 20px;
+  width: 11px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, .93);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -2.25px
+}
+
+input[type=range].hal:focus::-webkit-slider-runnable-track {
+  background: #444
+}
+
+input[type=range].hal::-moz-range-track {
+  width: 100%;
+  height: 15.5px;
+  cursor: pointer;
+  box-shadow: .4px .4px 1px #4a2424, 0 0 .4px #0d0d0d;
+  background: #111;
+  border-radius: 0;
+  border: 0 solid #010101
+}
+
+input[type=range].hal::-moz-range-thumb {
+  box-shadow: 0 0 2.2px rgba(17, 17, 17, .1), 0 0 0 rgba(30, 30, 30, .1);
+  border: 0 solid #fff;
+  height: 20px;
+  width: 11px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, .93);
+  cursor: pointer
+}
+
+input[type=range].hal::-ms-track {
+  width: 100%;
+  height: 15.5px;
+  cursor: pointer;
+  background: 0 0;
+  border-color: transparent;
+  color: transparent
+}
+
+input[type=range].hal::-ms-fill-lower {
+  background: #4a2424;
+  border: 0 solid #010101;
+  border-radius: 0;
+  box-shadow: .4px .4px 1px #4a2424, 0 0 .4px #0d0d0d
+}
+
+input[type=range].hal::-ms-fill-upper {
+  background: #111;
+  border: 0 solid #010101;
+  border-radius: 0;
+  box-shadow: .4px .4px 1px #4a2424, 0 0 .4px #0d0d0d
+}
+
+input[type=range].hal::-ms-thumb {
+  box-shadow: 0 0 2.2px rgba(17, 17, 17, .1), 0 0 0 rgba(30, 30, 30, .1);
+  border: 0 solid #fff;
+  height: 20px;
+  width: 11px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, .93);
+  cursor: pointer;
+  height: 15.5px
+}
+
+input[type=range].hal:focus::-ms-fill-lower {
+  background: #111
+}
+
+input[type=range].hal:focus::-ms-fill-upper {
+  background: #444
+}
+
+tw-hook {
+  font-size: inherit;
+}
+
+
+tw-hook[name="tooltip"] {
+  position: relative;
+  font-size: 2.5vmin;
+  display: inline-block;
+  border-bottom: 0px dotted grey;
+  /* If you want dots under the hoverable text */
+}
+
+tw-hook[name="tooltip"] tw-hook[name="tooltiptext"] {
+  visibility: hidden;
+  width: 10em;
+  font-size: 2.5vmin;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  margin-left: .25em;
+  padding: 0.5em;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+tw-hook[name="tooltip"]:hover tw-hook[name="tooltiptext"] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.lds-heart {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transform: rotate(45deg);
+  transform-origin: 40px 40px;
+}
+
+.lds-heart div {
+  top: 32px;
+  left: 32px;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.lds-heart div:after,
+.lds-heart div:before {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+}
+
+.lds-heart div:before {
+  left: -24px;
+  border-radius: 50% 0 0 50%;
+}
+
+.lds-heart div:after {
+  top: -24px;
+  border-radius: 50% 50% 0 0;
+}
+
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+
+  5% {
+    transform: scale(1.1);
+  }
+
+  39% {
+    transform: scale(0.85);
+  }
+
+  45% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(0.9);
+  }
+}

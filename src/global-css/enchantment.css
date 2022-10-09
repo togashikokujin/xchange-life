@@ -1,0 +1,15 @@
+.enchantment-mouseover {
+  border: none;
+}
+
+.enchantment-mouseout {
+  background-color: rgba(64, 149, 191, 0);
+  border: none;
+  border-radius: none;
+}
+
+.enchantment-mouseout:hover {
+  background-color: rgba(64, 149, 191, 0);
+  border: none;
+  border-radius: none;
+}

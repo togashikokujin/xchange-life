@@ -1,0 +1,152 @@
+:: blowjob transactional initialize {"position":"5487,110","size":"100,100"}
+{
+(set:$scene_type to "blowjob")
+(if:(datanames:$blowjob) contains "interrupt chance")[(set:$interrupt_chance to $blowjob's "interrupt chance")(set:$interrupt_roll to $blowjob's "interrupt roll")](else:)[(set:$interrupt_chance to 0)(set:$interrupt_roll to 1)]
+(set:$satisfaction to 0)
+(display:"sex sound variants")
+(set:$variant to (either:1,2,1,1))
+(if:$variant is 1)[(if:$character's "id" is "rae")[(set:$img to "scenes/characters/" + $character's "id" + "/bj/transactional " + (text:(random:1,7)) + ".mp4")](else-if:$character's "id" is "jia" or $character's "id" is "lana")[(set:$img to "scenes/characters/" + $character's "id" + "/bj/transactional " + (text:(random:1,6)) + ".mp4")](else:)[(set:$img to "scenes/characters/" + $character's "id" + "/bj/transactional " + (text:(random:1,5)) + ".mp4")]](else:)[(if:(a:"scarlit","ella","cassidy") contains $character's "id")[(set:$img to "scenes/generic/sex/bj/" + (either:"dark 1","dark 2","dark 3","dark 4","dark 5","nude 1","nude 2","nude 3","nude 4") + ".mp4")](else-if:$character's "race" is "asian")[(set:$img to "scenes/generic/sex/bj/" + (either:"clothed 1","light 4","light 5","light 6","light 7","light 8","light 10","light 12","nude 1","nude 2","nude 3","nude 4","dark 1","dark 2","dark 3","dark 4","dark 5") + ".mp4")](else:)[(set:$img to "scenes/generic/sex/bj/" + (either:"clothed 1","light 1","light 2","light 3","light 4","light 5","light 6","light 7","light 8","light 9","light 10","light 11","light 12","light 13","nude 1","nude 2","nude 3","nude 4") + ".mp4")]](replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bwc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")](set:$stats's "blowjobs given" to $stats's "blowjobs given" + 1)
+
+(if:(datanames:$npc) contains "tags")[(set:$tags to $npc's tags)](else:)[(set:$tags to (a:))]
+
+(set:$minigame to (dm:
+	"difficulty",7,
+	"babe type","clothed",
+	"cock type","nsfw",
+	"masculinity level",65,
+	"reason 1",(either:"You looked cute giving blowjobs.","Did you like sucking his cock?","Didn't you like sucking that big, juicy cock?"),
+	"reason 2","How did you like sucking that cock?",
+	"reason 3","You looked so cute and desperate, sucking that guy off.",
+	"afterwards","blowjob transactional finish"))
+	
+(if:(datanames:$npc) contains "tags")[
+
+(set:$minigame's "reason 1" to (either:"You had your lips wrapped around " + $npc's "name" + "'s cock like you were gonna suck out his soul, haha.","You have the makings of a fine little cock-sucking slut, I'm sure " + $npc's "name" + " would agree.","If only you could've seen yourself, lips wrapped around that " + $npc's "unfamiliar name" + "'s " + $npc's "cockdesc" + " cock."))
+(set:$minigame's "reason 2" to (either:"Did you actually *enjoy* sucking " + $npc's "name" + "'s cock?","Did you like the feeling of pleasing " + $npc's "name" + ", using just your mouth?","Did you feel degraded, inferior, with your lips wrapped around that " + $npc's "unfamiliar name" + "'s " + $npc's "cockdesc" + " cock?"))
+(if:$npc's age > 39)[(set:$minigame's "reason 3" to (either:"That guy you sucked off... he was old enough to be your father.","Have a thing for blowing old guys, eh?","That guy you just blew was old enough to be your dad. How does that make you feel?"))]
+(if:$npc's tags contains "fuckboy")[(set:$minigame's "reason 3" to (either:"That guy just saw you as a warm pair of lips. He didn't care about you.","That guy knows he's better than you.","You really sucked that fuckboy off.","I can't believe you blew a total fuckboy like that. You're really hopeless!"))]
+(if:$npc's tags contains "chad")[(set:$minigame's "reason 2" to (either:"That guy is superior to you in every way. Of course you sucked his cock.","Of course you sucked off that total chad - you're his inferior, by far."))]
+
+]
+
+(set:$quicktime_params to (dm:
+"difficulty","medium",
+"type","bj",
+"victory","He loves how eager you are.",
+"defeat","*It's just so big...*",
+"skill check","bj",
+"skill check difficulty",50,
+"points to win",45,
+"points",15,
+"sequence",(a:"up","down","up","down","up","up","none","down","up","down","left","right"),
+"quicktime timer",1,
+"result passage","blowjob transactional result",
+"backdrop",$img
+))
+(display:"quicktime bj sequence randomize")
+(set:$img to "<video src='img/"+ $img + "' autoplay='' loop='' muted='' playsinline/>")
+(display:"blowjob sounds")
+
+(set:$next to "quicktime initialize")(display:"change screen")}</div>
+
+
+:: blowjob transactional result {"position":"5486,223","size":"100,100"}
+(if:$interrupt_roll <= $interrupt_chance)[(display:$blowjob's "interrupt passage")](else:)[(if:$double_time is "true")[(set:$load to "big")](if:$result is "pass")[(display:"blowjob transactional cum")](else:)[<mark>His satisfaction -1!</mark>(print:"
+
+")(set:$satisfaction to $satisfaction - 1)(display:"blowjob transactional facefuck")(either:"Unsatisfied with your blowjob,","Not satisfied with your sub-par sucking,","Not satisfied with your performance,") (print:$npc's "sex name") (either:"takes control","takes charge","takes charge of things").
+
+(print:$img)(set:$timer to (random:45,75))(display:"play sex loop")(set:$next to "blowjob transactional cum")
+(display:"wait while being facefucked")
+]]
+
+
+:: blowjob transactional facefuck {"position":"5485,341","size":"100,100"}
+{
+(if:$character's "id" is "alina")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,2)))]
+(if:$character's "id" is "cassidy")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,4)))]
+(if:$character's "id" is "rae")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,4)))]
+(if:$character's "id" is "ella")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,3)))]
+(if:$character's "id" is "jade")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,2)))]
+(if:$character's "id" is "jia")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,2)))]
+(if:$character's "id" is "lana")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,3)))]
+(if:$character's "id" is "liya")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,6)))]
+(if:$character's "id" is "mia")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,6)))]
+(if:$character's "id" is "scarlit")[(set:$img to $character's "id" + "/bj/rough " + (text:(random:1,2)))]
+
+(set:$text to $img of 
+(dm:
+	"alina/bj/rough 1","floor",
+	"alina/bj/rough 2","floor",
+	"cassidy/bj/rough 1","floor",
+	"cassidy/bj/rough 2","couch",
+	"cassidy/bj/rough 3","floor",
+	"cassidy/bj/rough 4","couch",
+	"ella/bj/rough 1","wall",
+	"ella/bj/rough 2","floor",
+	"ella/bj/rough 3","floor",
+	"jade/bj/rough 1","floor",
+	"jade/bj/rough 2","floor",
+	"jia/bj/rough 1","couch",
+	"jia/bj/rough 2","floor",
+	"lana/bj/rough 1","floor",
+	"lana/bj/rough 2","floor",
+	"lana/bj/rough 3","floor",
+	"liya/bj/rough 1","floor",
+	"liya/bj/rough 2","floor",
+	"liya/bj/rough 3","floor",
+	"liya/bj/rough 4","floor",
+	"liya/bj/rough 5","floor",
+	"liya/bj/rough 6","floor",
+	"mia/bj/rough 1","floor",
+	"mia/bj/rough 2","floor",
+	"mia/bj/rough 3","couch",
+	"mia/bj/rough 4","floor",
+	"mia/bj/rough 5","couch",
+	"mia/bj/rough 6","couch",
+	"rae/bj/rough 1","couch",
+	"rae/bj/rough 2","floor",
+	"rae/bj/rough 3","floor",
+	"rae/bj/rough 4","floor",
+	"scarlit/bj/rough 1","floor",
+	"scarlit/bj/rough 2","upside down"))
+	
+(set:$img to "<video src='img/scenes/characters/" + $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+(display:"bj rough sounds")
+}
+
+
+:: blowjob transactional cum {"position":"5488,455","size":"100,100"}
+(replace:?right_options)[](if:(random:1,2) is 1)[(print:"<video src='img/scenes/generic/sex/pre/bwc/jerking.mp4' autoplay='' loop='' muted='' playsinline/>")](else:)[(print:$img)]
+(if:$result is "pass")[<mark>His satisfaction +1!</mark>(set:$satisfaction to $satisfaction + 1)
+
+](if:(Random:1,2) is 1)[(print:(upperfirst:$npc's "sex name")) (either:"groans, he's gonna cum!","gives a loud moan.","Moans loudly. He's about to blow his load!","groans heavily, and his cock twitches. He's about to cum.")](else:)[(print:(upperfirst:$npc's "sex name"))'s (either:"cock twitches in your mouth","cock twitches","cock starts to throb in your mouth"). (either:"He's gonna cum.","He's gonna blow!")]
+<div class='options'>(link:"On my face!")[(set:$choice to "face")(set:$next to "blowjob transactional cum choice")(display:"change screen")](link:"In my mouth!")[(set:$choice to "mouth")(set:$next to "blowjob transactional cum choice")(display:"change screen")]</div>
+
+
+:: blowjob transactional cum choice {"position":"5486,565","size":"100,100"}
+(if:$result is "fail" or (random:1,3) is 1 or $tags contains "fuckboy" or ($tags contains "chad" and (random:1,2) is 1))[(set:$his_choice to (either:"face","mouth"))](else:)[(set:$his_choice to $choice)](if:$load is "big" and (random:1,2) is 1)[(set:$his_choice to "mouth")](if:$his_choice is "face")[(display:"sex cum on face")](else:)[(display:"sex cum in mouth")](print:$img)(if:$text contains "big load")[(set:$sound to $se)(display:"play sound")](else:)[(display:"his cum sounds")]
+(unless:$choice is $his_choice)[(if:(random:1,2) is 1)["(if:$tags contains "fuckboy")[(either:"Nah","Naw"), (if:$his_choice is "mouth")[(either:"take your medicine,","you're gonna drink it,")](else:)[(either:"I'm gonna make you prettier","I'm gonna make you look good","I'm gonna paint your face"),] (either:"ho","thot",$petname),](else-if:$tags contains "chad")[(if:$his_choice is "face")[(either:"Prefer painting your face","I prefer cumming on sluts' faces","I'd rather cover your face","I'd rather cum on your face","Nah, I'm nutting on your face"),](else:)[(either:"Just take your medicine","You're gonna swallow it","You're gonna take it in your mouth","You're gonna swallow","You're gonna drink it","It's going in your mouth"),]](else:)[(either:"I don't think so,","Nah,","No,")]" he grunts](else:)[(either:"He shakes his head","He just grunts")](if:$his_choice is "face")[, (either:"angling his cock toward your face instead","pointing his cock at your face instead").](else:)[. "(either:"Say 'ah'.","Open wide.","Open wide, slut.","Open wide!")"] (if:$text contains "jerk")[(if:$his_choice is "mouth")[(either:"Submissively, you take it in your hand and start jerking it, mouth open.","Mouth opening dutifully, you take his erection and start jerking it.","Dutifully, you take his dick in your hands and open your mouth.")]]](else-if:$his_choice is "face")["(either:"Hah, sure,","Heh,","NNNnghh...","MMMMnnnn!!!","Oh FUCK yes,","God, yes! NNnnggh-")" (either:"he points his cock at your face","he points his cock at your face, as he beats off","he groans mightily, ready to unload").](else-if:$his_choice is "mouth")["(either:"Hah, sure....","Heh...","NNNnghh...","MMMMnnnn!!!","Oh FUCK yes...","God, yes! NNnnggh-") (either:"Say ah!","Open wide!","Open wide, slut.","Open up...")" (if:$text contains "jerk")[(either:"you take a hold of his cock and finish him off, like a good girl.","you grasp his meaty cock to finish him off.")]](if:$text contains "big load")[
+
+(either:"Oh FUCK.","Holy FUCK.","God-DAMN!") (either:"This is a big load...","This is an absolutely massive load.","This fucking load is absolutely massive.")](else-if:$his_choice is "face")[
+
+(display:"cum face description")(if:$cum_text contains "hair" and not ($hairstyle is 0))[(print:"
+
+")<mark>(print:$npc's "name")'s cum got in your hair, ruining your (print:$hairstyle of (dm:"bangs","bangs",
+"blowout","blowout",
+"cornrow braid","cornrow braids",
+"braids","braids",
+"volume","voluminous hairdo",
+"curly","nice curls",
+"beach","beachy hair",
+"fancy","fancy hairdo",
+"high ponytail","ponytail",
+"odango","odango buns",
+"pigtails","pigtails",
+"ponytail","ponytail",
+"straightened","hair straightening",
+"updo","up-do",
+"wavy","wavy hairstyle")).</mark>(set:$hairstyle to 0)(set:$hairstyle_timer to 0)(display:"refresh portrait")
+](replace:?portrait)[(print:"<img class='border' src='img/characters/cum/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")](set:$character's "status" to "cum")(set:$npc_cum to $npc's "sex name")](else-if:$his_choice is "mouth")[(display:"cum mouth description")](if:$his_choice is "face" and not ($text contains "in mouth"))[
+
+<mark>Final satisfaction rating: (if:$satisfaction is -2)[DISAPPOINTED](if:$satisfaction is -1)[QUITE UNIMPRESSED](if:$satisfaction is 0)[UNIMPRESSED](if:$satisfaction is 1)[SATISFIED](if:$satisfaction is 2)[VERY SATISFIED](if:$satisfaction is 3)[*SUPREMELY* SATISFIED]</mark>]
+<div class='options'>(if:$text contains "big load")[(link:"Try not to gag")[(set:$sex_loop_continue to "true")(display:"big load minigame")]](else-if:$text contains "in mouth")[(link:"Spit")[(set:$choice to "spit")(set:$next to "blowjob transactional cum spit swallow choice")(display:"change screen")](link:"Swallow")[(set:$choice to "swallow")(set:$next to "blowjob transactional cum spit swallow choice")(display:"change screen")]](else:)[(display:"masculinity crisis link")]</div>

@@ -1,0 +1,12 @@
+:: StoryTitle
+X-Change Life
+
+
+:: StoryData
+{
+	"ifid": "A395D6EB-1B75-425F-A08C-63E866B6F337",
+	"format": "Harlowe",
+	"format-version": "3.3.3",
+	"start": "starting passage",
+	"zoom": 0.6
+}

@@ -1,0 +1,26 @@
+#towergame {
+  margin: 0;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+}
+
+#instructions {
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#results {
+  display: none;
+  cursor: default;
+}
+
+#results .content,
+#instructions .content {}
+
+#score {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+}

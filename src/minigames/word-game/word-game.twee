@@ -1,0 +1,437 @@
+:: word game begin {"position":"258,7081","size":"100,100"}
+{(set:$persuade to "na")(set:$result to "none")
+(set:$difficulty to $word_game's "difficulty")(set:$association_index to 1)
+(if:$difficulty > 74)[(set:$win_amount to 1)](else-if:$difficulty < 26)[(set:$win_amount to 5)](else-if:$difficulty > 65)[(set:$win_amount to 2)](else-if:$difficulty < 34)[(set:$win_amount to 4)](else:)[(set:$win_amount to 3)]
+(if:$difficulty > 74)[(set:$lose_amount to 5)](else-if:$difficulty < 26)[(set:$lose_amount to 1)](else-if:$difficulty > 65)[(set:$lose_amount to 4)](else-if:$difficulty < 34)[(set:$lose_amount to 2)](else:)[(set:$lose_amount to 3)]
+(set:$persuasion_guess to (a:))
+(set:$sentences to $word_game's "sentences")
+(set:$persuasion_correct to (words:$sentences's 1st))
+
+(if:$sentences's length > 1)[(set:$sentences to (subarray:$sentences, 2, $sentences's length))](else-if:$sentences's length is 1)[(set:$sentences to (a:))]
+(set:$persuasion_bits to (shuffled:...$persuasion_correct))(display:"word minigame arousal mod")
+(set:$index to 0)
+<div class="game_header">
+(print:$word_game's "backdrop")
+  <div class="game_header_text">(set:$time_limit to (round:((-0.07 * $difficulty) + 20)))(set:$word_time_left to (max:$time_limit,(($persuasion_correct's length)*2)))[(live:1s)[(display:"word minigame timer")(unless:$result is "none")[(replace:?timer)[](if:$result is "pass")[(replace:?challenge_text)[<mark>(display:$word_game's "win passage")</mark>](replace:?right_options)[<span class='shadow'>You win!</span>
+(link:"Next")[(replace:?right_options)[](set:$next to $word_game's "victory passage")(display:"change screen")]]](else:)[(replace:?challenge_text)[<mark>(display:$word_game's "fail passage")</mark>](replace:?right_options)[<span class='shadow'>You lose...</span>
+(link:"Next")[(replace:?right_options)[](set:$next to $word_game's "failure passage")(display:"change screen")]]](stop:)]](color:"#f9ced5")[(css:"font-size:4em")[<span class='shadow'>$time_limit</span>]]]<timer|(print:"
+  ")
+  <mark>|challenge_text>[(if:$word_game's "type" is "pick up")[(print:$word_game's "first lines"'s 1st)]]</mark></div>
+</div>
+
+<div class="options">
+</div>
+(print: "<script>GE.updateStats(" + 
+(text: $word_game's "points to win") + "," + (text: $word_game's "points")
++ ");")
+<div id="win-bar">
+            <div class='bar' style='background: repeating-linear-gradient(
+               45deg,
+               rgba(255, 255, 255, 0.9),
+               rgba(255, 255, 255, 0.9) 40px,
+               rgba(255, 255, 255, 1) 40px,
+               rgba(255, 255, 255, 1) 80px
+               );'>[**(print:$word_game's "points") / (print:$word_game's "points to win")**]<score_bar|</div>
+</div><table cellpadding="0" cellspacing="0"><tr><td width=25%>|result>[]|cursor>[(text-style:"blink")[_]]</td>
+  </tr>
+</table><div class='options'>[(for: each _word, ...$persuasion_bits)[
+(print:"(link: '" + (text: _word) + "')[(append:?result)[(print:'" + (text: _word) + "' + ' ')](set:$index to $index + 1)(set:$persuasion_guess to $persuasion_guess + (a:'" + (text: _word) + "'))(display:'word minigame check guess')]")
+]]<options|</div>
+}
+
+
+:: word game skill check {"position":"256,7200","size":"100,100"}
+{
+(replace:?challenge_text)[]
+(set:$skill_difficulty to 50 + ($character's "arousal" * 5))
+(set:$character's "effective charm" to (max:(min:10,$character's "effective charm"),1))
+
+(set:$percentage_chance to $character's "effective charm" of (dm:
+1,30,
+2,35,
+3,45,
+4,50,
+5,60,
+6,70,
+7,80,
+8,85,
+9,90,
+10,95))
+(set:_difficulty_mod to (100-$skill_difficulty))
+(unless:$percentage_chance is 50)[(set:$percentage_chance to (min:(max:(ceil:((_difficulty_mod + $percentage_chance + $percentage_chance)/3)),5),95))](if:$percentage_chance < 56 and $percentage_chance > 44)[(set:$percentage_chance to 50)]
+
+(link:"Charm check" + " (" + (text:$percentage_chance) + "%)")[
+
+(replace:?challenge_text)[]
+
+(replace:?right_options)[(set:$se to "dice")(display:"play sound")(display:"word game skill check result")]
+
+]
+}
+
+
+:: word game skill check result {"position":"377,7203","size":"100,100"}
+{(replace:?right_options)[(set:$roll to (random:1,20))(set:$needed to (20 - (floor:$percentage_chance*0.2)) + 1)(if:$needed is 0)[(set:$needed to 1)](if:$needed > 20)[(set:$needed to 20)](color:"#e27087")[(if:$needed is 20)[You need to roll a 20.](else-if:$needed is 1)[As long as you don't roll a 1, you're good.](else:)[(either:"You need to roll a $needed or higher to succeed.","You need at least a $needed...","You need a $needed or higher to pass...","Gotta roll at least a $needed.")]](print:"
+")
+D20 roll:(print:" ")<span class='shadow'>[]<dice|</span>
+(replace:?dice)[$roll]
+(if:$roll >= $needed)[(set:$result to "pass")(either:"You win!","Nice!","You got it!")
+(link:"Next")[(replace:?right_options)[](set:$next to $word_game's "victory passage")(display:"change screen")]
+(replace:?challenge_text)[<mark>(display:$word_game's "win passage")</mark>
+(set:$gain_base to 2)(display:"charm gain xp")(set:$result to "pass")]](else:)[(replace:?challenge_text)[<mark>(display:$word_game's "fail passage")</mark>
+(set:$gain_base to 1)(display:"charm gain xp")](set:$result to "fail")(if:($needed - $roll < 2))[(either:"You fail, just barely...","So close!","Almost!","Too bad, that was close!")](else:)[(either:"You lose.","Too low.","You fail.")](print:"
+")(set:$result to "fail")
+(link:"Next")[(replace:?right_options)[](set:$next to $word_game's "failure passage")(display:"change screen")]]]}
+
+
+:: word game initialize {"position":"133,6970","size":"100,100"}
+{
+<div class="game_header">
+(print:$word_game's "backdrop")
+  <div class="game_header_text">[<span class='shadow'>(either:"Form correct sentences before the time runs out.","Un-scramble the sentences before the time runs out!")</span>]<challenge_text|</div>
+</div>
+(replace:?right_options)[(link:"Begin")[(replace:?right_options)[](replace:?screen)[(display: "word game begin")]](display:"word game skill check")(if:$minigame_skip is "Skippable Minigames: On")[
+(link:"Skip (win)")[(set:$result to "pass")(replace:?right_options)[](set:$next to $word_game's "victory passage")(display:"change screen")]
+(link:"Skip (lose)")[(set:$result to "fail")(replace:?right_options)[](set:$next to $word_game's "failure passage")(display:"change screen")]]]
+}
+
+
+:: word game test {"position":"260,6965","size":"100,100"}
+{(set:$npc to (dm:"id","leah"))
+(set:$word_game to (dm:
+"challenge","Resist your new female hormones!",
+"near victory","Your mind is strong!",
+"near defeat","It's so hard...",
+"victory","Yes, mind over matter!",
+"defeat","You couldn't resist!",
+"points to win",15,
+"points",5,
+"failure passage","nona driver resist fail",
+"victory passage","nona driver resist succeed",
+"backdrop","<img class='border' src='img/npc/girls/" + $npc's "id" + "/bar_normal.jpg' width='100%' height=auto>",
+"dealer name","Dealer",
+"difficulty",67,
+"text color","black",
+"sentences",(a:),
+"first lines",(a:),
+"type","pick up",
+"fail passage","nona driver resist fail text",
+"win passage","nona driver resist win text"
+))
+(if:(Random:1,2) is 1)[(display:"dirty pickup lines")](else:)[(display:"nice pickup lines")]
+(display:"word game initialize")}
+
+
+:: word minigame timer {"position":"145,7082","size":"100,100"}
+{
+
+(set:$word_time_left to ($word_time_left - 1))
+(if:$word_time_left is 0)[(display:"word minigame check fail")](else-if:$word_time_left < 0)[(replace:?timer)[]](else:)[
+(replace:?timer)[<span class='shadow'>(color:"#f9ced5")[(css:"font-size:4em")[$word_time_left]]</span>]]
+}
+
+
+:: word minigame check guess {"position":"146,7204","size":"100,100"}
+{(if:(subarray:$persuasion_correct,1,$index) is $persuasion_guess)[(if:$index is $persuasion_correct's length)[(display:"word minigame check pass")(stop:)]](else:)[(display:"word minigame check fail")(stop:)(stop:)]}
+
+
+:: word minigame check pass {"position":"148,7315","size":"100,100"}
+{
+(stop:)(set:$persuade to "true")
+(replace:?challenge_text)[(if:$word_game's "type" is "pick up")[(display:$word_game's "win passage")](else:)[(for: each _item, ...$persuasion_correct)[*_item*(print:" ")]]](replace:?options)[(display:"word minigame score")]
+}
+
+
+:: word minigame check fail {"position":"262,7310","size":"100,100"}
+{
+(unless:$persuade is "true")[(replace:?challenge_text)[](replace:?options)[(display:"word minigame fail")]](set:$persuade to "false")
+}
+
+
+:: word minigame score {"position":"147,7435","size":"100,100"}
+{
+(set:$se to "quicktime correct 1 B")(display:"play sound")
+(set:$word_game's "points" to (min:$word_game's "points to win", ($word_game's "points" + $win_amount)))
+(replace:?score_bar)[**(print:$word_game's "points") / (print:$word_game's "points to win")**(print: "<script>GE.updateStats(" + 
+(text: $word_game's "points to win") + "," + (text: (min:$word_game's "points",$word_game's "points to win"))
++ ");")]
+
+(if:$word_game's "points" >= $word_game's "points to win")[(replace:?right_options)[(replace:?right_options)[(link:"You win!")[(display:"word minigame win")]](set:$result to "pass")]](else:)[(set:$se to "quicktime correct 1 A")(display:"play sound")(display:"word minigame next")(set:$word_time_left to $word_time_left + (max:$time_limit,($persuasion_correct's length)*2))]
+(replace:?challenge_text)[<mark>(display:$word_game's "win passage")</mark>(if:$word_game's "points" >= $word_game's "points to win")[(replace:?options)[(set:$gain_base to 2)(display:"charm gain xp")]]]
+(set:$win_amount to ($win_amount + 1))
+
+}
+
+
+:: word minigame fail {"position":"261,7432","size":"100,100"}
+{(replace:?timer)[](set:$se to "quicktime incorrect")(display:"play sound")
+(set:$word_game's points to (max:$word_game's "points" - $lose_amount,0))
+(replace:?score_bar)[**(print:$word_game's "points") / (print:$word_game's "points to win")**(print: "<script>GE.updateStats(" + 
+(text: $word_game's "points to win") + "," + (text: (min:$word_game's "points",$word_game's "points to win"))
++ ");")](replace:?challenge_text)[(display:$word_game's "fail passage")]
+(live:0.5s)[(if:$word_game's "points" < 1)[(unless:$result is "pass")[(set:$result to "fail")]](else:)[(display:"word minigame next")](stop:)]
+(set:$lose_amount to ($lose_amount + 1))
+}
+
+
+:: word minigame next {"position":"160,7556","size":"100,100"}
+{
+
+(if:((datanames:$word_game) contains "word association") and (random:1,2) is 1)[(display:"word minigame association")](else:)[
+(set:$persuasion_guess to (a:))
+(set:$persuasion_guess to (a:))
+(set:$persuasion_correct to (words:$sentences's 1st))
+(if:$sentences's length > 1)[(set:$sentences to (subarray:$sentences, 2, $sentences's length))(if:$word_game's "type" is "pick up")[(set:$word_game's "first lines" to (subarray:$word_game's "first lines", 2, $word_game's "first lines"'s length))]](else-if:$sentences's length is 1)[(set:$sentences to (a:))]
+(set:$persuasion_bits to (shuffled:...$persuasion_correct))
+(display:"word minigame arousal mod")
+(display:"word minigame shame mod")
+(set:$index to 0)
+
+(replace:?result)[]
+(replace:?options)[(link:"Next")[(if:$word_time_left < 1)[(set:$word_time_left to (max:$time_limit,(($persuasion_correct's length)*2)))](replace:?challenge_text)[(print:$word_game's "first lines"'s 1st)]
+(replace:?options)[(set:$persuade to "na")(replace:?ticking)[](for: each _word, ...$persuasion_bits)[
+(print:"(link: '" + (text: _word) + "')[(append:?result)[(print:'" + (text: _word) + "' + ' ')](set:$index to $index + 1)(set:$persuasion_guess to $persuasion_guess + (a:'" + (text: _word) + "'))(display:'word minigame check guess')]")
+]]]]]
+}
+
+
+:: word minigame association {"position":"264,7552","size":"100,100"}
+{
+(if:$association_index > (length of $word_game's "association question"))[(set:$association_index to 1)]
+(set:$question to ($association_index of $word_game's "association question"))
+(set:$bad_answer to ($association_index of $word_game's "association bad answer"))
+(set:$good_answer to ($association_index of $word_game's "association good answer"))
+(replace:?options)[(link:"Next")[(replace:?result)[(print:$question)](replace:?challenge_text)[$question]
+(replace:?options)[(if:(Random:1,2) is 1)[(link:$bad_answer)[(display:"word minigame association incorrect")](link:$good_answer)[(display:"word minigame association correct")]](else:)[(link:$good_answer)[(display:"word minigame association correct")](link:$bad_answer)[(display:"word minigame association incorrect")]]]]](set:$association_index to $association_index + 1)
+}
+
+
+:: word minigame association correct {"position":"266,7668","size":"100,100"}
+{(replace:?result)[](replace:?challenge_text)[$question $good_answer.](replace:?options)[(display:"word minigame score")]}
+
+
+:: word minigame association incorrect {"position":"376,7669","size":"100,100"}
+{(replace:?result)[](replace:?challenge_text)[](replace:?options)[(display:"word minigame fail")]}
+
+
+:: word minigame arousal mod {"position":"150,7777","size":"100,100"}
+{
+(if:(datanames:$word_game) contains "aroused words")[
+(if:$character's "arousal" > 0)[
+(set:$words to (shuffled:...($word_game's "aroused words")))]
+
+(if:$character's "arousal" > 7)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2)))](else:)[(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2,3)))](else:)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2,3,4)))]]
+](else-if:$character's "arousal" > 3)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))](else:)[(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2)))]]
+](else-if:$character's "arousal" > 2)[
+(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+](else-if:$character's "arousal" > 1)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+](else-if:$character's "arousal" > 0)[
+(if:(random:1,4) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+]]
+
+(if:(datanames:$word_game) contains "controlled words")[
+(if:$control < 6)[
+(set:$words to (shuffled:...($word_game's "controlled words")))]
+
+(if:$control < 2)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2)))](else:)[(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2,3)))](else:)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2,3,4)))]]
+](else-if:$control < 3)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))](else:)[(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2)))]]
+](else-if:$your_pleasure > 9)[
+(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+](else-if:$your_pleasure > 8)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+](else-if:$your_pleasure > 7)[
+(if:(random:1,4) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+]]
+(set:$persuasion_bits to (shuffled:...$persuasion_bits))
+}
+
+
+:: word minigame shame mod {"position":"149,7891","size":"100,100"}
+{
+(set:$pride to -1*$submissiveness)
+(if:(datanames:$word_game) contains "pride words")[
+(if:$pride > 0)[
+(set:$words to (shuffled:...($word_game's "pride words")))]
+
+(if:$pride > 3)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))](else:)[(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1,2)))]]
+](else-if:$pride> 2)[
+(if:(random:1,2) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+](else-if:$pride > 1)[
+(if:(random:1,3) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+](else-if:$pride > 0)[
+(if:(random:1,4) is 1)[(set:$persuasion_bits to ($persuasion_bits + $words's (a:1)))]
+]]
+
+}
+
+
+:: dirty pickup lines {"position":"518,7131","size":"100,100"}
+{=
+
+
+(set:_pickup_lines to (a:
+"You’re so hot...","My zipper is falling for you.",
+"I’m on top of things.","Would you like to be one of them?",
+"Hey! My name is Microsoft.","Can I crash at your place tonight?",
+"Is your name winter?","Because you’ll be coming soon.",
+"I’m not into watching sunsets...","But I’d love to see you go down.",
+"Are you an exam?","Because I have been studying you like crazy.",
+"Are you a haunted house?","I’m going to scream when I’m in you.",
+"Is it hot in here?","Or is it just you?",
+"Are you butt dialing me?","I thought I heard your ass calling me.",
+"Are those pants from space?","Because your ass is out of this world.",
+"Are you a sea lion?","Cause I can see you lyin’ in my bed tonight.",
+"You remind me of a championship bass.","I don’t know whether to mount, or eat you.",
+"Is your name homework?","Cause I’m not doing you but I should be.",
+"Roses are red, violets are blue.","I like spaghetti, let’s go screw.",
+"So how do you like your eggs in the morning?","Scrambled, or fertilized?",
+"Need a pillow to sit on?","I can be yours if you want.",
+"Want to come over and watch porn all night...","On my new mirror?",
+"There’s a big sale in my bedroom right now.","Clothes are 100% off!",
+"Is that a keg in your pants?","Cause I wanna tap that ass.",
+"Let’s play house!","You’ll be the door and I’ll slam you.",
+"Are you a stack of dirty dishes?","’Cause I want to get you wet and do you all night long.",
+"Do you have pet insurance? No?","That’s too bad, because your pussy is going to get pounded tonight.",
+"Those are some nice legs.","What time do they open?",
+"Is your name Medusa?","Cause I’m rock hard?",
+"Hey girl, are you an escalator?","Because I wanna go down on you.",
+"If you were a washing machine...","I’d put my dirty load inside you.",
+"Hey girl, you ever had...","Your belly button tickled from inside?",
+"Baby, are you feeling down?","Because I can feel you up.",
+"Do you live on a chicken farm?","Cause you sure know how to raise a cock.",
+"Do you like flowers? Yes?","Well get your tulips round this.",
+"If I could rearrange the alphabet...","I’d put my dick in your ass.",
+"I see you like fitness.","How about fitness dick in your mouth?",
+"I see you like dragons...","How about me dragon this dick on your face?",
+"Are you a single mom? No?","Would you like to be?",
+"I wish you were my big toe...","So I could bang you on my coffee table.",
+"My dick just died.","Would you mind if I buried it in your ass?",
+"That outfit is very becoming on you. Then again, if I were on your chest...","I’d be cumming on you too.",
+"Do you have home insurance?","Because I’m gonna smash your backdoors in in.",
+"Your face is like a wrench.","When I see it, my nuts tighten up.",
+"Are you a termite?","Because I’ll give you a mouthful of wood.",
+"Won’t you sit on my lap?","We can talk about the first thing that pops up!",
+"Hey baby, would you like to sixty eight?","That’s where you blow me, and I owe you one.",
+"Hey baby, your legs remind me of peanut butter...","Smooth, tasty, and easy to spread.",
+"I could've called heaven and asked for an angel...","But I was hoping you’re a slut instead.",
+"Are you a drill sergeant?","Because you have my privates standing at attention.",
+"One of my friends told me girls hate oral.","Do you wanna help me prove him wrong?",
+"Do you like to draw?","Because I put the D in Raw.",
+"The FBI wants to steal my penis.","Can I hide it inside you?",
+"I’m not into watching sunsets...","But I’d love to see you go down.",
+"Let’s play carpenter.","First we’ll get hammered, then I’ll nail you.",
+"Your smile is almost as big, warm and lovely...","As my penis.",
+"Are you a raisin?","Because you’re raisin my dick.",
+"I’d love to kiss those beautiful, luscious lips.","And the ones on your face.",
+"Do you run track?","Because I heard you Relay want this dick.",
+"Are you a pirate?","Because I have a lot of semen waiting for you.",
+"Was your dad a baker?","Because you’ve got a nice set of buns.",
+"Are you a shark?","Cause I’ve got swimmers for you to swallow.",
+"Are you an archaeologist?","Because I’ve got a bone for you to examine.",
+"Fuck me if I’m wrong...","But dinosaurs still exist, right?",
+"Are you a racehorse?","When I ride, you’ll always finish first.",
+"Are you flappy bird?","Because I could tap you all night.",
+"Do you work for UPS?","I saw you checking out my package.",
+"Hey, you wanna do a 68?","You go down on me, and I’ll owe you one.",
+"You know what I like in a girl?","My dick.",
+"I may not go down in history...","But I’ll go down on you.",
+"The only reason I would kick you out of bed...","Would be to fuck you on the floor.",
+"There will only be 7 planets left...","After I destroy Uranus.",
+"Your place or mine? Tell you what? I’ll flip a coin.","Head at my place, tail at yours.",
+"Do you work at Subway?","Because you just gave me a footlong.",
+"Are you hungry?","Because omelette you suck this dick.",
+"If we were both squirrels...","Would you let me bust a nut in your hole?",
+"Do you go to church often?","Because you’re gonna be on your knees tonight.",
+"My dick’s been feeling a little dead lately.","Wanna give it some mouth-to-mouth?",
+"If I was a watermelon...","Would you spit or swallow my seed?",
+"Are your legs made of nutella?","Cause I’d love to spread them.",
+"Are you a sea lion?","Cause I wanna sea you lion on my bed tonight.",
+"I may not be a windshield repairman...","But I can still fill your crack in.",
+"That outfit looks great on you...","As a matter of fact, so would I!",
+"This may seem corny...","But you make me really horny.",
+"If I flip a coin...","What are my chances of getting head?",
+"Don’t ever change.","Just get naked.",
+"we should play strip poker.","You can strip and I’ll poke you.",
+"If I was your teacher...","I’d give you the D.",
+"Treat me like a pirate...","And give me that booty.",
+"Sit on my face...","And I’ll eat my way to your heart."))
+
+(set:$word_game's "first lines" to (a:))
+(set:$word_game's "sentences" to (a:))
+
+(for: each _index, ...(subarray:(shuffled:...(range:1,((_pickup_lines's length)/2))),1,10))[
+
+(set:_line_1 to ((_index * 2 - 1) of _pickup_lines))
+(set:_line_2 to ((_index * 2) of _pickup_lines))
+
+(set:$word_game's "first lines" to $word_game's "first lines" + (a:_line_1))
+(set:$word_game's "sentences" to $word_game's "sentences" + (a:_line_2))
+
+]
+
+
+:: nice pickup lines {"position":"636,7129","size":"100,100"}
+{=
+
+
+(set:_pickup_lines to (a:
+"On a scale of 1 to 10, you're a 9.","I’m the 1 you need.",
+"I thought happiness started with an H...","But mine starts with U.",
+"Can I give you a kiss?","If you don’t like it, you can return it.",
+"I’d say God Bless you...","But it looks like he already did.",
+"Hey, tie your shoes!","I don’t want you falling for anyone else.",
+"Forget about Spiderman, Superman, and Batman.","I’ll be Yourman.",
+"Roses are red, my face is too...","That only happens when I see you.",
+"I should charge you rent...","For all the time you spend in my mind.",
+"Are you a minecraft fence?","Cause I can’t get over you.",
+"You know what’s on the menu?","ME N U.",
+"Let’s play a game.","Winner dates loser.",
+"If your heart was a prison...","I would like to be sentenced for life.",
+"If you were my homework...","I’d do you everyday.",
+"See those gaps between your fingers...","They’re for my fingers to slip in.",
+"Did it hurt when you fell from the vending machine?","Cause you look like a snack!",
+"If kisses were snowflakes...","I’d send you a blizzard.",
+"Are you Harambe’s enclosure?","Cause I’d drop a kid inside you!",
+"Are you a bank loan?","Because you got my interest.",
+"Your body is 75% water...","And I’m thirsty.",
+"Well, here I am.","What are your other two wishes?",
+"You are hotter...","Than the bottom of my laptop.",
+"Kissing is a language of love...","So how about a conversation?",
+"I’m learning about important dates in history class.","Wanna be one of them?",
+"Are you my self-esteem?","Cause I’ve been looking for you everywhere.",
+"Mario is red, Sonic is blue.","Will you be my player 2?",
+"I’m going to ask you to leave.","You’re making the other girls look bad.",
+"This is the police! You’re under arrest for being too cute.","Now put your hands where I can hold them.",
+"What time...","Do you have to be back in heaven?",
+"If you were a Youtube ad...","I wouldn’t skip you.",
+"Is your face McDonalds?","Cause I’m lovin it!",
+"There are so many types of art...","But you are my favorite.",
+"Are you made of grapes?","Cause you’re fine as wine?",
+"Are you the square root of -1?","Cause you can’t be real.",
+"Are you religious?","Cause you’re the answer to all my prayers.",
+"I’m not drunk...","I’m just intoxicated by you.",
+"Congratulations! You’ve been voted 'Most Beautiful Girl in This Room...'","And the grand prize is a night with me!",
+"Are you a door?","Because you are adorable.",
+"Apart from being so sexy...","What do you do for a living?",
+"I may not be what you want...","But I am what you need.",
+"Would you like Gin and platonic...","Or do you prefer Scotch and sofa?",
+"Are you Luke?","Cause I’m your daddy."))
+
+(set:$word_game's "first lines" to (a:))
+(set:$word_game's "sentences" to (a:))
+
+(for: each _index, ...(subarray:(shuffled:...(range:1,((_pickup_lines's length)/2))),1,10))[
+
+(set:_line_1 to ((_index * 2 - 1) of _pickup_lines))
+(set:_line_2 to ((_index * 2) of _pickup_lines))
+
+(set:$word_game's "first lines" to $word_game's "first lines" + (a:_line_1))
+(set:$word_game's "sentences" to $word_game's "sentences" + (a:_line_2))
+
+]

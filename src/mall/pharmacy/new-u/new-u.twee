@@ -1,0 +1,875 @@
+:: New-U {"position":"11009,103","size":"100,100"}
+{(newtrack:'key press 1','aud/ambience/mall/machine/key press 1.mp3')(newtrack:'key press 2','aud/ambience/mall/machine/key press 2.mp3')(newtrack:'key press 3','aud/ambience/mall/machine/key press 3.mp3')(newtrack:'key press 4','aud/ambience/mall/machine/key press 4.mp3')(newtrack:'key press 5','aud/ambience/mall/machine/key press 5.mp3')
+(newtrack:'voice line 1','aud/ambience/mall/machine/voice lines/1.mp3')
+(newtrack:'voice line repeat','aud/ambience/mall/machine/voice lines/repeat.mp3')
+(newtrack:'voice line 2','aud/ambience/mall/machine/voice lines/2.mp3')
+(newtrack:'voice line 3','aud/ambience/mall/machine/voice lines/3.mp3')
+(newtrack:'voice line 4','aud/ambience/mall/machine/voice lines/4.mp3')(newtrack:'voice line 5','aud/ambience/mall/machine/voice lines/5.mp3')
+(newtrack:'voice line 6','aud/ambience/mall/machine/voice lines/6.mp3')
+(newtrack:'voice line 15','aud/ambience/mall/machine/voice lines/15.mp3')
+(newtrack:'voice line 16','aud/ambience/mall/machine/voice lines/16.mp3')
+(newtrack:'voice line 17','aud/ambience/mall/machine/voice lines/17.mp3')
+(newtrack:'voice line 18','aud/ambience/mall/machine/voice lines/18.mp3')
+(newtrack:'voice line 19','aud/ambience/mall/machine/voice lines/19.mp3')
+(newtrack:'voice line thanks','aud/ambience/mall/machine/voice lines/thanks.mp3')
+(newtrack:'no side effects','aud/ambience/mall/machine/voice lines/no side effects.mp3')
+(newtrack:'side effects','aud/ambience/mall/machine/voice lines/side effects.mp3')
+(newtrack:'injection','aud/ambience/mall/machine/injection.mp3')
+(newtrack:'key skip','aud/ambience/mall/machine/key skip.mp3')
+(newtrack:'initialize connection','aud/ambience/mall/machine/initialize connection.mp3')
+(newtrack:'new-u activated','aud/ambience/mall/machine/new-u activated.mp3')
+(newtrack:'new-u print','aud/ambience/mall/machine/print.mp3')
+(newtrack:'connection error','aud/ambience/mall/machine/connection error.mp3')(set:$ambience to "new-u ambience")(display:"play ambience")
+}<div class='top_left_half'>(print:"<img class='greyborder' src='img/places/shop/kiosk.jpg' width=100% height=auto>")</div>(unless:$shop_events contains "new-u seen")["What's this?" you ask the clerk. 
+
+"Oh, that old thing..." he says. "They told me to set it up here." 
+
+"What does it do?" 
+
+"I'll let you find out for yourself!" he winks.(set:$shop_events to $shop_events + (a:"new-u seen"))](else:)[(set:$next to "New-U screen")(display:"next")]
+<div class='options'>(link:"Try to use the machine")[(set:$next to "New-U screen")(display:"next")](link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]</div>
+
+
+:: New-U screen {"position":"11008,210","size":"100,100"}
+(set:$stage to 1)<span class='fixedwidth'><table width=100%; max-height=75%; height=75%;><tbody><tr class='computer_screen_newu'><td><div class='centered'>[<span class='borderless'>(print:"<img class='borderless' src='img/places/shop/newu.png' width=100% height=auto>")</span>]<image|</div></td><td>
+<span class='shadow'>(css:"font-size:1.25em")[(color:"white")[|computer_screen>[(display:"New-U text")]]]</span>
+<div class='options'>[]<next|</div></td></tr></table></span><div class='options'>[]<thoughts|[(unless:$shop_events contains "new-u intro")[(link:"Skip")[(track: $se, 'stop')(set:$se to "key skip")(display:"play sound")(set:$stage to 26)(replace:?computer_screen)[(display:"New-U core menu")]]](link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]]<exit|</div>
+
+
+:: New-U first time {"position":"11009,318","size":"100,100"}
+{(replace:?thoughts)[]
+(if:$stage is 1)[A chipper male voice blares at you. “Well, someone looks rather downtrodden, isn’t that right, Suzanne?”(set:$se to "voice line 1")(display:"play sound")]
+(if:$stage is 2)[(replace:?computer_screen)[“You’re absolutely right, Biff!” a female announcer chimes in. “I’ve seen it a million times over. Untapped potential.”(track: 'voice line 1', 'stop')(set:$se to "voice line 2")(display:"play sound")]]
+(if:$stage is 3)[(replace:?computer_screen)[“Untapped potential!” Biff echoes. “A bore at parties? A disappointment at job interviews and family dinners alike?”(track: 'voice line 2', 'stop')(set:$se to "voice line 3")(display:"play sound")](replace:?thoughts)[*Hey, it’s not that bad…*
+]]
+(if:$stage is 4)[(replace:?computer_screen)[“Oh lord,” Suzanne sighs, “whatever can you do?”](track: 'voice line 3', 'stop')(set:$se to "voice line 4")(display:"play sound")]
+(if:$stage is 5)[(replace:?computer_screen)[“Why,” Biff has the answer at the ready. “Become someone else, of course!”](track: 'voice line 4', 'stop')(set:$se to "voice line 5")(display:"play sound")]
+(if:$stage is 6)[(replace:?computer_screen)[“Become someone else? That’s crazy talk, Biff. I can’t just… get a tiny injection – less intrusive than my average doctor’s visit – and change my identity entirely within seconds, can I?”](track: 'voice line 5', 'stop')(set:$se to "voice line 6")(display:"play sound")]
+(if:$stage is 7)[(replace:?computer_screen)[“And that’s where you’re wrong, darling. For a modest fee, we can do just that. Get a little prick to make that prick vanish.”]]
+(if:$stage is 8)[(replace:?computer_screen)[“Sounds painful,” Suzanne remarks.]]
+(if:$stage is 9)[(replace:?computer_screen)[“Not at all, it goes in your index finger. Find out whether girls really do have more fun. Any spoilers, Suzanne? What are you doing tonight?”]]
+(if:$stage is 10)[(replace:?computer_screen)[Silence falls over the on-screen studio as Biff holds a finger to his ear. His mic quietly picks up the word “lawsuit” before the two presenters recompose themselves.]]
+(if:$stage is 11)[(replace:?computer_screen)[“So what’ll it be?” Biff continues as if he hadn’t missed a beat, or fifteen of them. “Nubian princess? Queen of the Orient? Or something more neighbourly? Like the farm girl, her skin kissed by the sun, just like her hair?”]]
+(if:$stage is 12)[(replace:?computer_screen)[“Impractically bouncy or pragmatically athletic,” Suzanne picks up, “the only limit is your imagination.”]]
+(if:$stage is 13)[(replace:?computer_screen)[Biff whispers, “…and the 2 templates we currently have available.” A wall of Legalese flashes across the screen. Something about product line expansion since recording this segment.]]
+(if:$stage is 14)[(replace:?computer_screen)[They drone on for a while...]]
+(if:$stage is 15)[(track: 'voice line 6', 'stop')(set:$se to "voice line 15")(display:"play sound")(replace:?computer_screen)[“But that’s not all!” Suzanne chirps. “*Call* now to make use of this *limited*-time offer.”(replace:?thoughts)[*Call? When did they shoot this commercial?*
+]]]
+(if:$stage is 16)[(replace:?computer_screen)[(track: 'voice line 15', 'stop')(set:$se to "voice line 16")(display:"play sound")“We’re constantly expanding our line-up, and you could be a big help.”]]
+(if:$stage is 17)[(replace:?computer_screen)[(track: 'voice line 16', 'stop')(set:$se to "voice line 17")(display:"play sound")“You heard that right,” Biff says. “You could be one of the famed, adored faces that people all over the state of Texas would want.”](replace:?thoughts)[You get another extensive reminder that this video must be old - X-Change isn't headquartered, or even *legal* in Texas anymore.
+]]
+(if:$stage is 18)[(track: 'voice line 17', 'stop')(set:$se to "voice line 18")(display:"play sound")(replace:?computer_screen)[“'*But who would want my face?*’ I hear you asking,” Suzanne pre-empts. “This isn’t just about your face, sweetheart. Then what is this about? Please remind us, Biff.”]]
+(if:$stage is 19)[(track: 'voice line 18', 'stop')(set:$se to "voice line 19")(display:"play sound")(replace:?computer_screen)[“*Untapped potential*,” he does.]]
+(if:$stage is 20)[(replace:?computer_screen)[“Exactly. Your DNA holds all we want, only one quick donation needed. Just put your John Hancock – soon-to-be Jane, soon-to-be Hanslit – under a *teeny weeny* release form and you get an extremely affordable New-U in accordance with your genetic code whenever you want.” ]]
+(if:$stage is 21)[(replace:?computer_screen)[(Previewing the teeny weeny release form opens a triple-digit pages long PDF file that makes the machine freeze for half a minute. When it recovers, the avalanche of verbiage continues.)]]
+(if:$stage is 22)[(replace:?computer_screen)[“There is one last offer we want to bug you with, and then it’s off to your New-U, we promise. And this last offer is…” Suzanne prepares to say this next line in unison with her partner.]]
+(if:$stage is 23)[(replace:?computer_screen)[(css:"font-size:1.25em")[<span class='chromatic'>“…The Wheel of Transfortune!”</span>]](replace:?thoughts)[*Oh god.*
+]]
+(if:$stage is 24)[(replace:?computer_screen)[(set:$shop_events to $shop_events + (a:"new-u intro"))“What’s the Wheel of Transfortune?” Biff teases. “If your goal is simply to experience something new for dirt cheap, then the Wheel will drive you straight to that goal. At a steep discount, you can elect to pick a New-U transformation at random. Feeling lucky? Then spin the Wheel and see what Transfortune holds in store for you!”]]
+(if:$stage is 25)[(replace:?computer_screen)[](replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]](replace:?thoughts)[That was a handful. So, what’s it gonna be?(replace:?computer_screen)[(display:"New-U core menu")]]]
+(if:$stage is 26)[(replace:?computer_screen)[](replace:?thoughts)[*Ain't nobody got time for that.*(replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]
+]]]
+(if:$stage < 25)[(replace:?next)[(link:"Next")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$stage to $stage + 1)(display:"New-U first time")]]]}
+
+
+:: New-U core menu {"position":"11009,429","size":"100,100"}
+{
+(unless:$shop_events contains "new-u used")[
+(replace:?next)[]
+(set:$song to 0)(display:"play song")(replace:?image)[(print:"<img class='wobbly' src='img/places/shop/sphere text.png' width=75% height=auto>")](link:"Place hand")[(text-style:"fade-in-out")[Processing...](replace:?thoughts)[The 'sphere' pricks your palm.
+](replace:?image)[(print:"<img class='wobbly' src='img/places/shop/sphere.png' width=75% height=auto>")](if:$character's "gender" is "female")[(set:$se to "connection error")(display:"play sound")(live:3s)[(replace:?thoughts)[*Seems like I need to be male to use this.*
+](replace:?image)[(print:"<img class='wobbly' src='img/places/shop/sphere error.png' width=75% height=auto>")](stop:)]](else:)[(set:$se to "initialize connection")(display:"play sound")(live:2s)[(replace:?computer_screen)[(text-style:"fade-in-out")[Sample verified. Connecting to the New-U™ teleservice...]](replace:?image)[(print:"<img class='wobbly' src='img/places/shop/newu.png' width=100% height=auto>")](live:3s)[(replace:?thoughts)[](replace:?computer_screen)[(text-style:"fade-in-out")[Downloading DNA database...]](stop:)](live:5s)[(display:"New-U menu options")(set:$shop_events to $shop_events + (a:"new-u used"))(stop:)](stop:)]]]](else:)[(replace:?next)[]
+(set:$song to 0)(display:"play song")(replace:?image)[(print:"<img class='wobbly' src='img/places/shop/sphere text.png' width=75% height=auto>")](link:"Place hand")[(if:$character's "gender" is "female")[(replace:?thoughts)[*Seems like I need to be male to use this.*
+](replace:?image)[(print:"<img class='wobbly' src='img/places/shop/sphere error.png' width=75% height=auto>")]](else:)[(display:"New-U menu options")]]]
+
+}
+
+
+:: randomize available dna {"position":"1739,139","size":"100,100"}
+{(if:$available_dna is 0)[(set:$available_dna to (a:"alina","cassidy","ella","jade","jia","lana","liya","mia","rae","scarlit") - (a:$character's "id"))]}
+
+
+:: New-U menu options {"position":"11013,536","size":"100,100"}
+{
+(replace:?computer_screen)[(link:"Select body")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$index to 1)(display:"New-U bodies")]
+(link:"Donate your DNA")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(display:"New-U donate")]
+(link:"Spin the wheel")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(display:"New-U transfortune")]](replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]]
+}
+
+
+:: New-U bodies {"position":"11015,652","size":"100,100"}
+{
+(replace:?computer_screen)[Would you rather become
+[]<description|
+<span class='borderless'>|left>[]|right>[]</span>
+(link:"Back")[(replace:?image)[(print:"<img class='wobbly' src='img/places/shop/newu.png' width=75% height=auto>")](set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(display:"New-U menu options")](link:"Select")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$select to ($index of $available_dna))(display:"New-U select body")]]
+(replace:?image)[|current>[]|new>[](replace:?current)[(print:"<img 
+src='img/scenes/characters/" + $character's "id" + "/tg/2.png' width=50% height=auto>")]]
+(display:"New-U bodies update")
+}
+
+
+:: New-U bodies update {"position":"11006,755","size":"100,100"}
+{
+(replace:?new)[(print:"<img 
+src='img/scenes/characters/" + (text:$index of $available_dna) + "/tg/5.png' width=47% height=auto>")]
+(replace:?left)[(link-repeat:"<img src='img/ui/buttons/64button1left.png'; width=50px; height=auto; onmouseover=this.src='img/ui/buttons/64button2left.png'; onmouseout=this.src='img/ui/buttons/64button1left.png'; />")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$index to $index - 1)(if:$index < 1)[(set:$index to $available_dna's length)]</span>(display:"New-U bodies update")]](replace:?right)[(link-repeat:"<img src='img/ui/buttons/64button1right.png'; width=50px; height=auto; onmouseover=this.src='img/ui/buttons/64button2right.png'; onmouseout=this.src='img/ui/buttons/64button1right.png'; />")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$index to $index + 1)(if:$index > $available_dna's length)[(set:$index to 1)](display:"New-U bodies update")]]
+
+(replace:?description)[{<span class='chromatic'>(print:($index of $available_dna) of (dm:
+"alina","an elegant, sporty latina?",
+"cassidy","a bouncy caramel sex toy?",
+"rae","a tiny Japanaese seductress?",
+"ella","a mixed-race beauty with floppy tits?",
+"jade","a busty Asian goddess?",
+"jia","a ravishing redhead?",
+"lana","an hourglass bimbo with dick-sucking lips?",
+"liya","a bronzed brunette with bodacious boobies?",
+"mia","a blonde girl-next-door with a big rack?",
+"scarlit","an all-natural ebony princess?" 
+))</span>}]
+}
+
+
+:: New-U select body {"position":"11008,861","size":"100,100"}
+{
+
+
+(set:$new_stats to $select of (dm:
+	"ella", (dm:
+		"id","ella",
+		"race","latin",
+		"breasts","E",
+		"butt","big",
+		"hair","brown",
+		"body type","voluptuous",
+		"height",62,
+		"weight kg",50,
+		"weight lb",110,
+		"height cm",162,
+		"height text","5ft, 2in",
+		"bra","36E",
+		"eyes","brown"),
+	"jia", (dm:
+		"id","jia",
+		"race","white",
+		"breasts","A",
+		"butt","bubble",
+		"hair","red",
+		"body type","slim",
+		"height",63,
+		"weight kg",55,
+		"weight lb",121,
+		"height cm",165,
+		"height text","5ft, 5in",
+		"bra","32A",
+		"eyes","brown"),
+	"lana", (dm:
+		"id","lana",
+		"race","white",
+		"breasts","D",
+		"butt","bubble",
+		"hair","brown",
+		"body type","average",
+		"height",68,
+		"weight kg",55,
+		"weight lb",121,
+		"height cm",165,
+		"height text","5ft, 8in",
+		"bra","34D",
+		"eyes","blue"),
+	"scarlit", (dm:
+		"id","scarlit",
+		"race","black",
+		"breasts","B",
+		"butt","bubble",
+		"hair","brown",
+		"body type","slim",
+		"height",61,
+		"weight kg",45,
+		"weight lb",99,
+		"height cm",155,
+		"height text","5ft, 1in",
+		"bra","32B",
+		"eyes","brown"),
+	"mia", (dm:
+		"id","mia",
+		"race","white",
+		"breasts","E",
+		"butt","big",
+		"hair","blonde",
+		"body type","voluptuous",
+		"height",67,
+		"weight kg",57,
+		"weight lb",126,
+		"height cm",170,
+		"height text","5ft, 7in",
+		"bra","32E",
+		"eyes","blue"),
+	"alina", (dm:
+		"id","alina",
+		"race","latin",
+		"breasts","C",
+		"butt","bubble",
+		"hair","brown",
+		"body type","slim",
+		"height",66,
+		"weight kg",54,
+		"weight lb",119,
+		"height cm",168,
+		"height text","5ft, 6in",
+		"bra","32C",
+		"eyes","hazel"),
+	"rae", (dm:
+		"id","rae",
+		"race","asian",
+		"breasts","C",
+		"butt","slim",
+		"hair","black",
+		"body type","slim",
+		"height",57,
+		"weight kg",45,
+		"weight lb",99,
+		"height cm",144,
+		"height text","4ft, 9in",
+		"bra","28C",
+		"eyes","brown"),
+	"liya", (dm:
+		"id","liya",
+		"race","white",
+		"breasts","D",
+		"butt","slim",
+		"hair","brown",
+		"body type","average",
+		"height",64,
+		"weight kg",50,
+		"weight lb",110,
+		"height cm",163,
+		"height text","5ft, 4in",
+		"bra","34D",
+		"eyes","brown"),
+	"jade", (dm:
+		"id","jade",
+		"race","asian",
+		"breasts","F",
+		"butt","slim",
+		"hair","black",
+		"body type","average",
+		"height",61,
+		"weight kg",48,
+		"weight lb",106,
+		"height cm",155,
+		"height text","5ft, 1in",
+		"bra","32F",
+		"eyes","brown"),
+	"cassidy", (dm:
+		"id","cassidy",
+		"race","latin",
+		"breasts","G",
+		"butt","big",
+		"hair","brown",
+		"body type","voluptuous",
+		"height",63,
+		"weight kg",57,
+		"weight lb",126,
+		"height cm",160,
+		"height text","5ft, 3in",
+		"bra","36G",
+		"eyes","brown")))
+
+(replace:?computer_screen)[Race: (print:(upperfirst:$new_stats's "race"))
+Height: (print:$new_stats's "height text")
+Hair: (print:(upperfirst:$new_stats's "hair"))
+Eye color: (print:(upperfirst:$new_stats's "eyes"))
+Bra size: (print:$new_stats's "bra")
+Body type: (print:(upperfirst:$new_stats's "body type"))
+(link:"Back")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(display:"New-U bodies")](link:"Confirm selection")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(display:"New-U confirm body")]]
+(replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]]
+}
+
+
+:: New-U confirm body {"position":"11005,971","size":"100,100"}
+(set:$active to "true")(replace:?computer_screen)[Price: $[200]<price|(if:$global_events contains "newu discount")[ (20% off!)]
+|tooltip>[Duration: (dropdown: bind $duration, "1 day","3 days","1 week","2 weeks","1 month","2 months")|tooltiptext>[How long the DNA alteration lasts, at which point you will transform to your original male self.]]
+|tooltip>[Formula: (dropdown: bind $stability, "High Quality","Good Value","Economical","Bargain Basement")|tooltiptext>[Lower-quality formulas cost less, but increase chances of DNA instability and potential side effects.]]
+|tooltip>[(checkbox: bind $rent, "Rent outfits")|tooltiptext>[Rent a full set of outfits for your new body, which will be returned after your transformation ends. (50% price surcharge)]]
+
+(link:"Back")[(replace:?thoughts)[](set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(display:"New-U bodies")][(link-repeat:"Buy")[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(if:$character's "money" < $price)[(set:$se to "quicktime incorrect")(display:"play sound")(replace:?thoughts)[*I don't have that much money.*]](else:)[(replace:?thoughts)[](set:$se to "kaching")(display:"play sound")(display:"New-U purchase")]]]](replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]](live:0.5s)[(display:"New-U price calc")(unless:$active is "true")[(stop:)]]
+
+
+:: New-U price calc {"position":"11003,1188","size":"100,100"}
+{
+(if:$duration is "1 day")[(set: $price to 200)(set:$length to 1)]
+(if:$duration is "3 days")[(set: $price to 500)(set:$length to 3)]
+(if:$duration is "1 week")[(set: $price to 1000)(set:$length to 7)]
+(if:$duration is "2 weeks")[(set: $price to 1500)(set:$length to 14)]
+(if:$duration is "1 month")[(set: $price to 2500)(set:$length to 31)]
+(if:$duration is "2 months")[(set: $price to 4500)(set:$length to 61)]
+(if:$stability is "Good Value")[(set:$price to (ceil:$price * 0.8))]
+(if:$stability is "Economical")[(set:$price to (ceil:$price * 0.6))]
+(if:$stability is "Bargain Basement")[(set:$price to (ceil:$price * 0.4))]
+(if:$global_events contains "newu discount")[(set:$price to (ceil:$price * 0.8))]
+(if:$rent is true)[(set:$price to (ceil:$price * 1.5))]
+(replace:?price)[(print:$price)]
+}
+
+
+:: New-U purchase {"position":"10994,1298","size":"100,100"}
+(set:$active to "purchased")(set:$global_events to $global_events - (a:"newu discount"))(replace:?image)[<span class='borderless'>(print:"<img class='borderless' src='img/places/shop/newu.png' width=100% height=auto>")</span>](stop:)(set:$character's "money" to $character's "money" - $price)(display:"refresh stats")(set:$ambience to "new-u activated")(display:"play ambience")(set:$se to "voice line thanks")(display:"play sound")(replace:?computer_screen)[(text-style:"fade-in-out")[Brewing your custom dose...]](replace:?thoughts)[](live:3s)[(if:$active is "purchased")[(replace:?thoughts)[A metal cuff locks your wrist in place!
+](set:$se to "injection")(display:"play sound")](stop:)](live:6s)[(if:$active is "purchased")[(replace:?computer_screen)[(text-style:"fade-in-out")[Loading injection apparatus...]]](stop:)](live:11s)[(if:$active is "purchased")[(replace:?computer_screen)[(text-style:"fade-in-out")[Inserting needle into your palm...](replace:?thoughts)[*Ouch!*]]](stop:)](live:14s)[(if:$active is "purchased")[(set:$ambience to "new-u ambience")(display:"play ambience")(replace:?computer_screen)[(text-style:"fade-in-out")[Injecting...]]](stop:)(replace:?thoughts)[]](replace:?exit)[(link:"You feel funny...")[(replace:?thoughts)[](set:$active to "transform")(track: 'injection', 'stop')(track: 'voice line thanks', 'stop')(set:$ambience to "new-u ambience")(display:"play ambience")(display:"New-U transform")]]
+
+
+:: New-U transform {"position":"10997,1404","size":"100,100"}
+(stop:)(set:$se to "transform")(display:"play sound")(replace:?image)[(t8n:"blur")[(print:"<img 
+src='img/scenes/characters/" + $character's "id" + "/tg/2.png' width=50% height=auto>")]](live:4s)[(if:$active is "transform")[(replace:?image)[(t8n:"blur")[(print:"<img 
+src='img/scenes/characters/" + $character's "id" + "/tg/3.png' width=49% height=auto>")]]](stop:)](live:12s)[(if:$active is "transform")[(replace:?image)[(t8n:"blur")[(print:"<img 
+src='img/scenes/characters/" + $select + "/tg/3.png' width=48% height=auto>")]]](stop:)](live:18s)[(if:$active is "transform")[(replace:?image)[(t8n:"blur")[(print:"<img 
+src='img/scenes/characters/" + $select + "/tg/4.png' width=47% height=auto>")]]](stop:)](live:23s)[(if:$active is "transform")[(replace:?image)[(t8n:"blur")[(print:"<img 
+src='img/scenes/characters/" + $select + "/tg/5.png' width=47% height=auto>")]]](stop:)](replace:?computer_screen)[](replace:?exit)[(link:"Finish")[(replace:?image)[(print:"<img 
+src='img/scenes/characters/" + $select + "/tg/5.png' width=47% height=auto>")](track: 'transform', 'stop')(set:$active to "false")(display:"New-U side effect check")]](display:"New-U transformation descriptions")
+
+
+:: New-U transformation descriptions {"position":"10988,1513","size":"100,100"}
+{(set:$index to 1)
+(set:$description to (a:))
+
+(unless:$select is $character's "id")[
+(if:"scarlit" is $character's "id" and (a:"jade","rae","liya","lana","mia","alina","jia") contains $select)[(set:$description to $description + (a:(either:"Your skin lightens considerably.","The colour progressively drains out of your skin, growing lighter with each passing pulse.","Starting at your fingertips, your skin loses its dark tone. The lighter shade creeps up your arm and from your chest starts spreading all over your 'New-U.'")))]
+
+(if:$select is "alina")[(set:$description to $description + (a:(either:"Oh. My. God, Becky, look at that butt. It is *so* big.","With the clap of these new ass-cheeks, you’ll have a hard time hiding from the guys who want you..."),(either:"Thank God this body doesn’t skip the gym. Whether it’s your legs or your mid-section, you’ve got a gorgeous tone to any and every part of yourself.","There’s not an ounce too much weight on you. Some might say that’s to your detriment considering you’re 'only' a C-cup, but honestly, that’s just the perfect handful."),(either:"Almost imperceptibly, your body is covered by a tan.","Your skin has been touched ever so slightly by the sun.","The typical Latina might be described as having a coffee-like complexion. You look like you take your coffee with a lot of cream. Hmm, you could go for some cream.")))]
+(if:$select is "cassidy")[
+
+(if:$character's "race" is "white")[(set:$description to $description + (a:"It looks like you’re getting a bit of spice to you. First, just patches of skin take on a slight tan, then it spreads to cover your whole body."))]
+
+(set:$description to $description + (a:"Oh *God,* why isn’t it stopping? You’ve had boobs for the better part of a minute now, but they just keep growing!","Even after your entire body has finished turning you into a smoking hot Latina, your chest just refuses to settle until it’s turned into truly massive tits.","Your tits are your biggest asset – literally – but that doesn’t mean your ass has to hide. It’s the perfect cushion to bounce up and down cocks with. Safety first.","If you thought that’s where your curves end, you’re sorely mistaken. Your lips have taken after the rest of your body. You never would’ve believed it when you saw your rack, but them being so perfectly plush and kissable might mean men will actually look at your face on occasion.","Brown eyes, brunette, sun-kissed skin… no doubt the owner of this body was fluent in Spanish. A sporty, sexy Latina with a big ass and tits from heaven? Yeah, you’ll be popular."))]
+(if:$select is "ella")[(unless:$character's "race" is "latin")[(set:$description to $description + (a:"Your skin turns the classic complexion you’d expect on a latina, a healthy amount of sun. Chances are, you’re somebody’s “thing” now. Expect to be approached accordingly."))]
+(set:$description to $description + (a:"*Damn,* look at those jugs. If you get settled in this body, back pains are in your future. Until then, bouncing these is kind of fun…"))
+]
+(if:$select is "jade")[(unless:$character's "race" is "asian")[(set:$description to $description + (a:"Your skin goes nearly white. Despite being pale, it takes on the vaguest hue. You’re not Caucasian… unless you drop a few letters.","This body has clearly made an effort to keep out of the sun, but its Far East heritage can’t be denied.","Look at your beautiful Oriental eyes, reshaping themselves, saying everything about you. Unsurprisingly, your genetic origins have predisposed your body to being on the short side. Cute!"))](else:)[(set:$description to $description + (a:"Your skin retains much the same complexion as before. This body has clearly made an effort to keep out of the sun, but its Far East heritage can’t be denied."))]
+
+(set:$description to $description + (a:"Your facial expression dulls slightly as your lips bloom, eager to find something to suck on. The corners of your eyes pinch closer together on the outer edges, pointing further upwards.","You gain some serious heft on your backside. There’s no other way to look at it: your body was engineered for the male of the 21st century.","Wait, is that a marketing line or an actual thought of yours?","You’re not at all shoddy up top, either. At an F-cup, most women would envy you. And you don’t need to spell out what most men think about it. Better hope you’ll love those stares, not to mention the colourful comments."))
+
+]
+
+(if:$select is "jia")[(set:$description to $description + (a:"Gingers are widely mocked, but nobody can make fun of you if you take their breath away. Your red hair will catch all the right attention the way it flows all the way down your back. Will you turn out as fiery as your creator made you?","Red hair, big ass… if you had green eyes, you could’ve sworn you’ve turned into a unicorn. This body is definitely quite a rarity. And like all rarities, will be highly sought after.","To balance out your healthy rump, your breasts are nearly non-existent. The average person might desire something else, but you’re plenty desirable as you are. A flat chest doesn’t have to be a disadvantage. Your slim form is still a sight to behold, and you can be lots of fun in the bedroom."))
+
+(if:(a:"latin","asian","black") contains $character's "race")[(set:$description to $description + (a:"Oh God. Where’s your colour going? If you woke up like this, your mother would probably make a comment about your health. But looking at your pale, milky white skin contrasting against your vibrant red hair, you have to say it’s a winning combination."))]
+
+]
+
+(if:$select is "lana")[
+
+(set:$description to $description + (a:"The first thing you notice about your new body is your steely blue gaze. If that was this body’s only quality, it might fly under the radar, but Jesus, this girl must’ve been created in a secret Brazzers lab.","Every proportion turns out just perfect, like it was built to induce thoughts of sex.","The average cup size in the US may be a DD, but your breasts are by no means average, much less below it. Perfect teardrops start hanging from your chest, enticing even you yourself to touch them. Hmm, they feel as good as they look.","Together with your boobs, your supple ass gives you a perfect hourglass body.","How do you look so grabbable all over? This girl absolutely won the genetic lottery to look like this. And so did you, just with some extra steps."))
+
+(if:(a:"latin","asian") contains $character's "race")[(set:$description to $description + (a:"Subtly, your skin hue drains from you, leaving nothing but pale skin. This body made a slight effort to tan, but you’re clearly a white girl now. Just have one look at those eyes and that should be plain as day."))]
+
+]
+
+(if:$select is "mia")[(set:$description to $description + (a:"The first things to come into sight are your blonde mane framing your bright blue eyes.","Blonde and blue-eyed? Sounds like the perfect bimbo recipe. You don’t feel stupid yet, but that’s nothing a Sex on the Beach can’t fix.","Your endowments help your image. There’s much you could hide, but what’s the point? You’d much rather let those E-cup puppies breathe. They sure have enough surface area to do just that."))
+
+(if:(a:"latin","asian") contains $character's "race")[(set:$description to $description + (a:"As if that needed to be said, most bimbos are white, and now so are you. Perhaps you’ll start sprinkling “oh mah gawd”s and “totally”s into your sentences from now on.","Whatever the case, you’ve still got a slight tan to you and sparkling blue eyes people can and will get lost in. Good for you."))]
+
+]
+
+(if:$select is "rae")[
+
+(set:$description to $description + (a:"Seeing your own reflection for the first time stuns you. This girl was born with the face of an angel. Apparently though, she got sick of hearing that, going by the septum piercing and heavy eyeliner. Add a few tattoos, and you don’t look quite so innocent anymore."))
+
+(unless:$character's "race" is "asian")[
+(set:$description to $description + (a:"You wouldn’t know it from looking at your skin, but the shape of your eyes clearly betrays your new body’s heritage. The description said something about family in Japan. Unsurprisingly, this had some impact on your size. You weren’t ugly before, but you’re gorgeous now.","There’s just… much less of you. You’re tiny, to call it by its name. What a cute little rebel you’ve turned out to be!"))
+]
+
+(set:$description to $description + (a:"This body isn’t the most full-figured you’ve seen. It has its own appeal. A perfectly-sized C-cup complementing a pert ass. Lovely handfuls no matter where you look.","It’s not all about size. In terms of shape, you’re second to none, everything looks like you were moulded out of marble."))
+]
+
+(if:$select is "scarlit")[
+
+(set:$description to $description + (a:"Look at those blooming lips. So kissable. And that’s leaving out many other uses. Your hair contracts into curls, betraying its true length.","As it is, it rests on your shoulders. Its volume draws looks to your greatest asset, your gorgeous face. With your slim figure, you won’t have to remind anybody that your eyes are up here. Chances are, they’re already lost in them.","Women will envy you for your complexion. What they cook themselves in the sun for has been given to this body from birth. You’re black, but still relatively light-skinned.","Despite your slim body shape, your skin tone helps accentuate the beautiful curves that are there. White girls getting “blacked” might dominate porn, but you’d be surprised if you didn’t get chased by men and women of all races.","Your figure isn’t exactly that of a stacked pornstar. You fit the “girl next door” image, but that doesn’t mean you have to sell yourself short. People would kill to live next to you.","Your breasts at a modest B-cup, and you've got a nice fat ass.","You’ll pull in stares, no doubt about it."))
+
+]](else:)[
+
+
+(set:$description to $description + (a:"Concentric circles of tingling electricity tease your nipples. They’re visibly larger and seem to pull the flesh behind them along. Moments later, you’ve taken another step towards an undeniably pleasing female form.","One part of you stays mostly the same, though the end result couldn’t be more different. Overall, you feel very much shorter than you used to be, yet your legs appear to have no end. Strutting around with these silky smooth thighs will catch eyes.","While your thighs are wonderfully juicy, your other appendages have slimmed down. Your arms are thin and dainty, just like your feminine fingers. You wouldn’t bet on having a healing touch, but the power to elevate heart rates with it is yours now.","Succulent lips combined with perfect teeth bless you with a smile that can break hearts. You better use this power responsibly. Your nose has slimmed considerably, an almost imperceivable cute little button poking out at the world.","as you would expect, your hair extends far beyond what the average man would choose. Its ends " + (either:"tickle your ass","pool on your shoulders","long to touch your chin","beautifully frame your face") + "."))
+
+
+
+]
+
+(if:$description's length < 3)[
+(set:$description to (a:"Concentric circles of tingling electricity tease your nipples. They’re visibly larger and seem to pull the flesh behind them along. Moments later, you’ve taken another step towards an undeniably pleasing female form.") + $description + (a:"as you would expect, your hair extends far beyond what the average man would choose. Its ends " + (either:"tickle your ass","pool on your shoulders","long to touch your chin","beautifully frame your face") + "."))]
+(replace:?computer_screen)[[]<description|
+|left>[]|right>[](display:"New-U transformation descriptions update")]
+}
+
+
+:: New-U transformation descriptions update {"position":"10990,1625","size":"100,100"}
+{
+(replace:?description)[(t8n:"blur")[(print:$index of $description)]]
+(replace:?right)[(link:"Next")[(set:$index to $index + 1)(if:$index > $description's length)[(set:$index to 1)](display:"New-U transformation descriptions update")]]
+}
+
+
+:: New-U side effect check {"position":"10991,1736","size":"100,100"}
+{
+(set:$text to "none")
+(if:$stability is "Good Value")[(if:(random:1,3) is 1)[(set:$text to "side effect")]]
+(if:$stability is "Economical")[(if:(random:1,2) is 1)[(set:$text to "side effect")]]
+(if:$stability is "Bargain Basement")[(unless:(random:1,10) is 1)[(set:$text to "side effects")]]
+
+(if:$text is "side effects")[(replace:?computer_screen)["Oops, side effects detected," Suzanna says.(set:$se to "side effects")(display:"play sound")
+(set:$options to (shuffled:"Fitness decrease","Intellect decrease","Breeder","Swallow or permanent ID","Orgasm or permanent ID","Swallow to continue","Orgasm to continue","Submissive pleasure","Libido overdrive"))(if:$character's "intellect" is 1)[(set:$options to $options - (a:"Intellect decrease"))](if:$character's "fitness" is 1)[(set:$options to $options - (a:"Fitness decrease"))](if:$new_stats's id is $character's "id")[(set:$options to $options - (a:"Swallow or permanent ID","Orgasm or permanent ID"))](display:"New-U new ID")(display:"New-U side effect options")
+
+]](else:)[(display:"New-U new ID")(replace:?computer_screen)[<span class='chromatic'>Congraluations:</span>
+"No side effects detected!" Suzanne chirps.(set:$se to "no side effects")(display:"play sound")(if:$rent is true)[(replace:?thoughts)[(set:$se to "new-u print")(display:"play sound")The machine prints out a ticket - you must bring it to Bonwit Teller (the clothing store in Paradise Mall) for redemption, to pick up your clothes.
+]](replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]]]]
+}
+
+
+:: New-U side effect options {"position":"10995,1846","size":"100,100"}
+{
+(set:$pill_taken to "Clone")
+(either:"Choose one:","Pick your poison:","Decide your fate:")(print:"
+")
+[(set:_link_1 to $options's 1st of (dm:
+"Fitness decrease","-1 <img src='img/ui/stats/512Fitness.png'; width=30px; height=auto>",
+"Intellect decrease","-1 <img src='img/ui/stats/512Int.png'; width=30px; height=auto>",
+"Breeder","Breeder effects",
+"Swallow or permanent ID","Swallow cum daily, or this DNA becomes permanent",
+"Orgasm or permanent ID","Orgasm at least once daily, or this DNA becomes permanent",
+"Swallow to continue","Swallow cum daily, or this effect wears off the next morning",
+"Orgasm to continue","Orgasm daily, or this effect wears off the next morning",
+"Submissive pleasure","Gain extra pleasure in passive positions",
+"Libido overdrive","Your arousal will increase without provocation"))
+(set:_link_2 to $options's 2nd of (dm:
+"Fitness decrease","-1 <img src='img/ui/stats/512Fitness.png'; width=30px; height=auto>",
+"Intellect decrease","-1 <img src='img/ui/stats/512Int.png'; width=30px; height=auto>",
+"Breeder","Breeder effects",
+"Swallow or permanent ID","Swallow cum daily, or this DNA becomes permanent",
+"Orgasm or permanent ID","Orgasm at least once daily, or this DNA becomes permanent",
+"Swallow to continue","Swallow cum daily, or this effect wears off the next morning",
+"Orgasm to continue","Orgasm daily, or this effect wears off the next morning",
+"Submissive pleasure","Gain extra pleasure in passive positions",
+"Libido overdrive","Your arousal will increase without provocation"))
+(link:_link_1)[
+(set:$pill_taken to "Clone")
+(if:$options's 1st is "Fitness decrease")[(set:$character's "fitness" to (max:$character's "fitness" - 1,1))(display:"sync stat progression")](else-if:$options's 1st is "Intellect decrease")[(set:$character's "intellect" to (max:$character's "intellect" - 1,1))(display:"sync stat progression")](else-if:$options's 1st is "Breeder")[(set:$pill_taken to "Breeder")](else:)[(set:$character's "side effects" to $character's "side effects" + (a:$options's 1st))](set:$se to "drain")(display:"play sound")(replace:?computer_screen)[<span class='chromatic'>Side effect applied.(display:"refresh stats")</span>(if:$rent is true)[(replace:?thoughts)[(set:$se to "new-u print")(display:"play sound")The machine prints out a ticket - you must bring it to Bonwit Teller (the clothing store in Paradise Mall) for redemption, to pick up your clothes.
+]]](replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]]
+](link:_link_2)[
+(set:$pill_taken to "Clone")
+(if:$options's 2nd is "Fitness decrease")[(set:$character's "fitness" to (max:$character's "fitness" - 1,1))(display:"sync stat progression")](else-if:$options's 2nd is "Intellect decrease")[(set:$character's "intellect" to (max:$character's "intellect" - 1,1))(display:"sync stat progression")](else-if:$options's 2nd is "Breeder")[(set:$pill_taken to "Breeder")](else:)[(set:$character's "side effects" to $character's "side effects" + (a:$options's 2nd))](set:$se to "drain")(display:"play sound")(replace:?computer_screen)[<span class='chromatic'>Side effect applied.(display:"refresh stats")</span>(if:$rent is true)[(replace:?thoughts)[(set:$se to "new-u print")(display:"play sound")The machine prints out a ticket - you must bring it to Bonwit Teller (the clothing store in Paradise Mall) for redemption, to pick up your clothes.
+]]](replace:?exit)[(link:"Exit")[(set:$next to "X-Change Pharmacy")(display:"next")]]
+]]<links|
+}
+
+
+:: New-U new ID {"position":"10991,1948","size":"100,100"}
+{
+(unless:$pill_taken is "Breeder")[(set:$pill_taken to "Clone")]
+
+(unless:$character's id is $new_stats's id)[
+
+(set:$favorite_outfits_character's (text:$character's id) to $favorite_outfits)
+
+(if:(datanames:$favorite_outfits_character) contains (text:$new_stats's id))[(set:$favorite_outfits to $favorite_outfits_character's (text:$new_stats's id))](else:)[(set:$favorite_outfits to (dm:
+  "beach",(a:),
+  "casual",(a:),
+  "office",(a:),
+  "gym",(a:),
+  "lounge",(a:),
+  "lingerie",(a:),
+  "stylin",(a:),
+  "fetish",(a:)))]]
+  
+(set:$character's id to $new_stats's id)
+(set:$character's race to $new_stats's race)
+(set:$character's breasts to $new_stats's breasts)
+(set:$character's butt to $new_stats's butt)
+(set:$character's hair to $new_stats's hair)
+(set:$character's "body type" to $new_stats's "body type")
+(set:$character's height to $new_stats's height)
+(set:$character's "weight kg" to $new_stats's "weight kg")
+(set:$character's "weight lb" to $new_stats's "weight lb")
+(set:$character's "height cm" to $new_stats's "height cm")
+(set:$character's "height text" to $new_stats's "height text")
+(set:$character's bra to $new_stats's bra)
+(set:$character's eyes to $new_stats's eyes)
+(set:$character's gender to "female")
+(set:$character's status to "female")
+
+(if:$duration is "1 day")[(set: $pill_timer to 4)]
+(if:$duration is "3 days")[(set: $pill_timer to (random:12,14))]
+(if:$duration is "1 week")[(set: $pill_timer to (random:28,30))]
+(if:$duration is "2 weeks")[(set: $pill_timer to (random:56,60))]
+(if:$duration is "1 month")[(set: $pill_timer to (random:120,130))]
+(if:$duration is "2 months")[(set: $pill_timer to (random:240,245))]
+(set:$favorite_outfits to (dm:
+  "beach",(a:),
+  "casual",(a:),
+  "office",(a:),
+  "gym",(a:),
+  "lounge",(a:),
+  "lingerie",(a:),
+  "stylin",(a:),
+  "fetish",(a:)))
+(display:"score multiplier recalc")
+(display:"refresh purchasable outfits")
+(if:$rent is true)[(set:$rented_outfits to $rentable_outfits - $ruined_outfits)(set:$global_events to $global_events + (a:"newu rental"))](else:)[(set:$rented_ouftis to (a:))]
+(display:"sex tracks")
+
+(set:$new_stats to 0)
+(set:$character's "real gender" to "female")
+(display:"available hairstyles")
+(set:$hairstyle to 0)
+(set:$hairstyle_timer to 0)
+(set:$pill_timer_orig to $pill_timer)(display:"calculate pregnancy chance")
+}
+
+
+:: New-U change back {"position":"11102,1948","size":"100,100"}
+{(set:$new_stats to $character's "real id" of (dm:
+	"ella", (dm:
+		"id","ella",
+		"race","latin",
+		"breasts","E",
+		"butt","big",
+		"hair","brown",
+		"body type","voluptuous",
+		"height",62,
+		"weight kg",50,
+		"weight lb",110,
+		"height cm",162,
+		"height text","5ft, 2in",
+		"bra","36E",
+		"eyes","brown"),
+	"jia", (dm:
+		"id","jia",
+		"race","white",
+		"breasts","A",
+		"butt","bubble",
+		"hair","red",
+		"body type","slim",
+		"height",63,
+		"weight kg",55,
+		"weight lb",121,
+		"height cm",165,
+		"height text","5ft, 5in",
+		"bra","32A",
+		"eyes","brown"),
+	"lana", (dm:
+		"id","lana",
+		"race","white",
+		"breasts","D",
+		"butt","bubble",
+		"hair","brown",
+		"body type","average",
+		"height",68,
+		"weight kg",55,
+		"weight lb",121,
+		"height cm",165,
+		"height text","5ft, 8in",
+		"bra","34D",
+		"eyes","blue"),
+	"scarlit", (dm:
+		"id","scarlit",
+		"race","black",
+		"breasts","B",
+		"butt","bubble",
+		"hair","brown",
+		"body type","slim",
+		"height",61,
+		"weight kg",45,
+		"weight lb",99,
+		"height cm",155,
+		"height text","5ft, 1in",
+		"bra","32B",
+		"eyes","brown"),
+	"mia", (dm:
+		"id","mia",
+		"race","white",
+		"breasts","E",
+		"butt","big",
+		"hair","blonde",
+		"body type","voluptuous",
+		"height",67,
+		"weight kg",57,
+		"weight lb",126,
+		"height cm",170,
+		"height text","5ft, 7in",
+		"bra","32E",
+		"eyes","blue"),
+	"alina", (dm:
+		"id","alina",
+		"race","latin",
+		"breasts","C",
+		"butt","bubble",
+		"hair","brown",
+		"body type","slim",
+		"height",66,
+		"weight kg",54,
+		"weight lb",119,
+		"height cm",168,
+		"height text","5ft, 6in",
+		"bra","32C",
+		"eyes","hazel"),
+	"rae", (dm:
+		"id","rae",
+		"race","asian",
+		"breasts","C",
+		"butt","slim",
+		"hair","black",
+		"body type","slim",
+		"height",57,
+		"weight kg",45,
+		"weight lb",99,
+		"height cm",144,
+		"height text","4ft, 9in",
+		"bra","28C",
+		"eyes","brown"),
+	"liya", (dm:
+		"id","liya",
+		"race","white",
+		"breasts","D",
+		"butt","slim",
+		"hair","brown",
+		"body type","average",
+		"height",64,
+		"weight kg",50,
+		"weight lb",110,
+		"height cm",163,
+		"height text","5ft, 4in",
+		"bra","34D",
+		"eyes","brown"),
+	"jade", (dm:
+		"id","jade",
+		"race","asian",
+		"breasts","F",
+		"butt","slim",
+		"hair","black",
+		"body type","average",
+		"height",61,
+		"weight kg",48,
+		"weight lb",106,
+		"height cm",155,
+		"height text","5ft, 1in",
+		"bra","32F",
+		"eyes","brown"),
+	"cassidy", (dm:
+		"id","cassidy",
+		"race","latin",
+		"breasts","G",
+		"butt","big",
+		"hair","brown",
+		"body type","voluptuous",
+		"height",63,
+		"weight kg",57,
+		"weight lb",126,
+		"height cm",160,
+		"height text","5ft, 3in",
+		"bra","36G",
+		"eyes","brown")))
+(unless:$character's id is $new_stats's id)[
+(set:$favorite_outfits_character's (text:$character's id) to $favorite_outfits)
+(if:(datanames:$favorite_outfits_character) contains (text:$new_stats's id))[(set:$favorite_outfits to $favorite_outfits_character's (text:$new_stats's id))](else:)[(set:$favorite_outfits to (dm:
+  "beach",(a:),
+  "casual",(a:),
+  "office",(a:),
+  "gym",(a:),
+  "lounge",(a:),
+  "lingerie",(a:),
+  "stylin",(a:),
+  "fetish",(a:)))]]
+(set:$character's id to $new_stats's id)
+(set:$character's race to $new_stats's race)
+(set:$character's breasts to $new_stats's breasts)
+(set:$character's butt to $new_stats's butt)
+(set:$character's hair to $new_stats's hair)
+(set:$character's "body type" to $new_stats's "body type")
+(set:$character's height to $new_stats's height)
+(set:$character's "weight kg" to $new_stats's "weight kg")
+(set:$character's "weight lb" to $new_stats's "weight lb")
+(set:$character's "height cm" to $new_stats's "height cm")
+(set:$character's "height text" to $new_stats's "height text")
+(set:$character's bra to $new_stats's bra)
+(set:$character's eyes to $new_stats's eyes)
+(set:$character's "side effects" to $character's "side effects" - (a:"Swallow or permanent ID","Orgasm or permanent ID","Swallow to continue","Orgasm to continue","Submissive pleasure","Libido overdrive"))
+(set:$global_events to $global_events - (a:"newu rental"))
+(display:"score multiplier recalc")
+(display:"refresh purchasable outfits")
+(display:"sex tracks")
+(set:$new_stats to 0)
+(set:$hairstyle to 0)
+(set:$hairstyle_timer to 0)}
+
+
+
+:: New-U transfortune {"position":"11122,551","size":"100,100"}
+{
+(replace:?computer_screen)[<span class='chromatic'>The Wheel of Transfortune</span>
+Disclaimer: When you "spin the wheel", you will be given a random body, for a random duration, for $300. There *could* also be side effects, since we are concocting you something untested. You'll be given a voucher for a set of rental clothes.
+
+Are you willing to proceed?
+(link:"Back")[(display:"New-U menu options")](link:"Yes")[(if:$character's "money" > 299)[(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$price to 300)(display:"New-U transfortune spin")](else:)[ *Not enough money.*]]]
+}
+
+
+:: New-U transfortune spin {"position":"11124,660","size":"100,100"}
+{(set:$select to 1st of (shuffled:...$available_dna))(set:$duration to (either:"1 day","3 days","3 days","1 day","3 days","3 days","3 days","1 week","1 week"))(set:$stability to "Bargain Basement")(set:$rent to true)(set:$new_stats to $select of (dm:
+	"ella", (dm:
+		"id","ella",
+		"race","latin",
+		"breasts","E",
+		"butt","big",
+		"hair","brown",
+		"body type","voluptuous",
+		"height",62,
+		"weight kg",50,
+		"weight lb",110,
+		"height cm",162,
+		"height text","5ft, 2in",
+		"bra","36E",
+		"eyes","brown"),
+	"jia", (dm:
+		"id","jia",
+		"race","white",
+		"breasts","A",
+		"butt","bubble",
+		"hair","red",
+		"body type","slim",
+		"height",63,
+		"weight kg",55,
+		"weight lb",121,
+		"height cm",165,
+		"height text","5ft, 5in",
+		"bra","32A",
+		"eyes","brown"),
+	"lana", (dm:
+		"id","lana",
+		"race","white",
+		"breasts","D",
+		"butt","bubble",
+		"hair","brown",
+		"body type","average",
+		"height",68,
+		"weight kg",55,
+		"weight lb",121,
+		"height cm",165,
+		"height text","5ft, 8in",
+		"bra","34D",
+		"eyes","blue"),
+	"scarlit", (dm:
+		"id","scarlit",
+		"race","black",
+		"breasts","B",
+		"butt","bubble",
+		"hair","brown",
+		"body type","slim",
+		"height",61,
+		"weight kg",45,
+		"weight lb",99,
+		"height cm",155,
+		"height text","5ft, 1in",
+		"bra","32B",
+		"eyes","brown"),
+	"mia", (dm:
+		"id","mia",
+		"race","white",
+		"breasts","E",
+		"butt","big",
+		"hair","blonde",
+		"body type","voluptuous",
+		"height",67,
+		"weight kg",57,
+		"weight lb",126,
+		"height cm",170,
+		"height text","5ft, 7in",
+		"bra","32E",
+		"eyes","blue"),
+	"alina", (dm:
+		"id","alina",
+		"race","latin",
+		"breasts","C",
+		"butt","bubble",
+		"hair","brown",
+		"body type","slim",
+		"height",66,
+		"weight kg",54,
+		"weight lb",119,
+		"height cm",168,
+		"height text","5ft, 6in",
+		"bra","32C",
+		"eyes","hazel"),
+	"rae", (dm:
+		"id","rae",
+		"race","asian",
+		"breasts","C",
+		"butt","slim",
+		"hair","black",
+		"body type","slim",
+		"height",57,
+		"weight kg",45,
+		"weight lb",99,
+		"height cm",144,
+		"height text","4ft, 9in",
+		"bra","28C",
+		"eyes","brown"),
+	"liya", (dm:
+		"id","liya",
+		"race","white",
+		"breasts","D",
+		"butt","slim",
+		"hair","brown",
+		"body type","average",
+		"height",64,
+		"weight kg",50,
+		"weight lb",110,
+		"height cm",163,
+		"height text","5ft, 4in",
+		"bra","34D",
+		"eyes","brown"),
+	"jade", (dm:
+		"id","jade",
+		"race","asian",
+		"breasts","F",
+		"butt","slim",
+		"hair","black",
+		"body type","average",
+		"height",61,
+		"weight kg",48,
+		"weight lb",106,
+		"height cm",155,
+		"height text","5ft, 1in",
+		"bra","32F",
+		"eyes","brown"),
+	"cassidy", (dm:
+		"id","cassidy",
+		"race","latin",
+		"breasts","G",
+		"butt","big",
+		"hair","brown",
+		"body type","voluptuous",
+		"height",63,
+		"weight kg",57,
+		"weight lb",126,
+		"height cm",160,
+		"height text","5ft, 3in",
+		"bra","36G",
+		"eyes","brown")))(display:"New-U purchase")}
+
+
+:: New-U donate {"position":"11236,555","size":"100,100"}
+{
+(replace:?computer_screen)[(if:$available_dna contains $character's id)[Your DNA is already in our database. (either:"Thanks again for that!","Thanks again!","Thanks again for your support.")
+(link:"Back")[(display:"New-U menu options")]](else-if:$character's "dna" is "tainted")[After analysis, it looks like your DNA has too many junk sequences to be donated. Apologies for any inconvenience!
+(link:"Back")[(display:"New-U menu options")]](else:)["Wow, thank you!" Suzanne's voice says, as lights flash to indicate your sample has been registered. "Your DNA has been registered in our system. As a thank you, please feel free to enjoy 20% off your first purchase with us, it's the least we can do!"(set:$available_dna to $available_dna + (a:$character's id))(set:$global_events to $global_events + (a:"newu discount"))
+(link:"Back")[(display:"New-U menu options")]]]
+
+}
+
+
+:: New-U second time {"position":"11124,318","size":"100,100"}
+{(replace:?thoughts)[]
+(if:$stage is 1)[“Do you long for an experience like no other?” Suzanne pipes up. “Then come closer and return as someone else! Someone foreign? Someone familiar? We won’t know until you tell us! Freely choose the New-U (from one of two templates (offerings may differ depending on the season, permanent roster changes and outstanding warrants)) today!”(set:$se to "voice line repeat")(display:"play sound")]
+(replace:?next)[(link:"Begin")[(track: $se, 'stop')(set:$se to "key press " + (text:(random:1,5)))(display:"play sound")(set:$stage to 26)(replace:?computer_screen)[(display:"New-U core menu")]]]}
+
+
+:: New-U text {"position":"11123,213","size":"100,100"}
+{(unless:$shop_events contains "new-u intro")[(display:"New-U first time")](else:)[(display:"New-U second time")]}

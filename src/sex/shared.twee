@@ -1,0 +1,90 @@
+:: sex sound variants {"position":"4020,3894","size":"100,100"}
+{
+(set:$sound_variant to (text:(random:1,5)))(set:$sound_variant_6 to (text:(random:1,6)))(set:$sound_variant_7 to (text:(random:1,7)))(set:$sound_variant_8 to (text:(random:1,8)))(set:$sound_variant_9 to (text:(random:1,9)))
+
+}
+
+
+:: his cum sounds {"position":"3783,4140","size":"100,100"}
+{
+(set:$line to "generic " + (text:(random:1,13)))
+(if:$his_choice is "mouth" and (random:1,2) is 1)[(set:$line to "generic mouth " + (text:(random:1,4)))]
+
+(if:$character's "id" is "alina")[
+(unless:(random:1,3) is 1)[(set:$line to "alina " + (text:(random:1,12)))]
+(if:$his_choice is "pull out" and (random:1,2) is 1)[(set:$line to "alina body 1")]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to "alina creampie 1")]
+(if:$his_choice is "face" and (random:1,2) is 1)[(set:$line to "alina face " + (text:(random:1,4)))]
+(if:$his_choice is "tits" and (random:1,2) is 1)[(set:$line to "alina tits 1")]
+]
+
+(if:$character's "id" is "cassidy")[
+(unless:(random:1,3) is 1)[(set:$line to "cassidy " + (text:(random:1,12)))]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to "cassidy creampie " + (text:(random:1,2)))]
+(if:$his_choice is "face" and (random:1,3) is 1)[(set:$line to "cassidy face 1")]
+(if:$his_choice is "mouth" and (random:1,2) is 1)[(set:$line to "cassidy mouth " + (text:(random:1,2)))]
+]
+
+(if:$character's "id" is "ella")[
+(unless:(random:1,4) is 1)[(set:$line to "ella " + (text:(random:1,16)))]
+(if:$his_choice is "pull out" and (random:1,2) is 1)[(set:$line to "ella body 1")]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to "ella creampie " + (text:(random:1,3)))]
+(if:$his_choice is "mouth" and (random:1,2) is 1)[(set:$line to "ella mouth 1")]
+]
+
+(if:$character's "id" is "jade")[
+(unless:(random:1,3) is 1)[(set:$line to "jade " + (text:(random:1,8)))]
+(if:$his_choice is "pull out")[(set:$line to "jade body " + (text:(random:1,4)))]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to "jade creampie " + (text:(random:1,2)))]
+(if:($his_choice is "face" or $his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "jade face " + (text:(random:1,3)))]
+(if:$his_choice is "mouth" and (random:1,2) is 1)[(set:$line to "jade mouth 1")]
+(if:$his_choice is "tits" and (random:1,2) is 1)[(set:$line to (either:"jade tits 1","jade tits 2"))]
+]
+
+(if:$character's "id" is "jia")[
+(if:(random:1,2) is 1)[(set:$line to "jia " + (text:(random:1,4)))]
+(if:($his_choice is "pull out" or $his_choicce is "creampie") and (random:1,2) is 1)[(set:$line to "jia body 1")]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to "jia creampie 1")]
+(if:($his_choice is "face" or $his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "jia face 1")]
+(if:$his_choice is "mouth" and (random:1,2) is 1)[(set:$line to "jia mouth 1")]
+]
+(if:$character's "id" is "lana")[
+(unless:(random:1,3) is 1)[(set:$line to "lana " + (text:(random:1,9)))]
+(if:($his_choice is "face" or $his_choice is "mouth"))[(set:$line to "lana face " + (text:(random:1,7)))]
+(if:$his_choice is "mouth" and (random:1,2) is 1)[(set:$line to (either:"lana mouth 1","lana mouth 2"))]
+(if:$his_choice is "creampie")[(set:$line to (either:"lana creampie 1","lana creampie 2"))]
+(if:$his_choice is "pull out" and (random:1,2) is 1 and $your_choice is "pull out")[(set:$line to "lana body 1")]
+]
+(if:$character's "id" is "liya")[
+(unless:(random:1,3) is 1)[(set:$line to "liya " + (text:(random:1,9)))]
+(unless:(random:1,3) is 1)[(if:$his_choice is "pull out")[(set:$line to "liya body " + (text:(random:1,3)))]]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to (either:"liya creampie 1","liya creampie 2"))]
+(if:($his_choice is "face" or $his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "liya face " + (text:(random:1,2)))]
+(if:($his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "liya mouth " + (text:(random:1,3)))]
+]
+(if:$character's "id" is "mia")[
+(unless:(random:1,3) is 1)[(set:$line to "mia " + (text:(random:1,6)))]
+(unless:(random:1,3) is 1)[(if:$his_choice is "pull out")[(set:$line to "mia body " + (text:(random:1,4)))]]
+(if:$his_choice is "creampie" and (random:1,2) is 1)[(set:$line to (either:"mia creampie 1","mia creampie 2"))]
+(if:($his_choice is "face" or $his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "mia face " + (text:(random:1,5)))]
+(if:($his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "mia mouth 1")]
+(if:($his_choice is "tits") and (random:1,2) is 1)[(set:$line to (either:"mia tits 1","mia tits 2"))]
+]
+(if:$character's "id" is "rae")[
+(unless:(random:1,3) is 1)[(set:$line to "rae " + (text:(random:1,4)))]
+(if:$his_choice is "pull out" and (random:1,2) is 1)[(set:$line to "rae body " + (text:(random:1,2)))]
+(if:$his_choice is "creampie")[(set:$line to "rae creampie " + (text:(random:1,4)))]
+(if:$his_choice is "face" and (random:1,2) is 1)[(set:$line to "rae face " + (text:(random:1,2)))]
+]
+(if:$character's "id" is "scarlit")[
+(unless:(random:1,3) is 1)[(set:$line to "scarlit " + (text:(random:1,10)))]
+(if:$his_choice is "pull out" and (random:1,2) is 1)[(set:$line to "scarlit body " + (text:(random:1,3)))]
+(if:$his_choice is "creampie" and $your_choice is "creampie")[(set:$line to "scarlit creampie " + (text:(random:1,3)))]
+(if:$his_choice is "face" and $your_choice is "face")[(set:$line to "scarlit face " + (text:(random:1,5)))]
+(if:($his_choice is "mouth") and (random:1,2) is 1)[(set:$line to "scarlit mouth 1")]
+]
+(if:$cum_text contains "internal" and $his_choice is "mouth")[(set:$line to (either:"generic mouth 1","generic mouth 2","generic mouth 3","generic mouth 4"))]
+(if:$cum_text contains "throatpie")[(set:$line to "generic throatpie 1")]
+(newtrack:$line,"aud/se/sex/orgasm/cum/dynamic/" + $line + ".mp3")
+(set:$se to $line)
+(display:"play sound")}

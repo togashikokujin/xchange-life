@@ -1,0 +1,231 @@
+:: blackjack initialize {"position":"123,6068","size":"100,100"}
+{(set:$style to "normal")(set:$bonus to 0)(if:(datanames:$blackjack_params) contains "lose modifier")[(set:$lose_modifier to $blackjack_params's "lose modifier")](else:)[(set:$lose_modifier to 1)](set:$win_modifier to 1)(set:$first to (either:"you"))(set:$dealer_score to 0)
+<div class="game_header">
+(display:"shuffle deck")(set:$you_played to (a:))(set:$dealer_played to (a:))(set:_vid to "<video src='img/" + $blackjack_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")(print:_vid)
+<div class="game_header_text"><mark>|challenge_text>[]</mark></div>
+</div>
+(set:$result to "none")
+<div class="options">
+</div>
+(print: "<script>GE.updateStats(" + 
+(text: $blackjack_params's "points to win") + "," + (text: $blackjack_params's "points")
++ ");</script>")
+<div id="win-bar">
+            <div class='bar' style='background: repeating-linear-gradient(
+               45deg,
+               rgba(255, 255, 255, 0.9),
+               rgba(255, 255, 255, 0.9) 40px,
+               rgba(255, 255, 255, 1) 40px,
+               rgba(255, 255, 255, 1) 80px
+               );'>(color:"#4a2424")[[**(print:$blackjack_params's "points") / (print:$blackjack_params's "points to win")**]<score_bar|]</div>
+</div><table cellpadding="0" cellspacing="0"><tr>
+    <td width=100%; padding-top: 8px>[]<card_screen|</td></tr>
+</table>}<div class="options"></div>(replace:?right_screen)[(if:$blackjack_params's "npc" is "enabled")[(print:"<img class='greyborder' src='" + (text:$npc's "img") + "' width='100%' height=auto>")
+<div class='options'><span class='shadow'>(if:(datanames:$npc) contains "unfamiliar name")[(if: not ($npc's "events" contains "name"))[(print:$npc's "unfamiliar name")](else:)[(print:$npc's "name")]](else:)[(print:$npc's "name")]</span>{[]<right_options|}</div>
+]|score_blackjack>[(link:"Play Blackjack")[(live:1)[(replace:?right_options)[](stop:)](if:$first is "dealer")[Dealer goes first.(live:1s)[(display:"dealer turn")(stop:)]](else:)[You go first.(live:1s)[(display:"your turn")(stop:)]]](display:"blackjack skill check link")(if:$minigame_skip is "Skippable Minigames: On")[
+(link:"Skip (win)")[(replace:?score_blackjack)[](set:$next to $blackjack_params's "result passage")(set:$result to "pass")(display:"change screen")]
+(link:"Skip (lose)")[(replace:?score_blackjack)[](set:$next to $blackjack_params's "result passage")(set:$result to "fail")(display:"change screen")]]](print:"
+")
+[]<draw|]
+
+
+:: shuffle deck {"position":"247,6011","size":"100,100"}
+{
+(set:$card_lookup to (dm:
+"2",2,
+"3",3,
+"4",4,
+"5",5,
+"6",6,
+"7",7,
+"8",8,
+"9",9,
+"0",10,
+"A",1,
+"J",10,
+"Q",10,
+"K",10))
+(set:$deck to (shuffled:"2C","3C","4C","5C","6C","7C","8C","9C","0C","AC","QC","JC","KC","2H","3H","4H","5H","6H","7H","8H","9H","0H","AH","QH","JH","KH","2D","3D","4D","5D","6D","7D","8D","9D","0D","AD","QD","JD","KD","2S","3S","4S","5S","6S","7S","8S","9S","0S","AS","QS","JS","KS"))
+}
+
+
+:: draw card {"position":"246,6131","size":"100,100"}
+{
+(set:$card to (dm:
+"card",$deck's 1st,
+"value",$deck's 1st's 1st,
+"numval",$deck's 1st's 1st of $card_lookup,
+"pic",(text:$deck's 1st) + ".png"))
+(set:$deck to (subarray:$deck,2,$deck's length))
+}
+
+
+:: calculate your score {"position":"124,6185","size":"100,100"}
+{
+(replace:?card_screen)[<div class='card'>[]<card|</div>]
+(set:$your_score to 0)(set:$ace_count to 0)(set:$index to 0)
+(for: each _card, ...$you_played)[
+(set:$index to $index + 1)
+(if:(($you_played's length) - 5) < $index)[(append:?card)[(set:$card_img to "<img class='noborder'; src='img/minigame/cards/" + _card's "card" + ".png' width=20%>")(print:$card_img)]]
+(set:$your_score to $your_score + _card's "numval")
+(if:_card's "numval" is 1)[(set:$ace_count to $ace_count + 1)]
+]
+(if:$your_score < 12 and $ace_count is 1)[(set:$your_score to $your_score + 10)]
+(replace:?score_blackjack)[Your turn (if:$your_score < 21)[($your_score)](else-if: $your_score is 21)[- Blackjack! (21)](else:)[- Bust! ($your_score)]]
+}
+
+
+:: you play card {"position":"367,6265","size":"100,100"}
+{
+(set:$you_played to $you_played + (a:$card))(display:"calculate your score")
+(replace:?draw)[(if:$your_score < 21)[(link:"Hit")[(replace:?draw)[](display:"draw card")(display:"you play card")](link:"Stand")[(replace:?draw)[](if:$first is "dealer")[(display:"round results")](else:)[(display:"dealer turn")]]](else:)[(link:"Next")[(replace:?draw)[](if:$first is "dealer")[(display:"round results")](else:)[(display:"dealer turn")]]]]
+}
+
+
+:: dealer decide {"position":"252,6251","size":"100,100"}
+{
+(if:$dealer_score > 20)[
+
+(replace:?draw)[(link:"Next")[
+  (if:$first is "dealer")[(display:"your turn")](unless:$first is "dealer")[
+	  (display:"round results")]]]
+
+]
+
+(unless:$dealer_score > 20)[
+
+  (if:$dealer_ace is 0)[
+	(if:$dealer_score < 13)[
+	  (display:"dealer hit")
+	  ](else-if:$dealer_score < 15)[
+	  (if:$your_score > 21 and $first is "you")[
+		  (display:"dealer stand")]
+	(unless:$your_score > 21 and $first is "you")[
+			  (display:"dealer hit")]
+			  ](else-if:$dealer_score < 17)[
+			  (if:(random:1,4) is 1 and $your_score < 22 and $first is "you")[(display:"dealer hit")](else-if: 1 is 1)[(display:"dealer stand")]
+			  
+			  
+			  ](else-if: 1 is 1)[(display:"dealer stand")]
+
+	  ]
+	  
+(unless:$dealer_ace is 0)[
+	  (if:$dealer_score > 16)[(display:"dealer stand")]
+	  (unless:$dealer_score > 16)[(display:"dealer hit")]
+	  ]
+	  ]
+
+}
+
+
+:: dealer decide aggressive1 {"position":"253,6371","size":"100,100"}
+<!--{
+(if:$dealer_score > 20)[
+
+(replace:?draw)[
+
+(link:"Next")[
+
+(if:$first is "dealer")[
+(display:"your turn")](else:)[
+(display:"round results")]]]](else:)[
+(if:$dealer_ace is 0)[
+
+(if:$dealer_score < 15)[(display:"dealer hit")](else-if:$dealer_score < 17)[(if:$your_score > 21 and $first is "you")[(display:"dealer stand")](else:)[(display:"dealer hit")]](else-if:$dealer_score < 18)[(if:(random:1,3) is 1 and $your_score < 22 and $first is "you")[(display:"dealer hit")](else:)[(display:"dealer stand")]](else:)[(display:"dealer stand")]
+
+](else:)[
+(if:$dealer_score > 17)[(display:"dealer stand")](else:)[(display:"dealer hit")]]]
+
+}-->
+
+
+:: your turn {"position":"123,6369","size":"100,100"}
+{
+(set:$you_played to (a:))
+(display:"draw card")(display:"you play card")(display:"draw card")(display:"you play card")
+}
+
+
+:: dealer play card {"position":"130,6489","size":"100,100"}
+{
+(set:$dealer_played to $dealer_played + (a:$card))(display:"calculate dealer score")
+}
+
+
+:: dealer stand {"position":"251,6489","size":"100,100"}
+{
+
+(replace:?score_blackjack)[Dealer(if:$style is "aggressive")[ 🥴] stands. ($dealer_score)  ](replace:?draw)[(if:$first is "dealer")[(link:"Next")[ (display:"your turn")] ]
+(unless:$first is "dealer")[ (link:"Next")[(display:"round results")] ] ]
+
+}
+
+
+:: calculate dealer score {"position":"132,6609","size":"100,100"}
+{
+(replace:?card_screen)[<div class='card'>[]<card|</div>]
+
+(set:$dealer_score to 0)(set:$ace_count to 0)(set:$index to 0)
+(for: each _card, ...$dealer_played)[
+(set:$index to $index + 1)
+(if:(($dealer_played's length) - 5) < $index)[(append:?card)[(set:$card_img to "<img class='noborder'; src='img/minigame/cards/" + _card's "card" + ".png' width=20%>")(print:$card_img)]]
+(set:$dealer_score to $dealer_score + _card's "numval")
+(if:_card's "numval" is 1)[(set:$ace_count to $ace_count + 1)]
+]
+
+(if:$dealer_score < 12 and $ace_count is 1)[(set:$dealer_score to $dealer_score + 10)(set:$dealer_ace to 1)]
+(unless:$dealer_score < 12 and $ace_count is 1)[(set:$dealer_ace to 0)]
+(replace:?score_blackjack)[Dealer's turn.(if:$style is "aggressive")[ 🥴] (if:$dealer_score < 21)[($dealer_score)](else-if: $dealer_score is 21)[Blackjack! (21)](else:)[Bust! ($dealer_score)]]
+}
+
+
+:: dealer hit {"position":"254,6611","size":"100,100"}
+{
+(display:"draw card")(display:"dealer play card")(live:0.5s)[(if:$style is "normal")[(display:"dealer decide")](unless:$style is "normal")[(display:"dealer decide aggressive")](stop:)]
+}
+
+
+:: round results {"position":"136,6722","size":"100,100"}
+{(color:"#4a2424")[(set:$result to 0)(display:"shuffle deck")(replace:?score_blackjack)[Hand Result](replace:?card_screen)[<div class="options">(if:$your_score > 21 and $dealer_score > 21)[(if:$plural is "true")[You all bust.](else:)[Draw, you both bust.](set:$result to 0)](else-if: $dealer_score > 21 and $your_score < 21)[(set:$result to (ceil:$win_modifier*($your_score / 4)))Dealer busts; you gain** $result **points.(if:$win_modifier > 1)[ ⬆️]](else-if: $your_score > 21 and $dealer_score < 21)[(set:$result to -1 * (ceil:($dealer_score * 0.25 * $lose_modifier)))(display:"round lose effect")You bust, losing **(text:(ceil:$dealer_score * 0.25 * $lose_modifier))** points.(if:$lose_modifier > 1)[ ⚠️]](else-if: $dealer_score > 21 and $your_score is 21)[(set:$result to (ceil:$win_modifier*($your_score / 2)))Dealer busts; you gain** $result **points. (x2 blackjack bonus)(if:$win_modifier > 1)[ ⬆️]](else-if: $your_score > 21 and $dealer_score is 21)[(set:$result to -1 * (ceil:($dealer_score*$lose_modifier)/4))(display:"round lose effect")You bust, losing **$result** points. (either:"Shit.","Fuck.","Dammit.","Ugh.") (x2 blackjack penalty)(if:$lose_modifier > 1)[ ⚠️]](else-if:$your_score is $dealer_score)[Draw.(set:$result to 0)](else-if:$your_score is 21)[(set:$result to (($your_score - $dealer_score) * 2 * $win_modifier))You gain **$result** points. (x2 blackjack bonus)(if:$win_modifier > 1)[ ⬆️]](else-if:$dealer_score is 21)[(set:$result to (ceil:-2*($dealer_score - $your_score)*$lose_modifier))(display:"round lose effect")You lose **(text:(ceil:2*($dealer_score - $your_score)*$lose_modifier))** points. (x2 blackjack penalty)(if:$lose_modifier > 1)[ ⚠️]](else-if:$your_score > $dealer_score)[You win (text:(ceil:$win_modifier*($your_score - $dealer_score))) (if:(ceil:$win_modifier*($your_score - $dealer_score)) is 1)[point.](else:)[points.](if:$win_modifier > 1)[ ⬆️](set:$result to (ceil:$win_modifier*($your_score - $dealer_score)))](else:)[(display:"round lose effect")You lose (text:(ceil:$lose_modifier*($dealer_score - $your_score))) points.(set:$result to (ceil:$lose_modifier*($your_score - $dealer_score)))(if:$lose_modifier > 1)[ ⚠️]](print:"
+
+")
+Your Score: **$your_score**(print:"
+")
+Dealer's Score: **$dealer_score**(if:$style is "aggressive")[ 🥴]]
+(set:$blackjack_params's "points" to (max:$blackjack_params's "points" + $result,0))
+
+(replace:?score_bar)[**(print:$blackjack_params's "points") / (print:$blackjack_params's "points to win")**(print: "<script>GE.updateStats(" + 
+(text: $blackjack_params's "points to win") + "," + (text: (min:$blackjack_params's "points",$blackjack_params's "points to win"))
++ ");")]
+(replace:?draw)[(if:$blackjack_params's "points" >= $blackjack_params's "points to win")[(live:2s)[(set:$result to "pass")(replace:?score_blackjack)[](set:$next to $blackjack_params's "result passage")(display:"change screen")(stop:)]](else-if:$blackjack_params's "points" <= 0)[(live:2s)[(set:$result to "fail")(replace:?score_blackjack)[](set:$next to $blackjack_params's "result passage")(display:"change screen")(stop:)]](else:)[(link:"Next hand")[(replace:?draw)[]
+
+(if:$first is "dealer")[(display:"your turn")(set:$first to "you")](else:)[(set:$first to "dealer")(display:"dealer turn")]
+
+
+](unless:$blackjack_params's "type" is "cards")[(link:"Risk it")[(replace:?draw)[(display:"round end early")]]]]]]}
+</div>
+
+
+:: round end early {"position":"256,6724","size":"100,100"}
+{
+(set:_chance to (($blackjack_params's "points" / $blackjack_params's "points to win") * 100))
+
+(if:(random:1,100) >= _chance)[(live:1s)[(set:$result to "fail")(set:$next to $blackjack_params's "result passage")(display:"change screen")(stop:)]](else:)[(live:1s)[(set:$result to "pass")(set:$next to $blackjack_params's "result passage")(display:"change screen")(stop:)]]
+
+}
+
+
+:: dealer turn {"position":"138,6840","size":"100,100"}
+{
+(set:$dealer_played to (a:))
+(display:"draw card")(display:"dealer play card")(display:"draw card")(display:"dealer play card")
+(live:0.5s)[(if:$style is "normal")[(display:"dealer decide")]
+(unless:$style is "normal")[(display:"dealer decide aggressive")](stop:)]
+}
+
+
+:: round lose effect {"position":"260,6842","size":"100,100"}
+{
+(if:(datanames:$blackjack_params) contains "type")[(if:$blackjack_params's "type" is "big load")[(set:$se to "gag " + (text:(random:1,7)))(display:"play sound")]]
+}

@@ -1,0 +1,46 @@
+.harlowesave {
+  border: 2px solid #e27087;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  background-color: #e27087;
+  color: #fff;
+  text-align: center;
+  font-size: 2.5vmin;
+  font-weight: bold;
+  padding: 0.75vmin;
+  line-height: 100%;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px;
+  box-shadow: 3px 3px 0 #4a2424, -1px -1px 0 #4a2424, 1px -1px 0 #4a2424, -1px 1px 0 #4a2424, 1px 1px 0 #4a2424;
+  text-shadow: 3px 3px 0 #4a2424, -1px -1px 0 #4a2424, 1px -1px 0 #4a2424, -1px 1px 0 #4a2424, 1px 1px 0 #4a2424;
+}
+
+.harlowesave:hover {
+  border: 2px solid #fff;
+  background-color: #fff;
+  color: #e27087;
+  text-shadow: 1px 1px rgba(128, 128, 128, 0);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.harlowesave:disabled {
+  border: 2px solid #492525;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  background-color: #492525;
+  color: grey;
+  text-align: center;
+  font-size: 2.5vmin;
+  font-weight: bold;
+  padding: 0.75vmin;
+  line-height: 100%;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px;
+  box-shadow: 3px 3px 0 #492525, -1px -1px 0 #492525, 1px -1px 0 #492525, -1px 1px 0 #492525, 1px 1px 0 #492525;
+  text-shadow: 3px 3px 0 #492525, -1px -1px 0 #492525, 1px -1px 0 #492525, -1px 1px 0 #492525, 1px 1px 0 #492525;
+}

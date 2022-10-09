@@ -1,0 +1,18 @@
+.buff {
+  text-shadow:
+     3px 3px 0 #4a2424,
+   -1px -1px 0 #4a2424,  
+    1px -1px 0 #4a2424,
+    -1px 1px 0 #4a2424,
+     1px 1px 0 #4a2424; 
+  color: #6edb6e;
+}
+.debuff {
+  text-shadow:
+     3px 3px 0 #4a2424,
+   -1px -1px 0 #4a2424,  
+    1px -1px 0 #4a2424,
+    -1px 1px 0 #4a2424,
+     1px 1px 0 #4a2424; 
+  color: #ff6282;
+}

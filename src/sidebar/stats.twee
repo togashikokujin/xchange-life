@@ -1,0 +1,26 @@
+:: arousal icon {"position":"1532,10","size":"100,100"}
+{(if:$character's "arousal" < 3)[<img src='img/ui/stats/512Arousal1.png'; width=100%; height=auto>](else-if:$character's "arousal" < 8)[<img src='img/ui/stats/512Arousal2.png'; width=100%; height=auto>](else:)[<img src='img/ui/stats/512Arousal3.png'; width=100%; height=auto>]}
+
+
+:: effective fitness {"position":"1151,907","size":"100,100"}
+{
+(if:$character's "effective fitness" < $character's "fitness")[<span class='debuff'>(print:$character's "effective fitness")</span>](else-if:$character's "effective fitness" > $character's "fitness")[<span class='buff'>(print:$character's "effective fitness")</span>](else:)[(print:$character's "fitness")]
+}
+
+
+:: identity icon {"position":"1535,114","size":"100,100"}
+{(if:$character's "identity" > 59)[<img src='img/ui/stats/512Iden1.png'; width=100%; height=auto>](else-if:$character's "identity" > 39)[<img src='img/ui/stats/512Iden2.png'; width=100%; height=auto>](else-if:$character's "identity" > 19)[<img src='img/ui/stats/512Iden3.png'; width=100%; height=auto>](else:)[<img src='img/ui/stats/512Iden4.png'; width=100%; height=auto>]}
+
+
+:: effective charm {"position":"1158,686","size":"100,100"}
+{
+(if:$character's "effective charm" < $character's "charm")[|tooltip>[<span class='debuff'>(print:$character's "effective charm")</span>|tooltiptext>[Base charm: (print:$character's "charm")(set:$buffs to $charm_buffs)(display:"buff list")]]](else-if:$character's "effective charm" > $character's "charm")[|tooltip>[<span class='buff'>(print:$character's "effective charm")</span>|tooltiptext>[Base charm: (print:$character's "charm")(set:$buffs to $charm_buffs)(display:"buff list")]]](else:)[(print:$character's "charm")]
+
+}
+
+
+:: effective intellect {"position":"1154,796","size":"100,100"}
+{
+(if:$character's "effective intellect" < $character's "intellect")[<span class='debuff'>(print:$character's "effective intellect")</span>](else-if:$character's "effective intellect" > $character's "intellect")[<span class='buff'>(print:$character's "effective intellect")</span>](else:)[(print:$character's "intellect")]
+}
+
