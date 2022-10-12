@@ -890,7 +890,6 @@ window.GE.outfit_database.set("rae", toMap({
     })
   }),
   "gym": toMap({
-    // guaranteed, plus 3 others
     "rae gym blue gym outfit": toMap({
       "id": "rae gym blue gym outfit",
       "category": "gym",
@@ -969,7 +968,6 @@ window.GE.outfit_database.set("rae", toMap({
       "shoes": "sneakers",
       "locations": ["gym", "casual", "lounge"]
     }),
-    // This shows up twice
     "rae gym fishnets": toMap({
       "id": "rae gym fishnets",
       "category": "gym",
@@ -1154,7 +1152,6 @@ window.GE.outfit_database.set("rae", toMap({
       "shoes": "none",
       "locations": ["lingerie"]
     }),
-    // Doesn't show up
     "rae lingerie black bodysuit": toMap({
       "id": "rae lingerie black bodysuit",
       "category": "lingerie",
@@ -2083,7 +2080,6 @@ window.GE.outfit_database.set("rae", toMap({
       "shoes": "heels",
       "locations": ["stylin"]
     }),
-    // Doesn't show up
     "rae stylin rogue": toMap({
       "id": "rae stylin rogue",
       "category": "stylin",

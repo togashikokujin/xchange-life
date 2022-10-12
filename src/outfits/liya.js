@@ -90,7 +90,6 @@ window.GE.outfit_database.set("liya", toMap({
       "shoes": "none",
       "locations": ["beach"]
     }),
-    // This one appeared twice
     "liya beach black strap bikini": toMap({
       "id": "liya beach black strap bikini",
       "category": "beach",
@@ -117,7 +116,6 @@ window.GE.outfit_database.set("liya", toMap({
       "shoes": "none",
       "locations": ["beach"]
     }),
-    // This one didn't appear
     "liya beach brown strapless bikini": toMap({
       "id": "liya beach brown strapless bikini",
       "category": "beach",
@@ -345,7 +343,6 @@ window.GE.outfit_database.set("liya", toMap({
       "shoes": "sandals",
       "locations": ["beach"]
     }),
-    // This one appeared twice
     "liya beach vixen bikini and jeans": toMap({
       "id": "liya beach vixen bikini and jeans",
       "category": "beach",
@@ -1007,7 +1004,6 @@ window.GE.outfit_database.set("liya", toMap({
       "shoes": "none",
       "locations": ["lingerie"]
     }),
-    // This shows up twice
     "liya lingerie black garter": toMap({
       "id": "liya lingerie black garter",
       "category": "lingerie",
@@ -1060,7 +1056,6 @@ window.GE.outfit_database.set("liya", toMap({
       "shoes": "none",
       "locations": ["lingerie"]
     }),
-    // This shows up twice
     "liya lingerie black pushup lingerie": toMap({
       "id": "liya lingerie black pushup lingerie",
       "category": "lingerie",

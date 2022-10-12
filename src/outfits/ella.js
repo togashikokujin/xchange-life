@@ -822,7 +822,6 @@ window.GE.outfit_database.set("ella", toMap({
       "shoes": "sneakers",
       "locations": ["gym", "lounge"]
     }),
-    // this one wasn't included, not sure if that was purposeful or not
     "ella gym simple": toMap({
       "id": "ella gym simple",
       "category": "gym",
@@ -959,7 +958,6 @@ window.GE.outfit_database.set("ella", toMap({
       "shoes": "none",
       "locations": ["lingerie"]
     }),
-    // this one wasn't included, not sure if that was purposeful or not
     "ella lingerie purple multiway bra": toMap({
       "id": "ella lingerie purple multiway bra",
       "category": "lingerie",
@@ -1276,7 +1274,6 @@ window.GE.outfit_database.set("ella", toMap({
       "shoes": "flats",
       "locations": ["office", "casual"]
     }),
-    // This one was in the possibilities 3 times, I'll have to think about how to weight it like that
     "ella office navy skirt": toMap({
       "id": "ella office navy skirt",
       "category": "office",

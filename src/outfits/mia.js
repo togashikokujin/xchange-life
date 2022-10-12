@@ -669,7 +669,6 @@ window.GE.outfit_database.set("mia", toMap({
     })
   }),
   "fetish": toMap({
-    // This one shows up twice
     "mia fetish black leather goddess": toMap({
       "id": "mia fetish black leather goddess",
       "category": "fetish",
@@ -965,7 +964,6 @@ window.GE.outfit_database.set("mia", toMap({
     })
   }),
   "lingerie": toMap({
-    // This doesn't show up
     "mia lingerie black and pink multiway lingerie": toMap({
       "id": "mia lingerie black and pink multiway lingerie",
       "category": "lingerie",

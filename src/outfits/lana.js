@@ -736,7 +736,6 @@ window.GE.outfit_database.set("lana", toMap({
       "shoes": "flats",
       "locations": ["casual", "lounge", "stylin"]
     }),
-    // This one was listed twice in the list
     "lana casual stripey tank top": toMap({
       "id": "lana casual stripey tank top",
       "category": "casual",
@@ -1589,7 +1588,6 @@ window.GE.outfit_database.set("lana", toMap({
       "shoes": "none",
       "locations": ["lounge", "casual"]
     }),
-    // In the list twice
     "lana lounge red crop top": toMap({
       "id": "lana lounge red crop top",
       "category": "lounge",
