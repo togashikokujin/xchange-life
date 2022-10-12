@@ -1,0 +1,64 @@
+:: get outfit {"position":"251,8177","size":"100,100"}
+{
+  (set:_words to (words:$select))
+  (if:_words's last is "stepsis")[
+    (set:$variant to "stepsis")
+  ]
+  
+  (unpack: _words into (a: _id, _style))
+
+  (set:$select to (joined:" ",...(_words-(a:"stepsis"))))
+  (set:_name to $select - (_id + " " + _style + " "))
+
+  ($use_global: "$outfit_database", "window.GE.outfit_database", [{
+    (set:$select_outfit to $select of _style of _id of $outfit_database)
+    (if:$select_outfit contains "flavors")[
+      (move: flavors of $select_outfit into _flavors)
+      (set:flavor of $select_outfit to (either:..._flavors))
+    ]
+  }])
+
+  (set:image of $select_outfit to ("<img class='greyborder' src='img/characters/outfits/" +
+    _id + "/" + _style + "/" + _name + ".jpg' width='100%' height=auto>"))
+
+  (display:"get outfit buff")
+}
+
+
+:: refresh purchasable outfits {"position":"135,8176","size":"100,100"}
+{
+  (set:$rentable_outfits to (a:))
+  (set:$purchasable_outfits to (a:))
+
+  ($use_global: "$outfit_database", "window.GE.outfit_database", [
+    (set:_character_outfits to $character's id of $outfit_database)
+    (set:_purchase_limits to purchasable of _character_outfits)
+
+    (for:each _style, ...(datanames:_purchase_limits))[
+      (set:_outfits to (dm:))
+      (set:_guaranteed_tags to (cond:
+        _style is "gym", (a:"gym scene"),
+        (a:)
+      ))
+      (if:_style is "intimates")[
+        (set:_outfits to (fetish of _character_outfits) + (lingerie of _character_outfits))
+      ](else:)[
+        (set:_outfits to _style of _character_outfits)
+      ]
+
+      (set:_outfit_names to (datanames:_outfits))
+      (set:_guaranteed_outfit_names to (a:))
+
+      (if:_guaranteed_tags is not (a:))[
+        (set:_guaranteed_entries to (find:_outfit where _outfit's value's tags contains any of _guaranteed_tags, ...(dm-entries:_outfits)))
+        (set:_guaranteed_outfit_names to (altered: _entry via _entry's name, ..._guaranteed_entries))
+        (set:_outfit_names to it - _guaranteed_outfit_names)
+      ]
+
+      (set:_purchase_limit to _style of _purchase_limits)
+      (set:$purchasable_outfits to it + (subarray:(shuffled:..._outfit_names), _purchase_limit, 1) + _guaranteed_outfit_names)
+    ]
+  ])
+
+  (set:$rentable_outfits to $purchasable_outfits - $outfit_inventory)
+}
