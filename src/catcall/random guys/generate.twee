@@ -2,7 +2,7 @@
 {
   (set:_min_age to (num: 1st of (str-find: (p-many: digit), $min_npc_age)))
   (set:_max_age to (num: 1st of (str-find: (p-many: digit), $max_npc_age)))
-  (set:_max_age to (cond: (random:1,2) is 1, 30, it))
+  (set:_max_age to (cond: (random:1,2) is 1, 30, _max_age))
   (set:_age to (random:_min_age, _max_age))
   (set:_agecat to (cond:
     _age < 20, "late teens",
