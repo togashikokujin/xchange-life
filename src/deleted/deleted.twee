@@ -17,7 +17,17 @@
 :: random guy description genx
 :: tg cartoon update
 :: lights out win
+{
+(set:$result to "pass")
+(replace:?game_screen)[(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>You (print:$blackjack_params's "good action").</span>]]]
+(replace:?right_options)[(link:"Next")[(set:$next to $blackjack_params's "result passage")(set:$result to "pass")(display:"change screen")]]
+}
 :: lights out lose
+{
+(set:$result to "fail")
+(replace:?game_screen)[(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>You (print:$blackjack_params's "bad action").</span>]]]
+(replace:?right_options)[(link:"Next")[(set:$next to $blackjack_params's "result passage")(set:$result to "fail")(display:"change screen")]]
+}
 :: buttons off
 
 :: refresh purchasable outfits alina

@@ -107,6 +107,6 @@
 
   (if:$correct > _correct_target and (random:1,_random_target) is 1)[
     (set:$space to "yes")
-    (set:$amount to (_amount:))
+    (set:$amount to _amount)
   ]
 }

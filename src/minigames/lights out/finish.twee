@@ -13,7 +13,7 @@
     (out-data:(cond:(a:8, 11, 18) contains _value, "an ", "a ") + (str:_value))
   ]))
   (set:_finish to (macro: bool-type _pass, [
-    (set:$result to (cond: _pass, "pass", "fail")
+    (set:$result to (cond: _pass, "pass", "fail"))
     (set:_action to (cond: _pass, "good action", "bad action"))
     (replace:?game_screen)[
       (color:"#f9ced5") + (css:"font-size:4vmin")[
