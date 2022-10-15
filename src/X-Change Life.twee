@@ -82,18 +82,6 @@ tw-story {
         background-position: 50% 50%;
     }
 }
-@keyf
-@keyframes gradient-right {
-    0% {
-        background-position: 100% 50%;
-    }
-    50% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 100% 50%;
-    }
-}
 
 
 .buff {
@@ -2214,7 +2202,7 @@ if (typeof module !== 'undefined') {
 
 
 :: character status {"position":"1048,1","size":"100,100"}
-<div class='top_left'>{(display:"check buffs")(if:$character's "temp pill" is "true")[(set:$outfit_button to "dont show")(set:$character's "name" to $temp_pill's "name")<span class='borderless'>|portrait>[(print:"<img class='greyborder' src='img/characters/temp/" + (text:$temp_pill's "id") + "/normal.jpg' width='100%' height=auto>")]</span>
+(display:"clamp stats")<div class='top_left'>{(display:"check buffs")(if:$character's "temp pill" is "true")[(set:$outfit_button to "dont show")(set:$character's "name" to $temp_pill's "name")<span class='borderless'>|portrait>[(print:"<img class='greyborder' src='img/characters/temp/" + (text:$temp_pill's "id") + "/normal.jpg' width='100%' height=auto>")]</span>
 <div class='options'>|name>[(print:$temp_pill's "name")(display:"mood status")]</div>](else:)[(if:$character's "gender" is "male")[(set:$character's "name" to $character's "male name")<span class='borderless'>|portrait>[(print:"<img class='greyborder' src='img/characters/male/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]</span>
 <div class='options'>|name>[<span class='shadow'>(print:$character's "male name")</span>(display:"mood status")]</div>](else:)[(if:$character's "gender" is "female")[(set:$character's "name" to $character's "female name")|portrait>[(if:$hairstyle is 0 or not (($character's status) is "female"))[(print:"<img class='border' src='img/characters/" + $character's "status" + "/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")](else:)[(print:"<img class='border' src='img/characters/hairstyle/" + $hairstyle + "/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]]
 <div class='options'>[|name>[<span class='shadow'>(print:$character's "female name")</span>(display:"mood status")]</div>]]]]
@@ -2304,7 +2292,10 @@ if (typeof module !== 'undefined') {
 
 
 :: initialize variables {"position":"1522,787","size":"100,100"}
-{(display:"reset mood")(display:"reset status")(set:$day to 1)(set:$time to 1)(set:$masturbated_today to 0)(set:$mess to 5)
+{
+(set:$pregnancy to 0)
+(set:$preg_npc to 0)
+(display:"reset mood")(display:"reset status")(set:$day to 1)(set:$time to 1)(set:$masturbated_today to 0)(set:$mess to 5)
 (set:$tip_jar_index to 1)
 (set:$day_of_week to "Saturday")(display:"initialize npc variables")(set:$pill_taken to "none")(set:$request to "chores")
 (set:$has_cheated to "no")
@@ -2430,13 +2421,15 @@ if (typeof module !== 'undefined') {
 (set:$character's "dna" to "normal")
 (set:$character's "pregnant" to "false")
 (set:$character's "pregnancy known" to "false")
+(set:$character's "max masculinity" to 100)
 (set:$pregnant_discover_timer to 0)
 (display:"house dirty rooms")
-(display:"initialize stat progression")}
+(display:"initialize stat progression")
+(display:"initialize pregnancy progression")}
 
 
 :: advance day {"position":"2763,47","size":"100,100"}
-{(set:$seed to "none")<script>$seed = Math.floor((new Date()).getTime());</script>(seed:(text:$seed))(unless:$hairstyle is 0)[(set:$hairstyle_timer to $hairstyle_timer - 1)(if:$hairstyle_timer < 1)[(set:$hairstyle to 0)(set:$hairstyle_timer to 0)]](if:$character's "identity" < 1)[(set:$next to "identity game over")(display:"next")](else:)[
+{(display:"clear variables")(set:$seed to "none")<script>$seed = Math.floor((new Date()).getTime());</script>(seed:(text:$seed))(unless:$hairstyle is 0)[(set:$hairstyle_timer to $hairstyle_timer - 1)(if:$hairstyle_timer < 1)[(set:$hairstyle to 0)(set:$hairstyle_timer to 0)]](if:$character's "identity" < 1)[(set:$next to "identity game over")(display:"next")](else:)[
 (display:"check sleep status")
 (unless:(datanames:$character) contains "status effects")[(set:$character's "status effects" to (a:))]
 (set:$protection's "active" to "false")
@@ -2525,7 +2518,7 @@ A little shoutout to some others, who have contributed writing for various porti
 
 
 :: refresh stats {"position":"1049,108","size":"100,100"}
-{(set:$stats_refresh to "refresh stats")(unless:$character's "temp pill" is "true")[(if:$character's "gender" is "male")[(set:$outfit_button to "dont show")(set:$character's "name" to $character's "male name")](else:)[(set:$character's "name" to $character's "female name")]](else:)[(set:$character's "name" to $temp_pill's "name")](display:"check buffs")(display:"refresh name")(replace:?stats)[<span class='fixedwidth'><table>
+{(display:"clamp stats")(set:$stats_refresh to "refresh stats")(unless:$character's "temp pill" is "true")[(if:$character's "gender" is "male")[(set:$outfit_button to "dont show")(set:$character's "name" to $character's "male name")](else:)[(set:$character's "name" to $character's "female name")]](else:)[(set:$character's "name" to $temp_pill's "name")](display:"check buffs")(display:"refresh name")(replace:?stats)[<span class='fixedwidth'><table>
   <tbody>
 	<tr>
 	  <td>(if:$character's "gender" is "female" or $character's "temp pill" is "true")[<img src='img/ui/stats/512Femininity.png'; width=100%; height=auto>](else:)[<img src='img/ui/stats/512Masculinity.png'; width=100%; height=auto>] </td>
@@ -2571,7 +2564,7 @@ A little shoutout to some others, who have contributed writing for various porti
 
 
 :: advance time {"position":"545,227","size":"100,100"}
-(display:"clear variables")<div style='display: none;'>(if:$character's "side effects" contains "Libido overdrive")[(set:$character's "arousal" to (min:$character's "arousal" + 1,10))]
+<div style='display: none;'>(if:$character's "side effects" contains "Libido overdrive")[(set:$character's "arousal" to (min:$character's "arousal" + 1,10))]
 (set:$time_events to (a:))
 
 (unless:$character's "temp pill" is "true" or $character's "gender" is "male")[(unless:$character's "status" is "cum")[(set:$character's "status" to "female")]
@@ -3050,7 +3043,7 @@ Anyhow, thanks for reading. This is so far the result of a couple weeks' work, a
 (set:$song to 0)(display:"play song")(set:$stepsis's "xchange seen" to (max:1,$stepsis's "xchange seen"))[(display:"character status")]<status|(set:$npc to (dm:"name","Alexia","img","img/npc/family/stepsis/alexia/portrait_happy.jpg"))<div class='center_screen' data-simplebar>[(print:"<img class='greyborder' 
 src='img/npc/family/stepsis/alexia/shower.jpg' width=100% height=auto>")
 ["(either:"OH. MY. GOD! STEPBRO??","Holy shit! Stepbro!","Holy shit... stepbro!","Jesus, stepbro!") (either:"Is that you?","That's YOU?","Hahahaha, that's you?!","You took an X-Change???")(if:$character's "status" is "cum")[ (if:$stepsis's "mad reasons" contains "shower cum on face")[And (either:"it looks like you got a taste of your own goddamned medicine.","it looks like you got taught a fucking lesson for cumming on MY face.")](else-if:$stepsis's "mad reasons" contains "shower cum in mouth")[And (either:"it looks like you got a taste of your own goddamned medicine.","it looks like you got taught a fucking lesson for cumming in MY mouth. Idiot.")](else:)[(either:"And what is on your face???","And I see you've already been... making 'friends'.","Looks like you've been 'making friends,' tee hee!")]](if:(a:4,-1,5) contains $stepsis's "shower")[ (either:"God...","Shit...","I mean, fuckk...") (either:"I don't think I can look at you the same way again.","I can't believe I gave you a blowjob that time.","I can't believe I actually gave you a blowjob. Now I won't be able to look at you the same way...")]"
-(set:$npc_select to "stepsis")(set:$gain_respect to -1)(set:$gain_dom to 1)(display:"change relationship")<div class='options'>(if:$stepsis's "shower" is 0)[(link:"What do you think?")[(set:$choice to "thoughts")(replace:?text)[(display: "stepsis shower tease chat")]](link:"Wanna make out?")[(set:$choice to "makeout")(replace:?text)[(display:"stepsis shower tease chat")]]](linK:"Whatever")[(set:$next to "shower event")(display:"next")]</div>]<text|]<screen|</div><div class='top_right' data-simplebar>[]<right_screen|(display:"npc screen update location")</div>
+<div class='options'>(if:$stepsis's "shower" is 0)[(link:"What do you think?")[(set:$choice to "thoughts")(replace:?text)[(display: "stepsis shower tease chat")]](link:"Wanna make out?")[(set:$choice to "makeout")(replace:?text)[(display:"stepsis shower tease chat")]]](linK:"Whatever")[(set:$next to "shower event")(display:"next")]</div>]<text|]<screen|</div><div class='top_right' data-simplebar>[]<right_screen|(display:"npc screen update location")</div>
 
 
 :: initialize npc variables {"position":"1868,265","size":"100,100"}
@@ -3338,7 +3331,7 @@ Then he storms out.
 
 
 :: pill expires {"position":"1171,126","size":"100,100"}
-(unless:$character's "pregnant" is "true")[(set:$hairstyle to 0)(set:$hairstyle_timer to 0)(set:$character's "real gender" to "male")(set:$character's "gender" to "male")(display:"refresh portrait")(set:$character's "real gender" to "male")[(display:"reset mood")(display:"character status")]<status|<div class='center_screen' data-simplebar>[(set:$character's "gender" to "male")(set:$character's "status" to "female")(set:$character's "side effects" to $character's "side effects" - (a:"Swallow or permanent ID","Orgasm or permanent ID","Swallow to continue","Orgasm to continue","Submissive pleasure","Libido overdrive"))(set:$your_name to $character's "male name")(if:$pill_taken is "Clone" or not ($character's "real id" is $character's "id"))[(display:"New-U change back")(set:$character's "status" to "male")(set:$outfit_button to "dont show")(display:"refresh portrait")(if:$rent is true)[(display:"remove rented outfits")(print:"
+(set:$milk to 0)(unless:$character's "pregnant" is "true")[(set:$hairstyle to 0)(set:$hairstyle_timer to 0)(set:$character's "real gender" to "male")(set:$character's "gender" to "male")(display:"refresh portrait")(set:$character's "real gender" to "male")[(display:"reset mood")(display:"character status")]<status|<div class='center_screen' data-simplebar>[(set:$character's "gender" to "male")(set:$character's "status" to "female")(set:$character's "side effects" to $character's "side effects" - (a:"Swallow or permanent ID","Orgasm or permanent ID","Swallow to continue","Orgasm to continue","Submissive pleasure","Libido overdrive"))(set:$your_name to $character's "male name")(if:$pill_taken is "Clone" or not ($character's "real id" is $character's "id"))[(display:"New-U change back")(set:$character's "status" to "male")(set:$outfit_button to "dont show")(display:"refresh portrait")(if:$rent is true)[(display:"remove rented outfits")(print:"
 
 ")]](if:(random:1,2) is 1)[(either:"A shiver goes down your spine","You shudder","You feel an intense 'melting' sensation","You yelp at the sudden jolt") as your](else:)[Your] $pill_taken pill (either:"expires","wears off").(if:(Random:1,2) is 1)[ (set:_a_guy to (either:$character's "male name","a guy","male"))(either:"You're _a_guy once again.","You're back to being _a_guy.")](set:$pill_taken to "none")
 <div class='options'>(link:"Next")[(display:"advance time")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>(display:"calculate pregnancy chance")](else:)[(display:"pill doesnt expire")]
@@ -3469,7 +3462,7 @@ Then he storms out.
 ")
 <span class='shadow'>Daytime:</span>(print:"
 ")
-(unless:(a:"8-week prenatal appointment") contains $daytime_activity)[(dropdown: bind $daytime_activity, ...$daytime_activities)](else:)[(print:$daytime_activity)](print:"
+(unless:(a:"8-week prenatal appointment","12-week prenatal appointment") contains $daytime_activity)[(dropdown: bind $daytime_activity, ...$daytime_activities)](else:)[(print:$daytime_activity)](print:"
 ")
 <span class='shadow'>Evening:</mark> (print:"
 ")
@@ -4862,7 +4855,7 @@ src='img/npc/girls/" + (text:"id" of $npc) + "/bar_unhappy.jpg' width=100% heigh
 
 
 :: refresh stats sex {"position":"1052,232","size":"100,100"}
-{(set:$outfit_button to "dont show")(display:"refresh portrait")(set:$stats_refresh to "refresh stats sex")(if:$character's "gender" is "male")[(set:$character's "name" to $character's "male name")](else:)[(set:$character's "name" to $character's "female name")]
+{(display:"clamp stats")(set:$outfit_button to "dont show")(display:"refresh portrait")(set:$stats_refresh to "refresh stats sex")(if:$character's "gender" is "male")[(set:$character's "name" to $character's "male name")](else:)[(set:$character's "name" to $character's "female name")]
 (display:"check buffs")(display:"refresh name")(replace:?stats)[🍾: (print:(min:10,$your_pleasure))/10(print:"
 ")
 ⚡: $energy(print:"
@@ -5529,11 +5522,11 @@ Double-click this passage to edit it.
 "(if:$npc's "id" is "dredd")[(either:"Up for a game of blackjack?","Up for a high stakes card game?")](else:)[(either:"What's up?","Hey.")]"
 
 
-:: save npc male {"position":"2505,41","size":"100,100"}
+:: save npc male {"position":"3975,50","size":"100,100"}
 (set:("id" of $npc) of $npcs_men to $npc)
 
 
-:: load npc male {"position":"2501,153","size":"100,100"}
+:: load npc male {"position":"3975,175","size":"100,100"}
 (set:$npc to $select of $npcs_men)
 
 
@@ -7575,7 +7568,12 @@ you do your best to smile as he drains his balls across your face. You remind yo
 
 
 :: stepsis shoplifting offer sex fuck cum {"position":"9802,1546","size":"100,100"}
-(set:$sex_loop to 0)(display:"play sex loop")(set:$se to "stepsis shoplifting cum")(display:"play sound")(if:$choice is "accept")[(display:"sex creampie")(print:$img)(set:$minigame to (dm:
+(set:$sex_loop to 0)(display:"play sex loop")(set:$se to "stepsis shoplifting cum")(display:"play sound")(if:$choice is "accept")[{(set:$npc's age to 50)
+(set:$npc's ballsize to 8)
+(set:$npc's looks to 1)
+(set:$npc's wealth to 3)
+(set:$npc's personality to 2)
+(set:$npc's tags to (a:"fuckboy","guard","chubby","smelly"))}(display:"sex creampie")(print:$img)(set:$minigame to (dm:
 	"difficulty",7,
 	"babe type","clothed",
 	"cock type","nsfw",
@@ -7612,7 +7610,7 @@ you do your best to smile as he drains his balls across your face. You remind yo
 "10",(either:"big","thick","sticky","warm","hot","powerful","heavy","massive","potent","womb-smearing","womb-filling"))) + " " + (either:"jets","spurts","squirts","jets","spurts","ropes","spurts","spurts"))
 (set:$preg_chance_mod to $cum_amount of (a:0.6,0.6,0.7,0.8,0.9,1,1.2,1.5,1.8,2,2.2,2.4,2.8,3,4))
 
-(if:(random:1,2) is 1)[(print:(upperfirst:$npc's "sex name")) (either:"injected you with $cum_desc_creampie","filled you with $cum_desc_creampie","inseminated you with $cum_desc_creampie","loaded down your pussy with $cum_desc_creampie","filled you with $cum_desc_creampie") (either:"of cum","of his sperm","of cum","of jizz","of semen","of cum","of his cum").](else:)[(print:$cum_desc_creampie) (either:"of cum","of his sperm","of cum","of jizz","of semen","of cum","of his cum") (either:"fill your pussy","fill your womb","are shot into you","fill you up").] (print:"(")(print:$preg_chance_mod*100)% normal pregnancy chance(print:")")(print:" ")(set:$chance to $pregnancy_chance * $preg_chance_mod)
+(if:(random:1,2) is 1)[(print:(upperfirst:$npc's "sex name")) (either:"injected you with $cum_desc_creampie","filled you with $cum_desc_creampie","inseminated you with $cum_desc_creampie","loaded down your pussy with $cum_desc_creampie","filled you with $cum_desc_creampie") (either:"of cum","of his sperm","of cum","of jizz","of semen","of cum","of his cum").](else:)[(print:$cum_desc_creampie) (either:"of cum","of his sperm","of cum","of jizz","of semen","of cum","of his cum") (either:"fill your pussy","fill your womb","are shot into you","fill you up").] (print:"(")(print:(ceil:$preg_chance_mod*100))% normal pregnancy chance(print:")")(print:" ")(set:$chance to $pregnancy_chance * $preg_chance_mod)
 (if:$character's "pregnant" is "true")[(set:$img_type to "already pregnant")You're already pregnant.](else:)[(if:(random:1,100) >= $chance)[(set:$img_type to "swimming")](else:)[(set:$img_type to "fertilized")(set:$preg_npc to $npc)(set:$character's "pregnant" to "true")(if:$pill_timer > 27)[(set:$pregnant_discover_timer to 22)](else:)[(set:$pregnant_discover_timer to $pill_timer + 1)]]]</mark> </div>(if:$pill_taken is "Breeder")[<div class='options'>(set:$orgasm_type to "breeder")(display:"sex orgasm")(print:"
 ")(set:$today_events to $today_events + (a:"orgasm"))(set:$new_mood to (dm:
 	"mood","feeling FUCKING AMAZING",
@@ -7775,9 +7773,10 @@ You gulp, looking over at Alexia. Is your annoying little stepsister actually wo
 
 ]
 (unless:$ambience is 0)[
-(track: $ambience, 'play')
+(live:0.25s)[(track: $ambience, 'play')
 (track: $ambience,'loop', true)
-(set:$old_ambience to $ambience)](else:)[(set:$old_ambience to 0)]]]
+(track: $ambience, 'fadein', 2)
+(set:$old_ambience to $ambience)(stop:)]](else:)[(set:$old_ambience to 0)]]]
 }
 
 
@@ -8166,7 +8165,7 @@ src='img/npc/family/stepsis/alexia/mall/" + (either:"tease 1","tease 2
 
 
 :: refresh stats sex girl {"position":"1425,454","size":"100,100"}
-{(set:$outfit_button to "dont show")(set:$stats_refresh to "refresh stats sex girl")(unless:$character's "temp pill" is "true")[(if:$character's "gender" is "male")[(set:$character's "name" to $character's "male name")](else:)[(set:$character's "name" to $character's "female name")]](else:)[(set:$character's "name" to $temp_pill's "name")](display:"check buffs")(display:"refresh name")(replace:?stats)[
+{(display:"clamp stats")(set:$outfit_button to "dont show")(set:$stats_refresh to "refresh stats sex girl")(unless:$character's "temp pill" is "true")[(if:$character's "gender" is "male")[(set:$character's "name" to $character's "male name")](else:)[(set:$character's "name" to $character's "female name")]](else:)[(set:$character's "name" to $temp_pill's "name")](display:"check buffs")(display:"refresh name")(replace:?stats)[
 []<girl_sex_meters|(display:"refresh girl sex meters")
 <span class='fixedwidth'><table>
   <tbody>
@@ -8780,6 +8779,8 @@ He cums. (set:$sex_loop to 0)(display:"play sex loop")(set:$song to 0)(display:"
 (display:"refresh possible activities job")
 (display:"refresh possible activities home")
 (if:$character's "pregnancy known" is "true")[(display:"refresh possible activities pregnancy")]
+
+(set:$evening_activities to it - (a:"Milk yourself"))(if:$milk_timer > 0 and $character's gender is "female")[(set:$evening_activities to it + (a:"Milk yourself"))](else-if:$evening_activity is "Milk yourself")[(set:$evening_activity to "Nothing")]
 
 (set:$morning_activities to (a:$morning_activity) + ($morning_activities - (a:$morning_activity)))
 (set:$daytime_activities to (a:$daytime_activity) + ($daytime_activities - (a:$daytime_activity)))
@@ -10416,6 +10417,7 @@ quicktime combo 10: ./aud/se/quicktime/correct 10.mp3
 
 :: sex tracks {"position":"2280,384","size":"100,100"}
 {==
+(newtrack:'milking','aud/se/scene/pregnancy/milking.mp3')
 (newtrack:'pre insert 1','aud/se/sex/penetration/pre/' + $character's id + ' 1.mp3')
 (newtrack:'pre insert 2','aud/se/sex/penetration/pre/' + $character's id + ' 2.mp3')
 (newtrack:'pre insert 3','aud/se/sex/penetration/pre/' + $character's id + ' 3.mp3')
@@ -12751,7 +12753,7 @@ You'll make $$commission on the sale, considering your commission rate of (print
 "Don't you want...","to get a closer look?"))
 
 
-}You unwrap the GoodGirl Basic demo pill. It's yellow, and and printed with Mandarin on the back. The only English text says 'DEMO PRODUCT - NOT FOR RESALE'. 
+}You unwrap the GoodGirl Basic demo pill. It's yellow, and printed with Mandarin on the back. The only English text says 'DEMO PRODUCT - NOT FOR RESALE'. 
 
 *(either:"Here goes nothing.","Oh well, here I go.")* You take the pill and chase it with a glass of water.
 
@@ -13368,7 +13370,7 @@ src='img/scenes/office/sales demo/" + "id" of $product + "/07 bj 1.jpg' width=10
 
 
 :: work sale demo agreement {"position":"4895,6123","size":"100,100"}
-(if:$offered is "true")[They seem surprised by your offer but eager to see what the product is capable of. You agree to perform the demo as soon as possible.](else:)[They say they would potentially like to make a big purchase, but want to see the product's capabilities first hands to verify it meets their needs.]
+(if:$offered is "true")[They seem surprised by your offer but eager to see what the product is capable of. You agree to perform the demo as soon as possible.](else:)[They say they would potentially like to make a big purchase, but want to see the product's capabilities first hand to verify it meets their needs.]
 <div class='options'>(link:"Arrange demonstration.")[(set:$next to "work finish day early demo")(display:"change screen")](unless:$offered is "true")[(link:"Decline to do product demo.")[(set:$company to (dm:"name","NONE"))
 (set:$product to (dm:"name","NONE"))(set:$sales_job's "note" to "NONE")(set:$note to "")(set:$next to "work")(display:"change screen")]]</div>
 
@@ -15102,7 +15104,7 @@ For a while, you're just lost in the afterglow.](else:)[(if:(random:1,2) is 1)["
 
 "Oh yeah, yeah, slut," (print:$npc's "name") says. "NNNgh!!!"
 
-His cock twitches, as it squirts a jet of cum into you hair. The second blast falls on your tongue, giving you a taste of hot, (if:$orgasms > 0)[pleasant saltiness.](else:)[pungent saltiness.] 
+His cock twitches, as it squirts a jet of cum into your hair. The second blast falls on your tongue, giving you a taste of hot, (if:$orgasms > 0)[pleasant saltiness.](else:)[pungent saltiness.] 
 
 For a while you just kneel there in front of him, holding his dripping, uncircumcised cock in your hands. 
 
@@ -15778,7 +15780,7 @@ Status strength: (print:$status's strength)]]]
 
 ]](link:(either:"Let him down gently","Politely decline","Turn him down"))[
 
-(if:$character's "arousal" > $npc's looks - (5*(1-($character's "masculinity"/100))))[
+(if:$character's "arousal" > (max:5,(15 - $npc's looks) - (5*(1-($character's "masculinity"/100)))))[
 
 (replace:?explanation)[][*(either:"You're too aroused to turn him down, even politely.","You're too horny to turn this guy down.","You're too horny to turn him down politely.")*]<explanation|
 
@@ -15794,7 +15796,7 @@ Status strength: (print:$status's strength)]]]
 
 ](link:(either:"Welcome it","Smile","Be flirty","Act flirty","Act slutty"))[
 
-(if:$character's "arousal" > $npc's looks - ((10*(1-($character's "masculinity"/100)))))[(replace:?text)[(display:"catcall slutty")]](else:)[
+(if: ($character's arousal * 10) > (max:50,(($character's masculinity + ($npc's looks * 10))/2)))[(replace:?text)[(display:"catcall slutty")]](else:)[
 
 (if:$npc's looks < 3)[
 
@@ -16417,7 +16419,7 @@ Status strength: (print:$status's strength)]]]
 :: proposition request {"position":"1462,3246","size":"100,100"}
 {
 (set:$request to "bj")
-(if:(datanames:$location_params) contains "sex location passage")[(unless:(random:1,2) is 1)[(set:$request to "fuck")]]
+(if:(datanames:$location_params) contains "sex location passage")[(if:(random:1,2) is 1 or $npc's tags contains "breeder")[(set:$request to "fuck")]]
 (display:"proposition request " + $request)
 
 }
@@ -16747,7 +16749,7 @@ Card rarity: (print:(upperfirst:$trading_card's "rarity"))](set:$card_inventory 
 
 
 :: night options {"position":"10892,3227","size":"100,100"}
-<div class='options'>(if:$character's "gender" is "female" and $character's "status" is "cum")[(link:"Wash up")[(set:$character's "status" to "female")(display:"refresh portrait")]](if:$character's "gender" is "female")[(link-repeat:"Strip")[(display:"strip")]](if:$mood's mood is "ashamed" and $character's "gender" is "female")[(newtrack:'shame','aud/music/emotion/shame/' + (text:(random:1,3)) + '.mp3')(set:$song to "shame")(display:"play song")(if:$character's "arousal" > 1)[(link:"Masturbate")[(set:$next to "masturbate shame")(display:"change screen")]](else-if:$character's "arousal" < 2)[(link:"Deal with your shame logically 🧠")[(set:$option to "intellect")(set:$next to "deal with shame")(display:"change screen")](link:"Convince yourself it's ok 🍀")[(set:$option to "charm")(set:$next to "deal with shame")(display:"change screen")]]](else:)[(if:$character's "arousal" > 0 and $character's "gender" is "female" and not ($today_events contains "masturbate"))[(link:"Masturbate")[(set:$next to "masturbate")(display:"change screen")]]](if:$items contains "computer")[(link:"Use computer")[(set:$next to "use computer")(display:"change screen")]](if:$global_events contains "ask rent")[(link:"Help with expenses")[(set:$next to "transfer rent")(display:"change screen")]](unless:$mood's mood is "ashamed" and $character's "gender" is "female")[(color:"bique")[(link:"Sleep")[(set:$next to "check overnight messages")(display:"check stepdad mad")(display:"change screen")]]]</div>
+<div class='options'>(if:$character's "pregnancy known" is "true")[(link:"Look in the mirror")[(set:$next to "pregnancy mirror")(display:"change screen")]](if:$character's "gender" is "female" and $character's "status" is "cum")[(link:"Wash up")[(set:$character's "status" to "female")(display:"refresh portrait")]](if:$character's "gender" is "female")[(link-repeat:"Strip")[(display:"strip")]](if:$mood's mood is "ashamed" and $character's "gender" is "female")[(newtrack:'shame','aud/music/emotion/shame/' + (text:(random:1,3)) + '.mp3')(set:$song to "shame")(display:"play song")(if:$character's "arousal" > 1)[(link:"Masturbate")[(set:$next to "masturbate shame")(display:"change screen")]](else-if:$character's "arousal" < 2)[(link:"Deal with your shame logically 🧠")[(set:$option to "intellect")(set:$next to "deal with shame")(display:"change screen")](link:"Convince yourself it's ok 🍀")[(set:$option to "charm")(set:$next to "deal with shame")(display:"change screen")]]](else:)[(if:$character's "arousal" > 0 and $character's "gender" is "female" and not ($today_events contains "masturbate"))[(link:"Masturbate")[(set:$next to "masturbate")(display:"change screen")]]](if:$items contains "computer")[(link:"Use computer")[(set:$next to "use computer")(display:"change screen")]](if:$global_events contains "ask rent")[(link:"Help with expenses")[(set:$next to "transfer rent")(display:"change screen")]](unless:$mood's mood is "ashamed" and $character's "gender" is "female")[(color:"bique")[(link:"Sleep")[(set:$next to "check overnight messages")(display:"check stepdad mad")(display:"change screen")]]]</div>
 
 
 :: beach options {"position":"12604,268","size":"100,100"}
@@ -16872,7 +16874,7 @@ src='img/places/gym/locker room.jpg' width=100% height=auto>")
 }
 
 
-:: refresh xp {"position":"1547,574","size":"100,100"}
+:: refresh xp {"position":"1525,575","size":"100,100"}
 {
 
 
@@ -17704,6 +17706,56 @@ You might freeze up or say something unintentionally slutty at inopportune momen
 (replace:?score_blackjack)[(set:$se to "dice")(display:"play sound")(display:"blackjack skill check result")]
 
 ]]
+
+(if:$skill_check is "pregnancy")[
+
+(set:$percentage_chance to (($preg_talent's level)+1) of (dm:
+1,5,
+2,10,
+3,25,
+4,35,
+5,45,
+6,55,
+7,65,
+8,75,
+9,90,
+10,95))
+(set:_difficulty_mod to (100-$skill_difficulty))
+(unless:$percentage_chance is 50)[(set:$percentage_chance to (min:(max:(ceil:((_difficulty_mod + $percentage_chance + $percentage_chance)/3)),5),95))](if:$percentage_chance < 56 and $percentage_chance > 44)[(set:$percentage_chance to 50)]
+
+(set:$preg_emoji to " 🤰🏻 ")(if:$character's "race" is "white")[(set:$preg_emoji to " 🤰🏼 ")](else-if:$character's "race" is "asian")[(set:$preg_emoji to " 🤰🏻 ")](else-if:$character's "race" is "black")[(set:$preg_emoji to " 🤰🏾 ")](else-if:$character's "race" is "latin")[(set:$preg_emoji to " 🤰🏽 ")]
+
+(link:(either:"Use your pregnancy skill","Use your pregnancy skill instead") + $preg_emoji + "(" + (text:$percentage_chance) + "%)")[
+(if:$style is "lights out")[(replace:?game_screen)[<span class='shadow'>|score_blackjack>[]</span>]]
+(if:$style is "tower blocks")[(replace:?score)[<span class='shadow'>|score_blackjack>[]</span>]]
+(replace:?score_blackjack)[(set:$se to "dice")(display:"play sound")(display:"blackjack skill check result")]
+
+]]
+
+(if:$skill_check is "milking")[
+
+(set:$percentage_chance to (($milking_talent's level)+1) of (dm:
+1,5,
+2,10,
+3,25,
+4,35,
+5,45,
+6,55,
+7,65,
+8,75,
+9,90,
+10,95))
+(set:_difficulty_mod to (100-$skill_difficulty))
+(unless:$percentage_chance is 50)[(set:$percentage_chance to (min:(max:(ceil:((_difficulty_mod + $percentage_chance + $percentage_chance)/3)),5),95))](if:$percentage_chance < 56 and $percentage_chance > 44)[(set:$percentage_chance to 50)]
+
+(set:$preg_emoji to " 🍼 ")
+
+(link:(either:"Use your milking skill","Use your milking skill instead") + $preg_emoji + "(" + (text:$percentage_chance) + "%)")[
+(if:$style is "lights out")[(replace:?game_screen)[<span class='shadow'>|score_blackjack>[]</span>]]
+(if:$style is "tower blocks")[(replace:?score)[<span class='shadow'>|score_blackjack>[]</span>]]
+(replace:?score_blackjack)[(set:$se to "dice")(display:"play sound")(display:"blackjack skill check result")]
+
+]]
 }
 
 
@@ -17728,7 +17780,7 @@ D20 roll:(print:" ")<span class='shadow'>[]<dice|</span>
 (live:1.3s)[(replace:?dice)[(random:1,20)](stop:)]
 (live:1.5s)[(replace:?dice)[$roll](stop:)]
 (live:1.5s)[(print:"
-")(if:$roll >= $needed)[(if:$style is "lights out")[(display:"lights out win")](else-if:$style is "tower blocks")[(display:"tower blocks win")](else:)[(set:$result to "pass")(either:"You win!","Nice!","You got it!")]](else:)[(if:$style is "lights out")[(display:"lights out lose")](else-if:$style is "tower blocks")[(display:"tower blocks lose")](else:)[(set:$result to "fail")(if:($needed - $roll < 2))[(either:"You fail, just barely...","So close!","Almost!","Too bad, that was close!")](else:)[(either:"You lose.","Too low.","You fail.")]]](unless:$style is "lights out")[(print:"
+")(if:$roll >= $needed)[(if:$style is "lights out")[(display:"lights out win")](else-if:$style is "tower blocks")[(set:$score to $score_required)(display:"tower blocks win")](else:)[(set:$result to "pass")(either:"You win!","Nice!","You got it!")]](else:)[(if:$style is "lights out")[(display:"lights out lose")](else-if:$style is "tower blocks")[(set:$score to (random:1,($score_required-1)))(display:"tower blocks lose")](else:)[(set:$result to "fail")(if:($needed - $roll < 2))[(either:"You fail, just barely...","So close!","Almost!","Too bad, that was close!")](else:)[(either:"You lose.","Too low.","You fail.")]]](unless:$style is "lights out")[(print:"
 ")<div class='options'>(link:"Next")[(replace:?score_blackjack)[](set:$next to $blackjack_params's "result passage")(display:"change screen")]</div>(stop:)](stop:)]
 
 }
@@ -17771,6 +17823,10 @@ D20 roll:(print:" ")<span class='shadow'>[]<dice|</span>
 "friendship",0,
 "attraction",0,
 ))]
+
+(unless:(datanames:$character) contains "max masculinity")[(set:$character's "max masculinity" to 100)]
+
+(display:"initialize pregnancy progression")
 }
 
 
@@ -18142,8 +18198,8 @@ House dirtiness: (if:$mess is 0)[Clean](else-if:$mess < 4)[A little messy ($mess
 
 :: version {"position":"286,124","size":"100,100"}
 <div class='bottom_right'>(color:"#e27087")[X-Change™ Life
-Version 0.16b
-Updated September 17 2022]</div>
+Version 0.16c Subscriber Playtest
+Updated October 15 2022]</div>
 
 
 :: bar dance sex active interrupt {"position":"18135,4463","size":"100,100"}
@@ -20173,7 +20229,7 @@ src='img/characters/outfits/" + $character's id + "/"+ (words:$selections's (tex
 	"Casual","casual",
 	"Stylish","stylin",
 	"Fetishwear","fetish")) contains $selections's (text:$index_2))[(set:$span to '<span class="favorite">')](else:)[(set:$span to '<span class="none">')]](else:)[(set:$span to '<span class="none">')](print: $span + '(link:"' + (text:_image) + '")[(set:$select to "' + (text:$selections's (text:$index_2)) + '")</span>(display:"click")(display:"wardrobe select outfit")]')(stop:)]]]]
-(live:0.5s)[(unless:$old_filter is $filter or not ($index is $index_2))[(if:$filter is "All Outfits")[(display:"filter outfits unique")](else:)[(display:"filtered outfits owned unique")](display:"populate outfit display")](unless:$wardrobe is "active")[(stop:)]](stop:)]
+(live:0.3s)[(unless:$old_filter is $filter or not ($index is $index_2))[(if:$filter is "All Outfits")[(display:"filter outfits unique")](else:)[(display:"filtered outfits owned unique")](display:"populate outfit display")](unless:$wardrobe is "active")[(stop:)]](stop:)]
 
 }
 
@@ -20182,7 +20238,8 @@ src='img/characters/outfits/" + $character's id + "/"+ (words:$selections's (tex
 {
 (replace:?right_screen)[(css:"font-size:3vmin")[<span class='shadow'>$day_of_week, Day $day</span>](print:"
 ")(color:"#4a2424")[(if:$previous is "day")[*Wardrobe*](else:)[*$current_location*]]
-<div class='options'>(link:"Exit")[(set:$next to $previous)(set:$wardrobe to "inactive")(stop:)(display:"go back wardrobe")]</div>
+<div class='options'>(link-repeat:"Favorite All")[(display:"click")(display:"favorite primary")](link-repeat:"Clear Favorites")[(display:"click")(display:"clear favorites")](print:"
+")(link:"Exit")[(set:$next to $previous)(set:$wardrobe to "inactive")(stop:)(display:"go back wardrobe")]</div>
 <div class='centered'>
 (print:"Filter outfits:
 ")<span class='full'>(if:length of $owned_categories > 1)[(dropdown: 2bind $filter, ...$owned_categories)](else:)[(set:$filter to "All Outfits")All Outfits(print:"
@@ -21588,12 +21645,17 @@ Your first orgasm is incredible. Alexia's friend hilts himself in you, feeling y
 
 Your mind warns you that this is a very bad situation. That a single creampie will almost surely get you pregnant.
 
-But your body is practically paralyzed, your legs quiver, escstasy builds as you feel his ballsack tighten, and his long dick throb.   
+But your body is practically paralyzed, your legs quiver, ecstasy builds as you feel his ballsack tighten, and his long dick throb.   
 
 (set:$sex_loop to "23 creampie")(display:"play sex loop")(print:"<video src='img/scenes/characters/cassidy/cum/creampie/missionary 1.mp4' autoplay='' loop='' muted='' playsinline/>")
 Then you feel them - warm, blissful, repeated squirts inside you, as Darryl inseminates your needy pussy. Ropes of scalding hot sperm pressure-injected straight into your fertile womb. 
 
-(display:"sex creampie")
+{(set:$npc's age to 25)
+(set:$npc's ballsize to 8)
+(set:$npc's looks to 8)
+(set:$npc's wealth to 4)
+(set:$npc's personality to 8)
+(set:$npc's tags to (a:"jock","cassidy gym"))}(display:"sex creampie")
 
 Your head rolls back, as you start crying in the purest ecstasy. This orgasm is far more intense than anything you've ever experienced - the feeling of your life's purpose being fulfilled.
 
@@ -22686,14 +22748,19 @@ You moan and whimper on the workout bench, as you feel that fat cock start to tw
 
 Your mind warns you that this is a very bad situation. That a single creampie will almost surely get you pregnant.
 
-But your body is practically paralyzed, your legs quiver, escstasy builds as you feel Matt's ballsack tighten, and his fat cock throb, one last time.
+But your body is practically paralyzed, your legs quiver, ecstasy builds as you feel Matt's ballsack tighten, and his fat cock throb, one last time.
 
 Not that you could struggle if you wanted to - 'Kong' is totally dominating you, pinning you down. Once a guy is about to cum, it's a force of nature impossible to stop.
 
 (print:"<video src='img/scenes/characters/rae/cum/creampie/doggy 2.mp4' autoplay='' loop='' muted='' playsinline/>")
 Then you feel them - warm, blissful, repeated jets of superior cum, as Matt breeds you. Ropes of gooey sperm shot straight into your fertile womb. 
 
-(display:"sex creampie")
+{(set:$npc's age to 40)
+(set:$npc's ballsize to 8)
+(set:$npc's looks to 6)
+(set:$npc's wealth to 4)
+(set:$npc's personality to 2)
+(set:$npc's tags to (a:"jock","rae gym"))}(display:"sex creampie")
 
 Your head rolls back, as you start crying in the purest ecstasy. This orgasm is far more intense than anything you've ever experienced - the feeling of your life's purpose being fulfilled.
 
@@ -22719,7 +22786,7 @@ You moan and whimper on the workout bench, as you feel that fat cock start to tw
 
 "Yeah, that's right!" Gareth says. "Inseminate that little $description skank!"
 
-Your legs quiver, escstasy builds as you feel Matt's ballsack tighten, and his fat cock throb, one last time. (if:$choice is "face")[You didn't want this, but 'Kong' is totally dominating you, pinning you down - there's no way to stop him now.]
+Your legs quiver, ecstasy builds as you feel Matt's ballsack tighten, and his fat cock throb, one last time. (if:$choice is "face")[You didn't want this, but 'Kong' is totally dominating you, pinning you down - there's no way to stop him now.]
 
 (print:"<video src='img/scenes/characters/rae/cum/creampie 2.mp4' autoplay='' loop='' muted='' playsinline/>")
 Then you feel them - warm jets of his superior cum, as Matt Breeds you. Ropes of gooey sperm shot straight into your womb. 
@@ -23837,7 +23904,12 @@ You *feel* the hot load deposited forcefully inside you. Fat jets of old-man nut
 
 "Unnnhh!!! NNnngghh!" he groans with pleasure as he drains balls, completing the cream-filling of your reproductive deapths. 
 
-(display:"sex creampie")
+{(set:$npc's age to 50)
+(set:$npc's ballsize to 10)
+(set:$npc's looks to 2)
+(set:$npc's personality to 2)
+(set:$npc's wealth to 8)
+(set:$npc's tags to (a:"fuckboy","creepy","mia gym"))}(display:"sex creampie")
 
 Your mind is a suddenly consumed by white-hot bliss, thanks to the orgasm-inducing creampie. A thousand miles away mentally, you don't spare a thought towards the biological realities of getting creampied on a Breeder pill. Among them: the fact that, to each of your uterine walls are egg cells; receptive, unprotected, and planted in expectation of the fate that charged towards them in the millions: an unrelenting string of violent perforations by an uncountable number of wriggling, mindless sperm…
 
@@ -24410,14 +24482,14 @@ src='img/scenes/characters/" + $select + "/tg/5.png' width=47% height=auto>")](t
 ]](else:)[
 
 
-(set:$description to $description + (a:"Concentric circles of tingling electricity tease your nipples. They’re visibly larger and seem to pull the flesh behind them along. Moments later, you’ve taken another step towards an undeniably pleasing female form.","One part of you stays mostly the same, though the end result couldn’t be more different. Overall, you feel very much shorter than you used to be, yet your legs appear to have no end. Strutting around with these silky smooth thighs will catch eyes.","While your thighs are wonderfully juicy, your other appendages have slimmed down. Your arms are thin and dainty, just like your feminine fingers. You wouldn’t bet on having a healing touch, but the power to elevate heart rates with it is yours now.","Succulent lips combined with perfect teeth bless you with a smile that can break hearts. You better use this power responsibly. Your nose has slimmed considerably, an almost imperceivable cute little button poking out at the world.","as you would expect, your hair extends far beyond what the average man would choose. Its ends " + (either:"tickle your ass","pool on your shoulders","long to touch your chin","beautifully frame your face") + "."))
+(set:$description to $description + (a:"Concentric circles of tingling electricity tease your nipples. They’re visibly larger and seem to pull the flesh behind them along. Moments later, you’ve taken another step towards an undeniably pleasing female form.","One part of you stays mostly the same, though the end result couldn’t be more different. Overall, you feel very much shorter than you used to be, yet your legs appear to have no end. Strutting around with these silky smooth thighs will catch eyes.","While your thighs are wonderfully juicy, your other appendages have slimmed down. Your arms are thin and dainty, just like your feminine fingers. You wouldn’t bet on having a healing touch, but the power to elevate heart rates with it is yours now.","Succulent lips combined with perfect teeth bless you with a smile that can break hearts. You better use this power responsibly. Your nose has slimmed considerably, an almost imperceivable cute little button poking out at the world.","As you would expect, your hair extends far beyond what the average man would choose. Its ends " + (either:"tickle your ass","pool on your shoulders","long to touch your chin","beautifully frame your face") + "."))
 
 
 
 ]
 
 (if:$description's length < 3)[
-(set:$description to (a:"Concentric circles of tingling electricity tease your nipples. They’re visibly larger and seem to pull the flesh behind them along. Moments later, you’ve taken another step towards an undeniably pleasing female form.") + $description + (a:"as you would expect, your hair extends far beyond what the average man would choose. Its ends " + (either:"tickle your ass","pool on your shoulders","long to touch your chin","beautifully frame your face") + "."))]
+(set:$description to (a:"Concentric circles of tingling electricity tease your nipples. They’re visibly larger and seem to pull the flesh behind them along. Moments later, you’ve taken another step towards an undeniably pleasing female form.") + $description + (a:"As you would expect, your hair extends far beyond what the average man would choose. Its ends " + (either:"tickle your ass","pool on your shoulders","long to touch your chin","beautifully frame your face") + "."))]
 (replace:?computer_screen)[[]<description|
 |left>[]|right>[](display:"New-U transformation descriptions update")]
 }
@@ -24745,7 +24817,7 @@ Are you willing to proceed?
 
 
 :: New-U transfortune spin {"position":"11124,660","size":"100,100"}
-{(set:$select to 1st of (shuffled:...$available_dna))(set:$duration to (either:"1 day","3 days","3 days","1 day","3 days","3 days","3 days","1 week","1 week"))(set:$stability to "Bargain Basement")(set:$rent to true)(set:$new_stats to $select of (dm:
+{(set:$select to 1st of (shuffled:...$available_dna))(set:$duration to (either:"3 days","3 days","3 days","3 days","3 days","1 week","1 week"))(set:$stability to "Bargain Basement")(set:$rent to true)(set:$new_stats to $select of (dm:
 	"ella", (dm:
 		"id","ella",
 		"race","latin",
@@ -24925,6 +24997,7 @@ Are you willing to proceed?
 (link-repeat:"+10 Masculinity")[(set:$character's "masculinity" to (min:$character's "masculinity" + 10,100))(display:"register cheat")](link-repeat:"+10 Femininity")[(set:$character's "masculinity" to (max:$character's "masculinity" - 10,0))(display:"register cheat")]
 (link-repeat:"0 Arousal")[(set:$character's "arousal" to 0)(display:"register cheat")](link-repeat:"-1 Arousal")[(set:$character's "arousal" to (max:$character's "arousal" - 1,0))(display:"register cheat")](link-repeat:"+1 Arousal")[(set:$character's "arousal" to (min:$character's "arousal" + 1,10))(display:"register cheat")](link-repeat:"10 Arousal")[(set:$character's "arousal" to 10)(display:"register cheat")]
 (cycling-link: bind $minigame_skip, $minigame_skip, ...((a:"Skippable Minigames: Off","Skippable Minigames: On") - (a:$minigame_skip)))
+(link-repeat:"Remove Pregnancy")[(set:$pregnancy's weeks to 0)(display:"refresh possible activities pregnancy")(set:$character's pregnant to "false")(set:$character's "pregnancy known" to "false")(display:"register cheat")]
 [(display:"cheat increase skills")]<skills|
 
 
@@ -25975,7 +26048,7 @@ He (either:"shakes his head, unwilling to pay that much","shakes his head","says
 }
 
 
-:: generate random guy racial name {"position":"2634,482","size":"100,100"}
+:: generate random guy racial name {"position":"4200,175","size":"100,100"}
 {
 (if:$npc's "race" is "latin")[(set:"first name" of $npc to (either:"Carlos","Enrique","Fernando","Francisco","Jaime","Javier","Jorge","Jose","Juan","Julio","Juan","Luis","Marcos","Miguel","Santiago","Sebastian","Matias","Mateo","Nicolas","Alejandro","Diego","Daniel","Benjamin","Lucas","Tomas","Gabriel","Martin","Felipe","Angel","Pablo"))
 (set:"last name" of $npc to (either:"Hernandez","Garcia","Martinez","Gonzalez","Lopez","Perez","Rodriguez","Ramirez","Diaz","Vasquez","Rodriguez","Perez","Gonzalez","Hernandez","Frederick","Fernandez","Alvarez"))]
@@ -26100,7 +26173,7 @@ src='img/places/home/bathroom day.jpg' width=100% height=auto>",
 "Scrubbing","scrubbing",
 "Mopping","mopping"
 ))(display:"play sound")
-(replace:?text)[<div class='options'><span class='shadow'>(text-style:"fade-in-out")[(print:$action).(live:0.25s)[.(stop:)](live:0.5s)[.(stop:)](live:0.75s)[.(stop:)](live:1s)[.(stop:)]]</span></div>](live:1.25s)[(set:$se to "ui good")(display:"play sound")(set:$se to $action of (dm:
+(replace:?text)[<div class='options'><span class='shadow'>(text-style:"fade-in-out")[(print:$action).(live:0.15s)[.(stop:)](live:0.3s)[.(stop:)](live:0.45s)[.(stop:)](live:0.6s)[.(stop:)]]</span></div>](live:0.75s)[(set:$se to $action of (dm:
 "Vacuuming","vacuuming",
 "Washing the dishes","dishes",
 "Dusting","wiping",
@@ -26490,7 +26563,7 @@ src='img/npc/family/stepsis/alexia/house/on bed.jpg' width=100% height=auto></di
 }
 
 
-:: guy breath update {"position":"2636,600","size":"100,100"}
+:: guy breath update {"position":"4200,300","size":"100,100"}
 {
 
 (if:agecat of $npc is "late teens")[(set:$npc's "breath" to (either:"G-fuel","potato chips","energy drinks","pizza","Starbucks coffee","Cheezits","Doritos","Cheetos","Pringles"))]
@@ -26921,7 +26994,7 @@ He cums all over your butt.
 
 
 :: sex transactional he cums {"position":"7394,1212","size":"100,100"}
-(set:$song to 0)(display:"play song")(if:$npc's "tags" contains "gentleman" or $npc's "personality" > (random:-3,10))[(set:$his_choice to $your_choice)](else-if:$his_choice is "none")[(if:$npc's "cock" is "in you")[(set:$his_choice to (either:"creampie","creampie","creampie","pull out",$your_choice,"mouth","face"))](else:)[(set:$his_choice to (either:"face","mouth",$your_choice))]](set:$sex_loop to 0)(display:"play sex loop")(if:$his_choice is "pull out")[(display:"sex transactional he pulls out")](else-if:$his_choice is "creampie")[(display:"sex transactional creampie")](else-if:$his_choice is "face")[(display:"sex transactional cum face")](else:)[(display:"sex transactional cum mouth")](set:$his_pleasure to 0)(live:1s)[(display:"update his pleasure")(stop:)](set:$cum_npc to $npc)
+(set:$song to 0)(display:"play song")(if:$npc's "tags" contains "gentleman" or ($npc's "personality" > ((random:0,10)-$his_satisfaction)))[(set:$his_choice to $your_choice)](else-if:$his_choice is "none")[(if:$npc's "cock" is "in you")[(set:$his_choice to (either:"creampie","creampie","creampie","pull out",$your_choice,"mouth","face"))](else:)[(set:$his_choice to (either:"face","mouth",$your_choice))]](if:$npc's tags contains "breeder" and $npc's cock is "in you")[(set:$his_choice to "creampie")](set:$sex_loop to 0)(display:"play sex loop")(if:$his_choice is "pull out")[(display:"sex transactional he pulls out")](else-if:$his_choice is "creampie")[(display:"sex transactional creampie")](else-if:$his_choice is "face")[(display:"sex transactional cum face")](else:)[(display:"sex transactional cum mouth")](set:$his_pleasure to 0)(live:1s)[(display:"update his pleasure")(stop:)](set:$cum_npc to $npc)
 
 
 :: his cum sounds {"position":"3783,4140","size":"100,100"}
@@ -27464,6 +27537,7 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 (if:$npc's "personality" < 4)[(set:$face to (either:"stupid little face","pretty face","whorish little face","slutty face","beautiful face","face","stupid face","face","dumb little face"))]
 
 (set:$descriptions to (shuffled:"take my cock","own this pussy","feels good","cum choice","cant believe","you love it","cum soon","look back","grab boobs","grab butt","pull hair","tits clap","spank","push down"))
+(if:$npc's tags contains "breeder")[(set:$descriptions to (shuffled:"cum choice","cum choice",...$descriptions))]
 (unless:$his_choice is "none")[(set:$descriptions to $descriptions - (a:"cum choice"))]
 (unless:($npc's "looks" < 5) or $npc's "tags" contains "nerd" or ($npc's "age" > 39) or ($npc's "age" < 20) or $npc's "tags" contains "chubby")[
 (set:$descriptions to $descriptions - (a:"cant believe"))
@@ -27495,7 +27569,7 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 (if:$description is "grab boobs")[(set:$text to (either:"your $tits feel so good","love these $tits of yours","I love how your $tits swing","I love these $tits"))
 (if:$npc's "personality" > 6 or $npc's "tags" contains "nerd")[(set:$text to (either:"these $tits are amazing","your $tits are epic","I love these $tits"))]]
 (if:$description is "look back")[(set:$text to (either:"look at me while I fuck you. Just like that","look back at me while I fuck you","you're going cross-eyed","I think you're going cross-eyed","your eyes are rolling back in your head - must mean you're enjoying this"))]
-(if:$description is "cum soon")[(set:$text to (either:"I'm gonna cum soon","I think I'm gonna nut soon","you're gonna make me blow","you're gonna make me nut","you're gonna make me cum real soon"))]
+(if:$description is "cum soon")[(set:$text to (either:"I'm gonna cum soon","I think I'm gonna nut soon","you're gonna make me blow","you're gonna make me nut","you're gonna make me cum real soon"))(if:$npc's tags contains "breeder")[(set:$text to (either:"I hope you're ready, I'm gonna bust a nut in you now","I feel it coming... I'm gonna breed that fucking little pussy now","Fuck yes this is gonna feel incredible, I'm gonna fucking impregnate you"))]]
 
 
 (if:$description is "you love it")[
@@ -27504,25 +27578,31 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 (if:$npc's "personality" > 6)[
 (set:$text to (either:"look how much you're enjoying this","you clearly enjoy this","you like getting fucked, don't you? Well I'm happy to provide","you should see the look of bliss on your $face","I don't have to guess whether or not you're enjoying this","I can tell you're enjoying getting fucked","you love getting fucked","I can tell you like getting fucked","girls like you just love getting fucked"))
 ]
-
+(if:$npc's tags contains "breeder")[(set:$text to (either:"you wanna get pregnant","you WANT to carry my baby","you WANT me to bust a fat load inside you, and make you fucking pregnant","you want me to fucking breed that little pussy"))]
 ]
 
 (if:$description is "cant believe")[
 (set:$text to (either:"I can't believe I get to fuck a girl like you","Can't believe I get to fuck a girl as hot as you","can't believe I'm fucking you right now"))
 (if:$npc's "looks" < 5)[
 (set:$text to (either:"I guess even ugly guys like me can get lucky. Can't believe I get to fuck you","Summer City is great - even an ugly guy like me can fuck a girl as hot as you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a girl as hot as you"))
+(if:$npc's tags contains "breeder")[(set:$text to (either:"I might be ugly, but our kids are gonna be good looking, like you","Summer City is great, even an ugly guy like me can breed a girl like you"))]
 ]
 (if:$npc's age < 20)[(set:$age to $npc's "age")
 (set:$text to (either:"I can't I'm fucking a girl in her 20s. Yeah! This is fucking lit","this is wack. Can't believe I'm fucking a girl who looks like a fucking pornstar, when I'm only $age","I'm only $age, and fucking a girl like you already","can't believe I'm only $age, and getting to fuck a girl like you"))]
+(if:$npc's tags contains "breeder")[(set:$text to (either:"I can't I'm breeding a girl in her 20s. Yeah! This is fucking lit","this is wack. Can't believe I'm gonna impregnate a girl who looks like a fucking pornstar, when I'm only $age","I'm only $age, and I get to make you pregnant. I'm gonna have so many kids","can't believe I'm only $age, and getting to breed a girl like you"))]
 (if:$npc's "tags" contains "nerd")[
 (set:$text to (either:"I guess even nerdy guys like me can get lucky. Can't believe I get to fuck you","Summer City is great - even a nerdy guy like me can fuck a girl as hot as you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a girl as hot as you","this is just like fucking anime chicks","this is even better than porn","this is so much better than watching porn","I guess my mom was right when she said to get outside and meet girls","can't believe a girl like you would even talk to a nerd like me","can't believe I'm fucking a girl like you","you're even hotter than my anime statues"))
+(if:$npc's tags contains "breeder")[(set:$text to (either:"can't believe I'm gonna breed you","Summer City is great - even a nerdy guy like me can breed a girl like you","you look like one of those anime chicks, I can't wait to breed you"))]
 ]
 (if:$npc's "tags" contains "chubby")[
-(set:$text to (either:"I guess even shubby guys like me can get laid","Summer City is great - even a fat guy like me can fuck a girl as hot as you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a girl as hot as you","fucking a girl like you does wonders for my self-confidence"))
+(set:$text to (either:"I guess even chubby guys like me can get laid","Summer City is great - even a fat guy like me can fuck a girl as hot as you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a girl as hot as you","fucking a girl like you does wonders for my self-confidence"))
+(if:$npc's tags contains "breeder")[(set:$text to (either:"I guess even chubby guys like me can impregnate girls like you","Summer City is great - even a fat guy like me can fucking breed a girl as hot as you","and my friends say I'm out of my league, hitting on girls like you. But I'm going to breed you today","can't believe I get to fucking breed you","can't believe I really get to fucking breed a girl as hot as you","fucking a girl like you does wonders for my self-confidence. I'm definitely gonna breed you"))]
 ]
 (if:$npc's age > 39)[
 (set:$girl to (either:"girl","pretty little girl","pretty young thing","pretty little thing","hot young girl","girl","hot little thing"))
-(set:$text to (either:"I can't believe an old guy like me gets to fuck a $girl like you","I can't believe I'm fucking a $girl like you","can't believe I'm fucking a $girl like you","at my age, I didn't think I'd get to fuck a $girl like you again","your $pussy is the fountain of youth for me"))]
+(set:$text to (either:"I can't believe an old guy like me gets to fuck a $girl like you","I can't believe I'm fucking a $girl like you","can't believe I'm fucking a $girl like you","at my age, I didn't think I'd get to fuck a $girl like you again","your $pussy is the fountain of youth for me"))
+(if:$npc's tags contains "breeder")[(set:$text to (either:"I can't believe an old guy like me gets to breed a $girl like you","I can't believe I'm gonna impregnate a $girl like you","can't believe I'm gonna bust a fat nut in a $girl like you","at my age, I didn't think I'd get to impregnate a $girl like you again","your $pussy is the fountain of youth for me, I bet it's fertile as fuck"))]
+]
 ]
 (if:$description is "take my cock")[(set:$text to (either:"take my $cock","moan for this $cock","take my $cock"))
 (if:$npc's "tags" contains "chad" or $npc's "tags" contains "jock" )[(set:$text to (either:"that's right, take my $cock","feel my $cock inside you","take my $cock like a good girl","take it. Take my fucking cock","you love it. Yeah, you love my fucking cock","you'll be thinking about my cock for weeks after this. Yeah, take it","take. My. Fucking. Dick. Yes! Take it"))]
@@ -27530,6 +27610,7 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 (if:$npc's "tags" contains "nerd")[(set:$text to (either:"I can't believe such a hot girl is taking my $cock","take my $cock! Hah, I can't believe I'm really getting to fuck you"))]
 (if:$npc's "tags" contains "bully" or $npc's personality < 3)[(set:$text to (either:"this is what you're made for. Taking my $cock","take it like a good girl. Yeah, just like that","I bet you'll dream about my $cock for weeks after this, ho. Yeah, take it","take my $cock. Feel it inside you, slut. Yeah - FUCK"))]
 (if:$npc's "tags" contains "gentleman" or $npc's personality > 7)[(set:$text to (either:"I hope this feels as good for you as it does for me. Taking my $cock","enjoy yourself on my $cock","take my $cock - yes, like that","you're so good at taking my cock","I like how you take my cock"))]
+(if:$npc's tags contains "breeder")[(set:$text to (either:"take my $cock, it's gonna make you pregnant","take my $cock, yes, just like that - it's gonna make you pregnant today","take my $cock, I'm gonna breed you with it"))]
 
 ]
 (if:$description is "own this pussy")[(set:$text to (either:"your $pussy is mine","I own this $pussy","I fucking own this $pussy","my $cock owns this $pussy"))
@@ -27539,7 +27620,7 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 (if:$npc's "tags" contains "nerd")[(set:$text to (either:"squeeze my theorem, while I Poly your Nomial","I own this $pussy. Yeah! Can't wait to tell my friends","your $pussy is gonna crave my nerdy cock after this","how does it feel, having your $pussy belong to a nerd like me? Heh. So fucking good","your $pussy is mine. Way better than the ones in VR"))]
 (if:$npc's "tags" contains "bully" or $npc's personality < 3)[(set:$text to (either:"this $pussy was made for me. You love it","you know I own this $pussy now","your $pussy is mine","there's no going back now, I own this pussy","tell me who owns this pussy","I fucking own this $pussy now","this $pussy is mine now","your $pussy belongs to my $cock now"))]
 (if:$npc's "tags" contains "gentleman" or $npc's personality > 7)[(set:$text to (either:"your $pussy is mine","I own this $pussy","I fucking own this $pussy","my $cock owns this $pussy","I think your $pussy loves my $cock","your $pussy loves my $cock","your $pussy belongs to me now"))]
-
+(if:$npc's tags contains "breeder")[(set:$text to (either:"your $pussy is gonna belong to me, after I flood it with my seed","your $pussy belongs to me now. I'm gonna fucking breed it","your $pussy loves my $cock. I think it knows I'm gonna make you pregnant today"))]
 ]
 (if:$description is "feels good")[(set:$text to (either:"your $pussy feels so good","your $pussy feels so fucking good","so fucking good. Your $pussy is really gripping my $cock","your $pussy feels so good, the way it grips my $cock"))
 (if:$npc's "age" > 39)[(set:$age to $npc's "age")(set:$text to (either:"I'll never age, if I got to fuck a $pussy like this for the rest of my life","your $pussy feels amazing on my $age-old cock","it feels amazing to fuck a young girl like you","your $pussy feels amazing","your $pussy feels incredible"))]
@@ -27553,8 +27634,9 @@ $npc's "name" + "'s") + $npc's "alternate possessive names"))))](set:$case to "l
 
 
 (if:$description is "cum choice")[
-(set:$his_choice to (either:"creampie","pull out","face","mouth","creampie"))
+(set:$his_choice to (either:"creampie","pull out","face","mouth","creampie"))(if:$npc's tags contains "breeder")[(set:$his_choice to "creampie")]
 (if:$his_choice is "creampie")[(set:$text to (either:"I wanna fill you with my cum","I'm gonna bust a fat nut inside you","I'm gonna fucking fill you up","I wanna cum inside you","I wanna pump you full of my cum","I'm gonna bust a nut inside you"))
+(if:$npc's tags contains "breeder")[(either:"I wanna get you fucking pregnant","I wanna breed that tight little pussy","I'm gonna breed you","I'm gonna fucking fill you up with my cum","I'm gonna fucking impregnate you","I'm gonna seed that fertile little pussy of yours","I', gonna fucking breed you")]
 (if:$npc's "personality" > 6)[(set:$text to (either:"I wanna fill you with my cum","I want to creampie you, if you let me","I wanna fill you up with cum - if you're ok with that","I'm gonna fucking fill you up","I wanna cum inside you","I wanna pump you full of my cum","I'm gonna bust a nut inside you"))]
 (if:$npc's "tags" contains "nerd")[(set:$text to (either:"I wanna fill you with my cum","I'm gonna bust a nut inside you","I'm gonna fucking fill you up","I wanna cum inside you","I wanna pump you full of my cum") + " " + (either:"like you're one of my fleshlights","like they do in hentai","like they do in porn"))]
 
@@ -28614,6 +28696,19 @@ You lasted: $timer seconds</span>
 	"charm buff",-2,
 	"intellect buff",-2,
 	"fitness buff",0,
+	))(display:"new status")(display:"refresh stats")
+
+](else-if:$milk > 49 and $character's gender is "female" and $milk_timer > 0)[
+
+(set:$new_status to (dm:
+	"status","milky",
+	"emoji","🍼",
+	"strength",10,
+	"length",3,
+	"cause","You need to be milked...",
+	"charm buff",-2,
+	"intellect buff",-1,
+	"fitness buff",-1,
 	))(display:"new status")(display:"refresh stats")
 
 ]
@@ -30529,7 +30624,7 @@ Your heart is pounding fast - your body is telling you *MORE MORE MORE*, even th
 
 (set:$blackjack_params's "bad action" to (either:"lose 1 🍀 permanently","get your charm permanently drained"))
 (set:$sex_loop_continue to "true")
-(set:$next to "lights out initialize")(display:"change screen")}
+(set:$next to "tower blocks initialize")(display:"change screen")}
 
 
 :: hnr lose stats result {"position":"7775,6625","size":"100,100"}
@@ -31980,7 +32075,9 @@ You bite your lip. *What have I gotten myself into?*
 :: pill status {"position":"1150,1150","size":"100,100"}
 X-Change™ pill: (if:$pill_type is "Clone")[Clone (New-U Machine)](else:)[$pill_taken]
 Time left: (if:$pill_taken is "Plus")[It's permanent.](else-if:$character's "pregnancy known" is "true")[You're not turning back while you're pregnant.](else-if:$pill_taken is "Basic")[(if:$pill_timer < 1 or $character's "status effects" contains "time extended")[Should wear off anytime now.](else-if:$pill_timer < 4)[(either:"Less than 24 hours.","Less than a day.","24 hours or so.")](else-if:$pill_timer < 3)[(either:"A few hours, probably.","A few hours.","A few hours or so.")](else:)[24-ish hours.]](else:)[(if:$pill_timer > 239)[(either:"About 2 months.","2 months or so.")](else-if:$pill_timer > 200)[(either:"Under 2 months.","A bit less than 2 months.","Less than 2 months.")](else-if:$pill_timer > 160)[(either:"A month and a half.","About a month and a half.")](else-if:$pill_timer > 145)[(either:"A bit over a month.","A little over a month.","Over a month.")](else-if:$pill_timer > 110)[(either:"About a month.","A month or so.","Just about a month.")](else-if:$pill_timer > 80)[(either:"About 3 weeks.","3 weeks or so.","About 3 weeks.")](else-if:$pill_timer > 56)[(either:"About 2 weeks.","2 weeks.","About 2 weeks.")](else-if:$pill_timer > 40)[(either:"Under 2 weeks.","Less than 2 weeks.")](else-if:$pill_timer > 25)[(either:"About a week.","A week or so.","About a week.","A week.")](else-if:$pill_timer > 15)[(either:"Less than a week.","Under a week.")](else-if:$pill_timer > 10)[(either:"A few days.","Just a few days.")](else-if:$pill_timer > 7)[(either:"A couple days.","Just a couple days.")](else-if:$pill_timer > 4)[(either:"A day or two.","A day.")](else:)[(either:"Any time now...","A few hours...","Less than 24 hours...")]](unless:$character's "pregnancy known" is "true")[(print:"
-")Pregnancy chance: (print:$pregnancy_chance)%]
+")Pregnancy chance: (print:$pregnancy_chance)%](if:$milk_timer > 0)[(print:"
+")You're producing milk. (print:"
+")🥛 ((print:$milk)/50) 🥛]
 
 
 :: temp pill icon {"position":"1150,1275","size":"100,100"}
@@ -32180,7 +32277,7 @@ You find a half-drunk bottle of gatorade on the counter, and you take a big swig
 "Do you want...","to get a closer look?"))
 
 
-}You unwrap the GoodGirl Max demo pill. It's yellow, like the Basic, and and printed with Mandarin on the back. The only English text says 'DEMO PRODUCT - NOT FOR RESALE'. 
+}You unwrap the GoodGirl Max demo pill. It's yellow, like the Basic, and printed with Mandarin on the back. The only English text says 'DEMO PRODUCT - NOT FOR RESALE'. 
 
 *(either:"Here goes nothing.","Oh well, here I go.")* You take the pill and chase it with a glass of water.
 
@@ -32555,18 +32652,13 @@ You just continue doing what you're doing, maintaining the exact same tongue pat
 
 
 :: npc age settings {"position":"600,850","size":"100,100"}
-{Random NPC settings:(print:"
+{Pregnancy settings:(print:"
+")(cycling-link:2bind $pregnancy_enabled, "Pregnancy Enabled: True","Pregnancy Enabled: False")(print:"
+")
+Random NPC settings:(print:"
 ")(if:$min_npc_age is 0)[(set:$min_npc_age to "Min Age: 18")]
 (if:$max_npc_age is 0)[(set:$max_npc_age to "Max Age: 55")]
 (cycling-link: 2bind $min_npc_age,$min_npc_age, ...((a:"Min Age: 18","Min Age: 19","Min Age: 20","Min Age: 21","Min Age: 22","Min Age: 23","Min Age: 24","Min Age: 25","Min Age: 26","Min Age: 27","Min Age: 28","Min Age: 29")-(a:$min_npc_age)))(cycling-link: 2bind $max_npc_age,$max_npc_age, ...((a:"Max Age: 55","Max Age: 54","Max Age: 53","Max Age: 52","Max Age: 51","Max Age: 50","Max Age: 49","Max Age: 48","Max Age: 47","Max Age: 46","Max Age: 45","Max Age: 44","Max Age: 43","Max Age: 42","Max Age: 41","Max Age: 40","Max Age: 39","Max Age: 38","Max Age: 37","Max Age: 36","Max Age: 35")-(a:$max_npc_age)))
-
-
-
-
-
-
-
-
 }
 
 
@@ -32596,6 +32688,7 @@ You just continue doing what you're doing, maintaining the exact same tongue pat
 
 :: calculate pregnancy chance {"position":"1525,225","size":"100,100"}
 {
+(unless:$pregnancy_enabled is "Pregnancy Enabled: False")[
 (if:$character's "gender" is "male" or $character's "temp pill" is "true")[(set:$pregnancy_chance to 0)](else:)[
 (if:$pill_taken is "Breeder")[(set:$base_preg_chance to 65)]
 (if:$pill_taken is "Basic")[(set:$base_preg_chance to 0)]
@@ -32609,7 +32702,7 @@ You just continue doing what you're doing, maintaining the exact same tongue pat
 (set:$preg_perc to $index of (a:0.1,0.2,0.2,0.5,1,1,1,0.5,0.2,0.2,0.1,0.1,0.2,0.2,0.5,1,1,1,0.5,0.2,0.2,0.1))
 ](else-if:$pill_taken is "Breeder")[(set:$preg_perc to $index of (a:0.6,0.7,0.8,1,1,1,1,1,0.8,0.7,0.6))](else:)[(set:$preg_perc to $index of (a:0.1,0.2,0.2,0.5,1,1,1,0.5,0.2,0.2,0.1))]
 
-(set:$pregnancy_chance to (floor:$preg_perc * $base_preg_chance))]
+(set:$pregnancy_chance to (floor:$preg_perc * $base_preg_chance))]](else:)[(set:$pregnancy_chance to 0)]
 
 }
 
@@ -32630,29 +32723,16 @@ src='img/scenes/generic/pregnancy/swimming/" + (text:(random:1,12)) + ".jpg' wid
 
 
 :: discover pregnancy {"position":"2350,4900","size":"100,100"}
-{(print:'(set:$pregnancy to (dm:
-"weeks",4,
-"day of week",(text:$day_of_week),
-"trimester",1,
-"events",(a:)))')}(newtrack:'pregnancy discovery','aud/music/emotion/pregnant/discovery.mp3')(set:$character's "pregnancy known" to "true")[(display:"character status")]<status|<div class='center_screen' data-simplebar>[<div class='top_right_half'>(print:"<img class='greyborder' 
+(display:"initialize pregnancy")(newtrack:'pregnancy discovery','aud/music/emotion/pregnant/discovery.mp3')(set:$character's "pregnancy known" to "true")[(display:"character status")]<status|<div class='center_screen' data-simplebar>[<div class='top_right_half'>(print:"<img class='greyborder' 
 src='img/scenes/generic/pregnancy/positive.jpg' width=100% height=auto>")</div><div class='options'>(css:"font-size:5vmin")[<span class='chromatic'>You're pregnant!</span>]
 (either:"How do you feel?","How does that make you feel?","How will you react?")
-(link:"😱 Horrified 😱")[(set:$pregnancy's positivity to -10)(set:$pregnancy's "mood" to "horrified")(set:$next to "discover pregnancy 2")(display:"change screen")](link:"😰 Nervous 😰")[(set:$pregnancy's positivity to 0)(set:$pregnancy's "mood" to "nervous")(set:$next to "discover pregnancy 2")(display:"change screen")](link:"🥹 Excited 🥹")[(set:$pregnancy's positivity to 10)(set:$pregnancy's "mood" to "excited")(set:$next to "discover pregnancy 2")(display:"change screen")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>(set:$song to "pregnancy discovery")(display:"play song"){(set:$pregnancy's updates to $character's "id" of (dm:
-"alina",(a:8,9,11,14,19,22,25,30,35,36,38),
-"cassidy",(a:6,11,15,18,21,24,28,32,35,39),
-"ella",(a:6,11,14,23,26,29,32,35,36,37),
-"jade",(a:9,11,13,15,20,24,27,28,30,33,35,39),
-"jia",(a:5,9,11,14,17,25,27,30,32,35,39),
-"lana",(a:10,12,14,21,25,27,29,34,37),
-"liya",(a:8,10,12,21,27,33,38),
-"mia",(a:11,16,23,25,27,33,35,38,39),
-"rae",(a:7,11,20,24,27,29,31,35,39),
-"scarlit",(a:7,10,14,18,21,24,29,30,35)
-))}
+(link:"😱 Horrified 😱")[(set:$pregnancy's positivity to -10)(set:$pregnancy's "mood" to "horrified")(set:$next to "discover pregnancy 2")(display:"change screen")](link:"😰 Nervous 😰")[(set:$pregnancy's positivity to 0)(set:$pregnancy's "mood" to "nervous")(set:$next to "discover pregnancy 2")(display:"change screen")](link:"🤩 Excited 🤩")[(set:$pregnancy's positivity to 10)(set:$pregnancy's "mood" to "excited")(set:$next to "discover pregnancy 2")(display:"change screen")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>(set:$song to "pregnancy discovery")(display:"play song")
 
 
 :: morning sickness {"position":"2675,4900","size":"100,100"}
-[(display:"character status")]<status|<div class='center_screen' data-simplebar>[You feel *really* sick today. Like you're nauseous and run down - almost like a hangover, or being carsick. Certain smells or foods seem to make it worse. You're not in the mood to do much today...(set:$morning_activity to "Nothing")<div class='options'>(set:$new_status to (dm:
+(set:$request to "none")(set:$mess to 0)[(display:"character status")]<status|<div class='center_screen' data-simplebar>[You feel *really* sick today. Like you're nauseous and run down - almost like a hangover, or being carsick. Certain smells or foods seem to make it worse. You're not in the mood to do much today...
+
+Your stepdad sees you're not feeling well, and does the chores himself for once.(set:$morning_activity to "Nothing")<div class='options'>(set:$new_status to (dm:
 	"status","morning sickness",
 	"emoji","🤒",
 	"strength",10,
@@ -32760,6 +32840,7 @@ You look up.
 (set:$relationship's dom to it + $gain_dom)
 (set:$relationship's respect to it + $gain_respect)
 (set:$relationship's friendship to it + $gain_friendship)
+(set:$relationship's attraction to it + $gain_attraction)
 
 (unless:$gain_attraction is 0 and $gain_respect is 0 and $gain_dom is 0 and $gain_friendship is 0)[(if:$gain_attraction > 0)[<div class='options'><mark>(print:$relationship's name) is more attracted to you. Current attraction level: (print:$relationship's "attraction") (+(print:$gain_attraction))</mark></div>](else-if:$gain_attraction < 0)[<div class='options'><mark>(print:$relationship's name) is more attracted to you. Current attraction level: (print:$relationship's "attraction") ((print:$gain_attraction))</mark></div>](if:$gain_dom > 0)[<div class='options'><mark>(print:$relationship's name) becomes more dominant. Current dominance level: (print:$relationship's "dom") (+(print:$gain_dom))</mark></div>](else-if:$gain_dom < 0)[<div class='options'><mark>(print:$relationship's name) becomes more submissive. Current submission level: (print:$relationship's "dom"*-1) (+(print:$gain_dom*-1))</mark></div>](if:$gain_friendship > 0)[<div class='options'><mark>(print:$relationship's name) feels closer to you. Current friendship level: (print:$relationship's "friendship") (+(print:$gain_friendship))</mark></div>](else-if:$gain_friendship < 0)[<div class='options'><mark>(print:$relationship's name) doesn't feel as close to you. Current friendship level: (print:$relationship's "friendship") ((print:$gain_friendship))</mark></div>](if:$gain_respect > 0)[<div class='options'><mark>(print:$relationship's name) respects you more now. Current respect: (print:$relationship's "respect") (+(print:$gain_respect))</mark></div>](else-if:$gain_respect < 0)[<div class='options'><mark>(print:$relationship's name) respects you less now. Current respect: (print:$relationship's "respect") ((print:$gain_respect))</mark></div>]]
 
@@ -32866,8 +32947,10 @@ You look up.
 {
 (set:$day_of_week to ($day%7+1) of (a:"Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"))
 (set:$day to $day + 1)(set:$time to 1)(if:$day_of_week is "Sunday")[(display:"refresh purchasable outfits")(set:$rent_this_week to 0)(if:$stepsis's "shower" is -1)[(set:$stepsis's "shower" to 5)]]
-(display:"shop prices")(if:$request is "maid cleaned")[(set:$mess to 0)](else:)[(set:$mess to (max:0,$mess) + 1)(display:"house dirty rooms")(if:$mess > 3)[(set:$request to "chores")](else:)[(set:$request to "none")]](set:$character's "intellect buff" to 0)
+(display:"shop prices")(set:$character's "intellect buff" to 0)
 (if:$pregnant_discover_timer > 0)[(set:$pregnant_discover_timer to (max:$pregnant_discover_timer - 4,0))]
+(set:$milk_timer to (max:(it - 1),0))
+(if:$milk_timer > 0 and $character's gender is "female")[(set:$milk to (min:50,it + (random:2,5)))]
 (set:$character's "fitness buff" to 0)
 (set:$shower_timer to 0)
 (set:$position to "none")
@@ -32877,7 +32960,7 @@ You look up.
 
 
 :: swollen breasts {"position":"2775,4900","size":"100,100"}
-[(display:"character status")]<status|<div class='center_screen' data-simplebar>[(display:"describe breasts")(if:(random:1,2) is 1)[(either:"Your $breasts are swollen and tender today.","Your $breasts feel quite sore today.","Your breasts are tender, and your nipples itch.")](else:)[*(either:"They feel... heavier.","My boobs are feeling really sore and heavy.") (either:"And my nipples are hard! Like, painfully hard.","And my nipples feel like they're on fire!","My nipples feel weird too... they're hard, and starting to ache.","And my nipples... they're like, otherwordly sensitive. In a bad way.") (either:"My body is going through changes...","Pregnancy is changing my body...","And to think, this is just the beginning of the changes I'll go through...")*]<div class='options'>(set:$new_status to (dm:
+[(display:"character status")]<status|<div class='center_screen' data-simplebar>[(display:"pregnancy current video")(print:"<video src='img/" + $current_preg_video + "' autoplay='' loop='' muted='' playsinline/>")(display:"describe breasts")(if:(random:1,2) is 1)[(either:"Your $breasts are swollen and tender today.","Your $breasts feel quite sore today.","Your breasts are tender, and your nipples itch.")](else:)[*(either:"They feel... heavier.","My boobs are feeling really sore and heavy.") (either:"And my nipples are hard! Like, painfully hard.","And my nipples feel like they're on fire!","My nipples feel weird too... they're hard, and starting to ache.","And my nipples... they're like, otherwordly sensitive. In a bad way.") (either:"My body is going through changes...","Pregnancy is changing my body...","And to think, this is just the beginning of the changes I'll go through...")*]<div class='options'>(set:$new_status to (dm:
 	"status","swollen breasts",
 	"emoji","👙",
 	"strength",10,
@@ -32886,11 +32969,11 @@ You look up.
 	"charm buff",0,
 	"intellect buff",0,
 	"fitness buff",-3,
-	))(display:"new status")(display:"refresh stats")</div>]<div class='options'>(link:"Take it easy today...")[(display:"events")]</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>
+	))(display:"new status")(display:"refresh stats")</div><div class='options'>(link:"Take it easy today...")[(display:"events")]</div>]<div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>
 
 
 :: cramping {"position":"2875,4900","size":"100,100"}
-[(display:"character status")]<status|<div class='center_screen' data-simplebar>(either:"You have really bad cramping today. You can still function, but it's no fun.","You wake up with terrible cramps. Doubled-over, heat pack, crying, cold sweats... you are NOT looking forward to the rest of the day.")
+[(display:"character status")]<status|<div class='center_screen' data-simplebar>(display:"pregnancy current video")(print:"<video src='img/" + $current_preg_video + "' autoplay='' loop='' muted='' playsinline/>")(either:"You have really bad cramping today. You can still function, but it's no fun.","You wake up with terrible cramps. Doubled-over, heat pack, crying, cold sweats... you are NOT looking forward to the rest of the day.")
 
 Your stepdad tells you it's totally normal, just to wait until 12 weeks to see the doctor, as long as there's no bleeding. "It's because your uterus is stretching out, in preparation for all the additional stuff it's going to do over the next 9 months!"
 
@@ -32907,7 +32990,7 @@ Your stepdad tells you it's totally normal, just to wait until 12 weeks to see t
 
 
 :: mood swings {"position":"2675,5000","size":"100,100"}
-[(display:"character status")]<status|<div class='center_screen' data-simplebar>You're feeling quite irritable today. (either:"The dumbest things make you mad - hearing the crunching of your stepdad loudly eat his morning cereal, for example.","All your negative emotions just seem amplified, and the littlest things will tick you off.","Even just the sound of Alexia chewing makes you want to yell at her - though you do manage to hold yourself back.")
+[(display:"character status")]<status|<div class='center_screen' data-simplebar>(display:"pregnancy current video")(print:"<video src='img/" + $current_preg_video + "' autoplay='' loop='' muted='' playsinline/>")You're feeling quite irritable today. (either:"The dumbest things make you mad - hearing the crunching of your stepdad loudly eat his morning cereal, for example.","All your negative emotions just seem amplified, and the littlest things will tick you off.","Even just the sound of Alexia chewing makes you want to yell at her - though you do manage to hold yourself back.")
 
 *This must be due to the pregnancy... I'd better not have to deal with a lot of people today. Could get ugly.*(set:$gain to -1)(display:"pregnancy positivity")<div class='options'>(set:$new_mood to (dm:
 	"mood","irritable",
@@ -32921,7 +33004,7 @@ Your stepdad tells you it's totally normal, just to wait until 12 weeks to see t
 
 
 :: fatigue {"position":"2875,5000","size":"100,100"}
-[(display:"character status")]<status|<div class='center_screen' data-simplebar>[You're extremely tired today. (either:"Your stepdad tells you it's because your body is working overtime to maintain your pregnancy, and develop milk-producing glands in your breasts.","Your stepdad tells you it's because your body is changing, and is starting to adapt to the development phases of the embryo you're carrying.","Your stepdad says it's because of the increased levels of estrogen and progesterone your body is producing.")<div class='options'>(set:$new_status to (dm:
+[(display:"character status")]<status|<div class='center_screen' data-simplebar>[(display:"pregnancy current video")(print:"<video src='img/" + $current_preg_video + "' autoplay='' loop='' muted='' playsinline/>")You're extremely tired today. (either:"Your stepdad tells you it's because your body is working overtime to maintain your pregnancy, and develop milk-producing glands in your breasts.","Your stepdad tells you it's because your body is changing, and is starting to adapt to the development phases of the embryo you're carrying.","Your stepdad says it's because of the increased levels of estrogen and progesterone your body is producing.")<div class='options'>(set:$new_status to (dm:
 	"status","fatigued",
 	"emoji","😩",
 	"strength",10,
@@ -32944,16 +33027,20 @@ Your stepdad tells you it's totally normal, just to wait until 12 weeks to see t
 
 
 :: 8-week prenatal appointment {"position":"2675,5225","size":"100,100"}
-(newtrack:'pregnancy discovery','aud/music/emotion/pregnant/discovery.mp3')[(display:"character status")]<status|<div class='center_screen' data-simplebar>[(set:$song to "pregnancy discovery")(display:"play song")(print:"<img class='greyborder' 
+(if:$pregnancy's "mood" is "excited")[(newtrack:'pregnancy positivity','aud/music/emotion/pregnant/positivity.mp3')(set:$song to "pregnancy positivity")(display:"play song")](else-if:$pregnancy's "mood" is "horrified")[(newtrack:'pregnancy intensity','aud/music/emotion/pregnant/intensity.mp3')(set:$song to "pregnancy intensity")(display:"play song")](else:)[(newtrack:'pregnancy discovery','aud/music/emotion/pregnant/discovery.mp3')(set:$song to "pregnancy discovery")(display:"play song")][(display:"character status")]<status|<div class='center_screen' data-simplebar>[(set:$song to "pregnancy discovery")(display:"play song")(print:"<img class='greyborder' 
 src='img/scenes/generic/pregnancy/driving.jpg' width=100% height=auto>")It's time! Your stepdad offers to drive you to your very first prenatal doctor's visit.
 
 (if:$pregnancy's mood is "excited")[The thing you're excited the most for is the ultrasound, to finally get to see this life growing inside you! Mentally you *knew* you were pregnant, but you can tell this visit to the OB/GYN is really going to make it seem real, and not just a dream.
 
-"I'm glad to see you're feeling positive about all this," you stepdad says.](else-if:$pregnancy's mood is "horrified")[Your heart is pounding - things are getting VERY real. Your stepdad can tell you're feeling quite angsty, and does his best to calm you down.](else-if:$pregnancy's mood is "nervous")[You're still feeling quite nervous, and he does his best to calm you down on the car ride to the OB/GYN.]<div class='options'>(link:"Arrive")[(set:$next to "1st prenatal visit 1")(display:"change screen")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>(set:$song to "pregnancy discovery")(display:"play song")
+"I'm glad to see you're feeling positive about all this," you stepdad says.](else-if:$pregnancy's mood is "horrified")[Your heart is pounding - things are getting VERY real. Your stepdad can tell you're feeling quite angsty, and does his best to calm you down.](else-if:$pregnancy's mood is "nervous")[You're still feeling quite nervous, and he does his best to calm you down on the car ride to the OB/GYN.]<div class='options'>(link:"Arrive")[(set:$next to "1st prenatal visit 1")(display:"change screen")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>
 
 
 :: refresh possible activities pregnancy {"position":"1875,725","size":"100,100"}
-{(if:$pregnancy's weeks is 8 and not ($pregnancy's events contains "8-week prenatal appointment"))[(set:$daytime_activity to "8-week prenatal appointment")]
+{
+
+(if:$pregnancy's weeks is 8 and not ($pregnancy's events contains "8-week prenatal appointment"))[(set:$daytime_activity to "8-week prenatal appointment")](else:)[(set:$daytime_activities to it - (a:"8-week prenatal appointment"))(if:$daytime_activity is "8-week prenatal appointment")[(set:$daytime_activity to "Nothing")]]
+
+(if:$pregnancy's weeks is 12 and not ($pregnancy's events contains "12-week prenatal appointment"))[(set:$daytime_activity to "12-week prenatal appointment")](else:)[(set:$daytime_activities to it - (a:"12-week prenatal appointment"))(if:$daytime_activity is "12-week prenatal appointment")[(set:$daytime_activity to "Nothing")]]
 
 (if:$pregnancy's weeks >= 8 and it < 13 and not ($pregnancy's events contains "Call the father"))[(set:$evening_activities to it - (a:"Call the father"))(set:$evening_activities to it + (a:"Call the father"))](else:)[(set:$evening_activities to it - (a:"Call the father"))]
 
@@ -32970,7 +33057,7 @@ They take your ultrasound, and they tell you that the fetus is healthy - and you
 (print: "<video src='img/scenes/generic/pregnancy/ultrasound.mp4' autoplay='' loop='' muted='' playsinline/>")
 (if:$pregnancy's mood is "horrified")[Your eyes go wide as you see the image on the screen. *That THING is growing inside me? Taking over my body???*](else-if:$pregnancy's mood is "nervous")[Your eyes are glued to the screen, and you bite your lip. *I can't believe this is really happening...*](else:)[Your eyes light up as you see the image on the screen. *It's really happening!*]
 
-"It doesn't have a fully formed heart yet, so what you're listening to is just an audio representation of electrical cardiac activity," the doctor tells you. "But it means your fetus is healthy, so that's good. At 12-14 weeks, you'll have the option to transfer it out of your body, if that's what you want to do."<div class='options'>(link:"Keep the baby")[(set:$choice to "keep")(set:$next to "1st prenatal visit 2")(display:"change screen")](link:"Remove it")[(set:$choice to "remove")(set:$next to "1st prenatal visit 2")(display:"change screen")]</div>(set:$pregnancy's events to it + (a:"8-week prenatal appointment"))(set:$daytime_activity to "Nothing")(set:$current_location to "OB/GYN")(display:"location and time")
+"It doesn't have a fully formed heart yet, so what you're listening to is just an audio representation of electrical cardiac activity," the doctor tells you. "But it means your fetus is healthy, so that's good. At 12-14 weeks, you'll have the option to transfer it out of your body, if that's what you want to do."<div class='options'>(link:"Keep the baby")[(set:$choice to "keep")(set:$pregnancy's "choice" to "keep")(set:$next to "1st prenatal visit 2")(display:"change screen")](link:"Remove it")[(set:$pregnancy's "choice" to "remove")(set:$choice to "remove")(set:$next to "1st prenatal visit 2")(display:"change screen")]</div>(set:$pregnancy's events to it + (a:"8-week prenatal appointment"))(set:$daytime_activity to "Nothing")(set:$current_location to "OB/GYN")(display:"location and time")
 
 
 :: 1st prenatal visit 2 {"position":"2675,5425","size":"100,100"}
@@ -33029,7 +33116,7 @@ You see your stepdad raise his eyebrows at the guy's picture.
 "That's *if* you choose to reach out to him," the doctor says. "You'll need to contact him yourself if you want him to help - you have a 2 week window to do this."(set:$preg_npc to $npc)<div class='options'>(link:"Return home")[(set:$next to "1st prenatal visit 4")(display:"change screen")]</div>
 
 
-:: random guy last name {"position":"2525,475","size":"100,100"}
+:: random guy last name {"position":"4100,175","size":"100,100"}
 {
 (unless:(datanames:$npc) contains "last name")[
 
@@ -33046,7 +33133,7 @@ You see your stepdad raise his eyebrows at the guy's picture.
 }
 
 
-:: npc fill in details {"position":"2525,600","size":"100,100"}
+:: npc fill in details {"position":"4100,300","size":"100,100"}
 {
 (display:"random guy last name")
 
@@ -33101,11 +33188,11 @@ You blush a little bit, as you remember how (print:$preg_npc's "name") used you,
 
 "It's ok, I don't know how he convinced me to sleep with him... persistent little bastard."](else:)["So that's the kind of guy you like, huh?" your stepdad says. 
 
-"We are NOT talking about this!"](if:$choice is "yes")[<div class='options'><mark>You can now contact the baby's father as an evening activity.</mark></div>]<div class='options'>(link:"Next")[(display:"advance time")]</div>
+"We are NOT talking about this!"](if:$choice is "yes")[<div class='options'><mark>You can now contact the baby's father as an evening activity.</mark></div>]<div class='options'>(link:"Next")[(display:"advance time")]</div>(set:$pregnancy's "father paid" to 0)
 
 
 :: Call the father {"position":"2800,5225","size":"100,100"}
-(newtrack:'pregnancy intensity','aud/music/emotion/pregnant/discovery.mp3')(set:$song to "pregnancy intensity")(display:"play song")[(display:"character status")]<status|<div class='center_screen' data-simplebar>[{(set:$current_location to "Your Bedroom")(set:$npc to $preg_npc)}<img class='greyborder' 
+(set:$pregnancy's "father paid" to 0)(newtrack:'pregnancy intensity','aud/music/emotion/pregnant/intensity.mp3')(set:$song to "pregnancy intensity")(display:"play song")[(display:"character status")]<status|<div class='center_screen' data-simplebar>[{(set:$current_location to "Your Bedroom")(set:$npc to $preg_npc)}<img class='greyborder' 
 src='img/scenes/generic/pregnancy/phone.jpg' width=100% height=auto>Taking a deep breath, you dial the number the doctor gave you. (set:$se to "phone call")(display:"play sound")
 
 (if:$npc's "age" > 39)["Hello, who's this?"](else-if:$npc's tags contains "fuckboy")["Yo yo, whaddup?"](else-if:$npc's tags contains "gentleman")["Yes, who's this?"](else-if:$npc's tags contains "jock")["Hey, I'm in the middle of training - who's this?"](else-if:$npc's tags contains "chad")["Yeah, who's this?"](else:)["Hello?"] you hear (display:"npc possessive pronoun") voice on the other end of the line.
@@ -33147,7 +33234,7 @@ src='img/scenes/generic/pregnancy/phone call.jpg' width=100% height=auto></div>(
 
 (if:(random:1,2) is 1 or $npc's personality < 3)[You hear him let out a loud sigh on the other end. "That depends... I'd prefer to give the money over in person, so you'll need to give me your address. I want to make sure it's really you, and not some scammer."(set:$reaction to "visit")](else:)["Ok, ok. Sorry. How much did they say I need to send you?"(set:$reaction to "pay")]](if:$reaction is "wife")[Your bottom lip quivers. "It's not my fault you have a wife!" you say. "I'm the one who's pregnant! Stop feeling sorry for yourself. The doctors said you'd help me with the pregnancy costs."
 
-(if:(random:1,2) is 1 or $npc's personality < 3)[You hear him let out a loud sigh on the other end. "That depends... I'd prefer to give the money over in person, so you'll need to give me your address. I want to make sure it's really you, and not some scammer."(set:$reaction to "visit")](else:)["Ok, ok. Sorry. How much did they say I need to send you?"(set:$reaction to "pay")]]<div class='options'>(if:$reaction is "visit")[(link:"$" + (text:$pregnancy's "keep amount") + " (keep the baby)")[(set:$choice to "keep amount")(set:$paid to $pregnancy's "keep amount")(set:$next to "call father 2")(display:"change screen")](link:"$" + (text:$pregnancy's "remove amount") + " (artificial womb)")[(set:$paid to $pregnancy's "remove amount")(set:$choice to "keep amount")(set:$next to "call father 2")(display:"change screen")]](else:)[(link:"Give him your address")[(set:$choice to "give address")(set:$next to "call father visit")(display:"change screen")](link:"Refuse")[(set:$choice to "refuse")(set:$next to "call father end")(display:"change screen")]]</div>(set:$ambience to "bedroom")(display:"play ambience")
+(if:(random:1,2) is 1 or $npc's personality < 3)[You hear him let out a loud sigh on the other end. "That depends... I'd prefer to give the money over in person, so you'll need to give me your address. I want to make sure it's really you, and not some scammer."(set:$reaction to "visit")](else:)["Ok, ok. Sorry. How much did they say I need to send you?"(set:$reaction to "pay")]]<div class='options'>(if:$reaction is "pay")[(link:"$" + (text:$pregnancy's "keep amount") + " (keep the baby)")[(set:$pregnancy's "father events" to (a:"keep"))(set:$choice to "keep amount")(set:$paid to $pregnancy's "keep amount")(set:$next to "call father 2")(display:"change screen")](link:"$" + (text:$pregnancy's "remove amount") + " (artificial womb)")[(set:$pregnancy's "father events" to (a:"remove"))(set:$paid to $pregnancy's "remove amount")(set:$choice to "keep amount")(set:$next to "call father 2")(display:"change screen")]](else:)[(link:"Give him your address")[(set:$choice to "give address")(set:$next to "call father visit")(display:"change screen")](link:"Refuse")[(set:$choice to "refuse")(set:$next to "call father end")(display:"change screen")]]</div>(set:$ambience to "bedroom")(display:"play ambience")
 
 
 :: call father end {"position":"2900,5450","size":"100,100"}
@@ -33205,7 +33292,7 @@ He looks at you for a moment. "And how much are you expecting me to pay?"<div cl
 
 
 :: call father visit 4 {"position":"2800,6075","size":"100,100"}
-(set:$se to "male chuckle " + (text:(random:1,4)))(display:"play sound")(if:$satisfaction is -2 or $satisfaction is -1)["Well, I'm not gonna lie and say that was great. (if:$his_choice is "face")[But it felt good to paint your face.](else:)[But it felt pretty good to empty my balls in your mouth.] Probably what I should've done last time, haha."](if:$satisfaction is 0)["Well, maybe now that you're pregnant, you'll learn to get better at using your mouth, since your pussy's out of commission," (display:"npc pronoun") says, zipping back up. "(if:$his_choice is "face")[It felt good to blow a load all over you though, haha. The mother of my child.](else:)[It's probably better for you to learn to swallow those little swimmers, rather than letting them knock you up.]"](if:$satisfaction is 1)["Well, that was pretty good," (display:"npc pronoun") says. (if:$his_choice is "face")["And now you know it's better to take loads to your face, than get knocked up."](else:)["And remember, taking cum in your mouth like that - a much safer option."]](if:$satisfaction is 2 or $satisfaction is 3)["Damn, that was good!" (display:"npc pronoun") says, moaning and shuddering a little in post-orgasmic bliss. (if:$his_choice is "face")["The mother of my child..." he looks down at your cum-blasted face.](else:)["The mother of my child..." he looks at the cum trickling from your lips.]]
+(set:$paid to 0)(set:$se to "male chuckle " + (text:(random:1,4)))(display:"play sound")(if:$satisfaction is -2 or $satisfaction is -1)["Well, I'm not gonna lie and say that was great. (if:$his_choice is "face")[But it felt good to paint your face.](else:)[But it felt pretty good to empty my balls in your mouth.] Probably what I should've done last time, haha."](if:$satisfaction is 0)["Well, maybe now that you're pregnant, you'll learn to get better at using your mouth, since your pussy's out of commission," (display:"npc pronoun") says, zipping back up. "(if:$his_choice is "face")[It felt good to blow a load all over you though, haha. The mother of my child.](else:)[It's probably better for you to learn to swallow those little swimmers, rather than letting them knock you up.]"](if:$satisfaction is 1)["Well, that was pretty good," (display:"npc pronoun") says. (if:$his_choice is "face")["And now you know it's better to take loads to your face, than get knocked up."](else:)["And remember, taking cum in your mouth like that - a much safer option."]](if:$satisfaction is 2 or $satisfaction is 3)["Damn, that was good!" (display:"npc pronoun") says, moaning and shuddering a little in post-orgasmic bliss. (if:$his_choice is "face")["The mother of my child..." he looks down at your cum-blasted face.](else:)["The mother of my child..." he looks at the cum trickling from your lips.]]
 
 "P- pay up!" you say. "I did my part."
 
@@ -33216,7 +33303,7 @@ He tosses some bills onto the floor in front of you, and leaves.](else-if:$satis
 He tosses some bills onto the floor in front of you, and leaves.](else:)["Yeah, yeah," he says, shelling up some money and tossing it onto the floor. "You earned it, (if:(datanames:$npc) contains "petname")[(print:$npc's petname)](else:)[slut]!"
 
 With that, he leaves, and you hear him drive away.(set:$paid to $amount)]<div class='options'><mark>You receive $$paid.(set:$character's money to $character's money + $paid)</mark>(display:"refresh stats")
-(link:"Next")[(set:$next to "call father visit 5")(display:"change screen")]</div>
+(link:"Next")[(set:$next to "call father visit 5")(display:"change screen")]</div>(set:$pregnancy's "father paid" to $paid)
 
 
 :: call father visit 5 {"position":"2800,6175","size":"100,100"}
@@ -33306,7 +33393,7 @@ With that, he leaves.
 
 
 :: call father 2 {"position":"2800,5450","size":"100,100"}
-(if:$npc's personality >= (random:1,5) and $npc's wealth >= (random:1,5))["Ok, I can do that," (display:"npc pronoun") says. "I'll transfer it now.<div class='options'><mark>You receive $$paid in pregnancy support!</mark>(set:$se to "kaching")(display:"play sound")(set:$character's "money" to $character's "money" +$paid)(display:"refresh stats")
+(if:$npc's personality >= (random:1,5) and $npc's wealth >= (random:1,5))["Ok, I can do that," (display:"npc pronoun") says. "I'll transfer it now.<div class='options'><mark>You receive $$paid in pregnancy support!</mark>(set:$se to "kaching")(display:"play sound")(set:$character's "money" to $character's "money" +$paid)(set:$pregnancy's "father paid" to $paid)(display:"refresh stats")
 (link:"Next")[(display:"advance time")]</div>](else:)[ {(set:$blackjack_params to (dm:
 "challenge","convince him to pay his share.",
 "near victory","dynamic",
@@ -33345,12 +33432,12 @@ src='img/scenes/generic/pregnancy/phone.jpg' width=100% height=auto>"
 But (display:"npc pronoun") hangs up. 
 
 *Fuck.*](else:)["Alright, alright," (display:"npc pronoun") says. "I'll transfer the money to your account."
-<div class='options'><mark>You receive $$paid in pregnancy support!</mark>(set:$se to "kaching")(display:"play sound")(set:$character's "money" to it +$paid)(display:"refresh stats")</div>]<div class='options'>(link:"Next")[(display:"advance time")]</div>
+<div class='options'><mark>You receive $$paid in pregnancy support!</mark>(set:$se to "kaching")(set:$pregnancy's "father paid" to $paid)(display:"play sound")(set:$character's "money" to it +$paid)(display:"refresh stats")</div>]<div class='options'>(link:"Next")[(display:"advance time")]</div>
 
 
 :: pregnancy positivity {"position":"2350,5275","size":"100,100"}
 {
-<div class='options'><mark>(if:$gain > 0)[(either:"You're feeling more positive about your pregnancy!","You're feeling better about your pregnancy.","You're feeling better about things.","You're feeling a bit better about your pregnancy.")](else:)[(either:"You're feeling more stressed about your pregnancy.","You're feeling worse about being pregnant.")](set:$pregnancy's positivity to $pregnancy's positivity + $gain)(print:" ")(if:$pregnancy's mood is "excited" and $pregnancy's positivity < 1)[Your mood changed from 🥹 EXCITED 🥹 to 😰 NERVOUS 😰.(set:$pregnancy's mood to "nervous")](if:$pregnancy's mood is "nervous" and $pregnancy's positivity > 9)[Your mood changed from 😰 NERVOUS 😰 to 🥹 EXCITED 🥹.(set:$pregnancy's mood to "excited")](if:$pregnancy's mood is "horrified" and $pregnancy's positivity > -1)[Your mood changed from 😱 HORRIFIED 😱 to 😰 NERVOUS 😰.(set:$pregnancy's mood to "nervous")](if:$pregnancy's mood is "nervous" and $pregnancy's positivity < -9)[Your mood changed from from 😰 NERVOUS 😰 to 😱 HORRIFIED 😱.(set:$pregnancy's mood to "horrified")]</mark></div>
+<div class='options'><mark>(if:$gain > 0)[(either:"You're feeling more positive about your pregnancy!","You're feeling better about your pregnancy.","You're feeling better about things.","You're feeling a bit better about your pregnancy.")](else:)[(either:"You're feeling more stressed about your pregnancy.","You're feeling worse about being pregnant.")](set:$pregnancy's positivity to $pregnancy's positivity + $gain)(print:" ")(if:$pregnancy's mood is "excited" and $pregnancy's positivity < 1)[Your mood changed from 🤩 EXCITED 🤩 to 😰 NERVOUS 😰.(set:$pregnancy's mood to "nervous")](if:$pregnancy's mood is "nervous" and $pregnancy's positivity > 9)[Your mood changed from 😰 NERVOUS 😰 to 🤩 EXCITED 🤩.(set:$pregnancy's mood to "excited")](if:$pregnancy's mood is "horrified" and $pregnancy's positivity > -1)[Your mood changed from 😱 HORRIFIED 😱 to 😰 NERVOUS 😰.(set:$pregnancy's mood to "nervous")](if:$pregnancy's mood is "nervous" and $pregnancy's positivity < -9)[Your mood changed from from 😰 NERVOUS 😰 to 😱 HORRIFIED 😱.(set:$pregnancy's mood to "horrified")]</mark></div>
 
 }
 
@@ -33381,18 +33468,28 @@ Your cheeks flush.
 
 
 :: 12-week prenatal appointment {"position":"3175,5225","size":"100,100"}
-(newtrack:'pregnancy discovery','aud/music/emotion/pregnant/discovery.mp3')[(display:"character status")]<status|<div class='center_screen' data-simplebar>[(set:$song to "pregnancy discovery")(display:"play song")(print:"<img class='greyborder' 
-src='img/scenes/generic/pregnancy/driving.jpg' width=100% height=auto>")
+(if:$pregnancy's "mood" is "excited")[(newtrack:'pregnancy positivity','aud/music/emotion/pregnant/positivity.mp3')(set:$song to "pregnancy positivity")(display:"play song")](else-if:$pregnancy's "mood" is "horrified")[(newtrack:'pregnancy intensity','aud/music/emotion/pregnant/intensity.mp3')(set:$song to "pregnancy intensity")(display:"play song")](else:)[(newtrack:'pregnancy discovery','aud/music/emotion/pregnant/discovery.mp3')(set:$song to "pregnancy discovery")(display:"play song")](unless:(datanames:$pregnancy) contains "choice")[(set:$pregnancy's "choice" to "keep")][(display:"character status")]<status|<div class='center_screen' data-simplebar>[(display:"pregnancy current video")(print:"<video src='img/" + $current_preg_video + "' autoplay='' loop='' muted='' playsinline/>")It's time for your next prenatal appointment. {(print:$character's id of (dm:
+"alina","It's starting to become obvious to everyone now that you're pregnant - no more hiding it! You've had a pretty evident baby bump since last week. And it's only goin to get bigger from here, if you plan on keeping the baby.",
+"cassidy","It's pretty obvious to everyone around you how pregnant you are - and thanks to your fertility-goddess latina body, you've gotten quite a few comments about how well the look suits you.",
+"ella","Even though you're 12 weeks pregnant, it's not exactly *obvious* - you're still able to hide it, but you're not sure for how much longer - if you decide to keep the baby.",
+"jade","Your pregnancy is still not super obvious to a casual bystander - your belly is still *mostly* flat. But it's not going to be that way for very much longer, if you choose to keep the baby.",
+"jia","You're already quite visibly pregnant. Part of that's probably due to your slim, pale body. You have difficulty imagining how you'll look if you continue with the pregnancy.",
+"lana","You're already quite visibly pregnant. Part of that's probably due to your slim, pale body. You have difficulty imagining how you'll look if you continue with the pregnancy.",
+"liya","For only 12 weeks, your baby bump is *really* showing. You can barely imagine what your body is going to feel and look like over the coming months, if you decide to keep it.",
+"mia","You definitely have a baby bump, but it's not super obvious. If you decide to get rid of the baby now, hardly anyone would know you were ever pregnant!",
+"rae","Your bump is definitely showing, but if you decide to get rid of your pregnancy now, people would hardly know you were ever pregnant.",
+"scarlit","Your bump is definitely showing, but if you decide to get rid of your pregnancy now, people would hardly know you were ever pregnant."))}
 
+"So," you stepdad says as you drive toward the doctor's office. "How are you feeling about things? (if:$pregnancy's "choice" is "keep")[Are you still thinking to keep the baby?](else:)[Are you still thinking to end the pregnancy?]"
 
-<div class='options'>(link:"Arrive")[(set:$next to "1st prenatal visit 1")(display:"change screen")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>(set:$song to "pregnancy discovery")(display:"play song")
+You stare out of the care window for a bit before answering.<div class='options'>(link:"Keep it")[(set:$choice to "keep")(set:$pregnancy's "choice" to "keep")(set:$next to "2nd prenatal visit 1")(display:"change screen")](link:"End it")[(set:$choice to "remove")(set:$pregnancy's "choice" to "remove")(set:$next to "2nd prenatal visit 1")(display:"change screen")]</div>]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>(set:$pregnancy's events to it + (a:"8-week prenatal appointment"))(set:$daytime_activity to "Nothing")
 
 
 :: pregnant 3rd check {"position":"2975,5225","size":"100,100"}
 
 
 :: tower blocks initialize {"position":"1475,6225","size":"100,100"}
-{(set:$score to 0)(set:$score_required to ((floor:$blackjack_params's "skill check difficulty" / 5) + 10))(set:$towergame to "playing")(set:$count to 0)(set:$style to "tower blocks")(set:$moves to 0)<div id="towerheader" class="game_header">(if:(datanames:$blackjack_params) contains "backdrop type")[(print:$blackjack_params's "backdrop")](else:)[(print:"<video src='img/" + $blackjack_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")]<div id="towerscreen" class="game_full_screen">[]<game_screen|</div></div><div class='options'>[]<score|
+{(unless:(datanames:$blackjack_params) contains "color")[(set:$color to "normal")](else:)[(set:$color to $blackjack_params's color)](set:$score to 0)(set:$score_required to ((floor:$blackjack_params's "skill check difficulty" / 5) + 10))(if:$blackjack_params's "skill check" is "milking")[(set:$score_required to $milk)](set:$towergame to "playing")(set:$count to 0)(set:$style to "tower blocks")(set:$moves to 0)<div id="towerheader" class="game_header">(if:(datanames:$blackjack_params) contains "backdrop type")[(print:$blackjack_params's "backdrop")](else:)[(print:"<video src='img/" + $blackjack_params's "backdrop" + "' autoplay='' loop='' muted='' playsinline/>")]<div id="towerscreen" class="game_full_screen">[]<game_screen|</div></div><div class='options'>[]<score|
 []<demo_ind|</div>}(replace:?right_options)[<span class='shadow'><div id="instructions">Stack the blocks on top of each other!(print:"
 
 ")Click, tap or press Space when a block is above the stack.</div><div id="results"></div><div id='begintowergame'>(link:"Play minigame")[(display:"tower blocks begin")]</div>(display:"blackjack skill check link")(if:$minigame_skip is "Skippable Minigames: On")[
@@ -33557,6 +33654,8 @@ function addOverhang(x, z, width, depth) {
 function generateBox(x, y, z, width, depth, falls) {
   // ThreeJS
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
+  
+  
   const color = new THREE.Color(`hsl(${30 + stack.length * 4}, 100%, 50%)`);
   const material = new THREE.MeshPhongMaterial({ color});
   const mesh = new THREE.Mesh(geometry, material);
@@ -33808,5 +33907,758 @@ window.addEventListener("resize", () => {
 
 :: tower blocks result {"position":"1475,6325","size":"100,100"}
 {(live:0.5s)[(replace:?game_big_screen)[](if:$towergame is "lost")[(display:"tower blocks lose")](if:$towergame is "won")[(display:"tower blocks win") ](stop:)]}
+
+
+:: pregnancy current video {"position":"2975,4900","size":"100,100"}
+{
+
+(set:$preg_video_num to 1st of $pregnancy's updates)
+(for: each _video, ...$pregnancy's updates)[
+
+(if:_video <= $pregnancy's weeks)[(set:$preg_video_num to _video)]
+
+]
+(set:$current_preg_video to "characters/pregnancy/"+ $character's id + "/" + $character's id + " " + (text:$preg_video_num) + ".mp4")
+
+}
+
+
+:: pregnancy mirror {"position":"3300,5225","size":"100,100"}
+(display:"pregnancy current video")(print:"<video src='img/" + $current_preg_video + "' autoplay='' loop='' muted='' playsinline/>")
+<div class='options'>[(link:"Back")[(set:$next to "Night")(display:"next")]]<options|</div>(replace:?right_options)[]
+
+
+:: 2nd prenatal visit 1 {"position":"3175,5325","size":"100,100"}
+(print:"<img class='greyborder' 
+src='img/scenes/generic/pregnancy/driving.jpg' width=100% height=auto>")(set:$npc_select to "stepdad")(if:$choice is "remove" and $character's "money" < 2500)[(if:$pregnancy's "choice" is "keep")["I know I said I wanted to go through with it... but I changed my mind. Unfortunately, I don't have the $2500 I need to pay for the LifeBubble..."](else:)["I still want to remove it, but unfortunately, I don't have the $2500 it costs to pay for the LifeBubble..."](set:$npc_select to "stepdad")(set:$required to (dm:"friendship",3,"respect",3))(display:"check relationship")(if:$result is "pass")[(if:$character's money > 1249)["Ok," he says. "I think I can help you out. I'll cover half of the cost - I can afford it this month, and I think you've already been through enough."
+
+"Aww, thanks so much, dad!" you smile from ear to ear, putting your hand on his shoulder.(set:$gain_friendship to 1)(display:"change relationship")<div class='options'><mark>He gives you $1250 to help cover the costs.(set:$character's money to it + 1250)(set:$se to "kaching")(display:"play sound")(display:"refresh stats")</mark></div>](else:)["That's tough," he says. "I would offer to help, but it sounds like even if I covered half, we couldn't quite pull it off."
+
+"It's ok, dad," you sigh. *It's just 7 months of my life...*]](else:)["That's too bad," he sighs. "But maybe this will be a good experience for you. Might help ground you in the real world, understand the consequences of your actions."]](else-if:$choice is "remove")[(if:$pregnancy's "choice" is "keep")["I was thinking about keeping it and going through with the pregnancy, but actually, I think I'm going to remove it," you say. (if:$pregnancy's "mood" is "excited")["I know I was excited to be pregnant, but thinking about 7 more months of this... it's too much. I want to get back to normal life."](else-if:$pregnancy's "mood" is "nervous")["I'm too nervous... I just want to get back to normal life."](else:)["Pregnancy is a super fucking scary thing. Rearranging your internal organs - more intense than any pill. I just want to get back to a normal life."]](else:)["I'm still convinced that removing it is the right call," you say. "I just want to get back to normal life."]](else-if:$choice is "keep")[(if:$pregnancy's "choice" is "keep")[(if:$pregnancy's "mood" is "excited")["I'm definitely keeping it!" you say. "I'm excited for this. It's part of the great journey of life, and I'm gonna experience it."
+
+"Whoa," he says. "That's an interesting perspective."(set:$gain_respect to 1)(display:"change relationship")](else-if:$pregnancy's "mood" is "nervous")["It's nerve-wracking, I'm not gonna lie, but I'm still planning to go through with it," you say.](else:)["I'm not gonna lie," you say. "I'm scared as hell. But I'm still going to go through with it. I want to see it through. I'm *going* to give birth to another human being."]](else:)[(if:$pregnancy's "mood" is "excited")["I know I said I was gonna remove it," you say. "But I've changed my mind. Giving birth... it's part of the journey of life. It's such a central piece of the human experience, and I'm going to get to do it!"](else-if:$pregnancy's "mood" is "nervous")["I know I said I wanted to remove it and do the LifeBubble thing," you say. "But I've changed my mind. I'm nervous, but I want to see it through. I'm going to give birth to another human being!"](else:)["I'm still scared as hell," you say. "But I'm going to keep it."
+
+"Alright then," he says, slowly.]]](if:$choice is "remove" and $character's "money" >= 2500)[(set:$pregnancy's "choice" to "remove")](else:)[(set:$pregnancy's "choice" to "keep")]<div class='options'>(link:"Arrive")[(set:$next to "2nd prenatal visit 2")(if:$pregnancy's choice is "remove")[(set:$next to "2nd prenatal visit 2 remove")](display:"change screen")]</div>
+
+
+:: create utility macros [header] {"position":"800,0","size":"100,100"}
+{
+  (set: $delete_global_variable to (macro: str-type _var_name, [
+    Move the variable into a temp variable that falls out of scope, effectively deleting the variable
+    (out:)[(print: "(move: " + _var_name + " into _temp)")]
+  ]))
+
+  (set: $use_global to (macro: str-type _var_name, str-type _js_name, codehook-type _hook, [
+    Set the variable to a value so the script tag finds it to create the setter
+    Use the script tag to set the variable
+    Run the hook that uses the variable
+    Delete the variable
+
+    (out:)[{
+      (print: "(set: " + _var_name + " to '')")
+      (print: "<script>" + _var_name + " = " + _js_name + "</script>")
+      _hook
+      ($delete_global_variable: _var_name)
+    }]
+  ]))
+
+  (set: $clamp to (macro: num-type _value, num-type _min, num-type _max, [(out-data: (min: (max: _value, _min), _max))]))
+}
+
+
+:: breedify npc {"position":"4200,50","size":"100,100"}
+{
+(set:$npc's tags to it - (a:"gentleman"))
+(set:$npc's tags to it + (a:"breeder"))
+(set:$npc's personality to (min:it,5))
+($use_global: "$cock_database", "window.GE.cock_database", [(set:$npc to it + (either:...(find:_cock where _cock's ballsize is 10, ...$cock_database)))])
+}
+
+
+:: 2nd prenatal visit 2 {"position":"3175,5425","size":"100,100"}
+(print:"<img class='greyborder' 
+src='img/scenes/generic/pregnancy/obgyn.jpg' width=100% height=auto>")
+Once at the doctor's office, you get some more tests done. (set:$pregnancy's "gender" to (either:"male","female")) 
+
+"How's it looking?" you ask as they rub ultrasound gel on your tummy. 
+
+"So far, everything is normal," the doctor says. "Keep up the good work. You probably know this, but you're about to enter your 2nd trimester, so a lot of those initial symptoms like cramping should start going away. Of course, you're going to have a growing belly and breasts - I would expect those (print:$character's "breasts")-cup breasts to expand to {(print:($character's "breasts") of (dm:
+"A","C",
+"B","D",
+"C","DD",
+"D","E",
+"E","G",
+"F","G",
+"G","H")) cups or so. So make sure to stock up on supportive bras, with wide straps."}
+
+"Got it," you grimace. "They've been pretty sore..." 
+
+"Oh yes, that's another thing..." the doctor says as he starts the ultrasound. "Lactation will begin soon. Around 16 weeks, give or take. You can start hand expression at about 36 weeks." 
+
+(if:$pregnancy's "mood" is "excited")[*Hell yes, I'm gonna have nice, milky tits!*](else:)[*I'm going to produce... milk...*]
+
+"Here's a warning, since you're on X-Change. Your lactation hormones will block your X-Change from wearing off for a while. And then, for 6 months, every if you change back to male, and then back again to female, you will continue lactation, due to your progesterone levels. Even if you switch to a different body. You may experience discomfort if you do not relieve your breasts regularly."
+
+"Ok," you nod. 
+
+"But don't worry about that yet. Take a look!" 
+
+(print: "<video src='img/scenes/generic/pregnancy/ultrasound.mp4' autoplay='' loop='' muted='' playsinline/>")
+You stare at the screen as you see your baby, which appears much larger than it did a few weeks ago. 
+
+(if:$pregnancy's gender is "male")["Well, $your_name, I'm happy to report that you're pregnant with a very healthy baby boy!" the doctor says. ](else:)["Well, $your_name, I'm happy to report that you're pregnant with a very healthy baby girl!" the doctor says. ] 
+
+*Holy shit...* the realization hits you. It's a funny thing to be so affected by, considering the baby is going to be going to a childcare facility. But to think that *you* caused this life form to come into the world. Suddenly it hits you again like a punch to the heart - there should be songs written about motherhood. The experience of it. People should talk about it more. It's so intense - the stages, the realizations. *But perhaps there can't be. Perhaps the emotions are too strong for anything to ever capture...*
+
+*There should be a song for women to sing at this moment, or a prayer to recite. But perhaps there is none because there are no words strong enough to name the moment.*
+
+The doctor smiles at the look on your face. Your stepdad holds your hand. The room is quiet for a while. <div class='options'>(link:"Next")[(set:$next to "2nd prenatal visit 3")(display:"change screen")]</div>
+
+
+:: 2nd prenatal visit 2 remove {"position":"3275,5425","size":"100,100"}
+(print:"<img class='greyborder' 
+src='img/scenes/generic/pregnancy/obgyn.jpg' width=100% height=auto>")
+You tell the doctors your intention to transfer your baby to a LifeBubble. They agree to set up the necessary equipment, and start performing tests. (set:$pregnancy's "gender" to (either:"male","female"))
+
+"I'm happy to tell you, that (if:$pregnancy's "gender" is "male")[you're carrying a very healthy baby boy!" the transfer doctor says after reviewing the ultrasounds.](else:)[you're carrying a very healthy baby girl!" the transfer doctor says after reviewing the ultrasounds.] "I anticipate a very easy removal." 
+
+(print: "<video src='img/scenes/generic/pregnancy/ultrasound 12.mp4' autoplay='' loop='' muted='' playsinline/>")
+Your eyes are glued to the screen. (if:$pregnancy's gender is "male")[(if:$pregnancy's mood is "excited")[*There he is... wow. MY baby boy.*](else-if:$pregnancy's mood is "nervous")[*Oh gosh... a baby boy... and he's getting so big already.*](else:)[*Oh god... I can't believe that thing is growing INSIDE me. Geez. So glad it's coming out... HE'S coming out, I mean...*]](else:)[(if:$pregnancy's mood is "excited")[*There she is... wow. MY baby girl.*](else-if:$pregnancy's mood is "nervous")[*Oh gosh... a baby girl... and she's getting so big already.*](else:)[*Oh god... I can't believe that thing is growing INSIDE me. Geez. So glad it's coming out...*]]
+
+"We're going to put you under general anasthesia now," the doctor says. "When you wake up, your pregnancy will be transferred, and your pregnancy journey will be over. Remember, the LifeBubble 3 will take great care of your baby, providing all the necessary nutrients - a perfect development environment. But, it couldn't have done this without you, the LifeBubble can't replicate 1st trimester development yet." 
+
+"Not until the LifeBubble 4?" you quip. 
+
+"Who knows," the doctor smiles back. 
+
+An anaesthetist prepares your sleeping mask. "Ready?" 
+
+"Yeah."<div class='options'>(link:"You fall asleep...")[(set:$next to "2nd prenatal visit 3 remove")(display:"change screen")]</div>
+
+
+:: 2nd prenatal visit 3 remove {"position":"3275,5525","size":"100,100"}
+(set:$character's money to it - 2500)"Hey there, sleepyhead," your stepdad says as you come to. 
+
+You already feel different - there's none of that pressure inside you, that empty space is gone. 
+
+<div class='top_right_half'>(print:"<img class='greyborder' 
+src='img/scenes/generic/pregnancy/artificial womb.jpg' width=100% height=auto>")</div>"We've finished the transfer, the  the hormone treatments, and we've collected enough samples from your body to supply the LifeBubble. This includes your IgG antibodies, as well as samples of the nutrients your body was giving the fetus - the LifeBubble is capable of producing these up to an exact specification. So your fetus will develop as if it's inside your body - (if:$pregnancy's gender is "male")[he](else:)[she] will hardly no the difference."
+
+"Wow..." you say, feeling quite groggy. 
+
+"Everything's going to be alright," your stepdad holds your hand. "You made it."(set:$character's pregnant to "false")(set:$character's "pregnancy known" to "false")
+
+"Normally, your hormones would be in flux after a terminated pregnancy, and you might experience low-level postpartum mood swings," the doctor says. "But due to hormone balancing techniques, you should not experience anything of the kind. In fact, after a night of rest, you should be good to return to normal activities."<div class='options'><mark>You are no longer pregnant.</mark>
+(link:"Return home")[(set:$next to "pregnancy report")(display:"change screen")]</div>(display:"refresh stats")
+
+
+:: pregnancy report {"position":"3175,6000","size":"100,100"}
+<div class='options'><span class='shadow'>[(color:"#f9ced5")[(css:"font-size:2em")[Pregnancy Report]]]</span></div>(if:$choice is "remove")[You were 12 weeks pregnant before removing the pregnancy and transferring it to an artificial womb. From this point on, your child will be raised by the state and your motherly obligations are at an end.
+
+]Through (if:$pregnancy's gender is "male")[a series of advanced AI-guided mental tests throughout your child's development, your baby will choose his own name.](else:)[a series of advanced AI-guided mental tests throughout your child's development, your baby will choose her own name.]
+
+<div class='options'><span class='shadow'>[(css:"font-size:1.75em")[Baby's Genetic Traits]]</span></div><span class='shadow'>Race: (if:$preg_npc's race is $character's race)[(print:$character's race of (dm:"white","White","black","Black","latin","Hispanic","asian","Asian"))](else:)[Multi-racial ((print:$character's race of (dm:"white","White","black","Black","latin","Hispanic","asian","Asian")) and (print:$preg_npc's race of (dm:"white","White","black","Black","latin","Hispanic","asian","Asian")))]
+Birth gender: (print:(upperfirst:$pregnancy's gender))
+Appearance: (print:(ceil:(($preg_npc's looks + 8)/2)))/10
+Fitness: (print:(ceil:($preg_npc's fitness + $character's fitness) / 2))/10
+Intelligence: (print:(ceil:($preg_npc's wealth + $character's intellect) / 2))/10</span>
+
+<div class='options'><span class='shadow'>[(css:"font-size:1.75em")[Your Mental Changes]]</span></div>(display:"pregnancy consequence")(if:$choice is "remove")[(set:$gain_base to 10)](else:)[(set:$gain_base to 25)](display:"pregnancy gain xp")
+<div class='options'>(link:"Next")[(display:"advance day")]</div>(set:$daytime_activities to $daytime_activities - (a:"8-week prenatal appointment","12-week prenatal appointment"))(set:$mess to 0)(set:$pill_timer to 28)
+
+
+:: 2nd prenatal visit 3 {"position":"3175,5525","size":"100,100"}
+{(set:$pregnancy's updates to $character's "id" of (dm:
+"alina",(a:8,9,11,14,19,22,25,30,35,36,38),
+"cassidy",(a:6,11,15,18,21,24,28,32,35,39),
+"ella",(a:6,11,12,23,26,29,32,35,36,37),
+"jade",(a:9,11,12,15,20,24,27,28,30,33,35,39),
+"jia",(a:5,9,11,14,17,25,27,30,32,35,39),
+"lana",(a:10,12,14,21,25,27,29,34,37),
+"liya",(a:8,10,12,21,27,33,38),
+"mia",(a:11,16,23,25,27,33,35,38,39),
+"rae",(a:7,11,20,24,27,29,31,35,39),
+"scarlit",(a:7,10,14,18,21,24,29,30,35)
+))}The last step is that the doctors implant you with a 
+
+You return home again, thinking about what's going to happen over the next few weeks.<div class='options'><mark>Time will now speed up for you, the player. You will play out your pregnancy week by week, rather than day by day.</mark></div>(display:"pregnancy next link")
+
+
+:: pregnancy next link {"position":"3200,4900","size":"100,100"}
+(set:$continue to "true")<div class='options'>(if:$continue is "true")[(link:"Week " + (text:$pregnancy's weeks + 1))[(display:"pregnancy advance week")]]</div>
+
+
+:: pregnancy advance week {"position":"3300,4900","size":"100,100"}
+[(set:$current_location to "Your House")(set:$days_advanced to 0)<mark>(text-style:"fade-in-out")[Time goes by...]</mark>
+{(live:0.25s)[(display:"next day")(display:"time")(set:$days_advanced to it + 1)(if:$days_advanced > 6)[(display:"pregnancy current video")(set:$prev_preg_video to $current_preg_video)(set:$pregnancy's weeks to it + 1)(display:"refresh stats")(stop:)(display:"check pregnancy events 2nd trimester")(if:$event is "none")[(replace:?options)[(display:"pregnancy next link")]](else:)[(set:$next to $event)(display:"change screen")]]]}]<options|
+
+
+:: time {"position":"900,325","size":"100,100"}
+(replace:?right_screen)[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week,
+Day $day</span>]<div class='center'>[]<right_options|</div>]
+
+
+:: check pregnancy events 2nd trimester {"position":"2650,4775","size":"100,100"}
+{
+(set:$event to "none")
+
+
+(if:(random:-30,0) > $pregnancy's positivity and not ($pregnancy's events contains "pregnancy mental effects"))[(set:$event to "pregnancy mental effects")]
+
+(if:(random:20,35)<($pregnancy's weeks) and not ($pregnancy's events contains "pregnancy kicking"))[(set:$event to "pregnancy kicking")]
+
+(if:(random:20,37)<($pregnancy's weeks) and not ($pregnancy's events contains "pregnancy physical struggles"))[(set:$event to "pregnancy physical struggles")]
+
+(if:(random:26,35)<($pregnancy's weeks) and not ($pregnancy's events contains "pregnancy bigness"))[(set:$event to "pregnancy bigness")]
+
+(if:(random:15,20)<($pregnancy's weeks) and not ($pregnancy's events contains "pregnancy first lactation"))[(set:$event to "pregnancy first lactation")]
+
+(if:((random:1,10) is 1) and not ($pregnancy's events contains "pregnancy stepsis support"))[(set:$event to "pregnancy stepsis support")]
+
+
+(display:"pregnancy current video")
+(unless:$prev_preg_video is $current_preg_video)[(set:$event to "pregnancy belly update")]
+(if:$pregnancy's weeks > 39)[(set:$event to "pregnancy give birth")]
+}
+
+
+:: pregnancy belly update {"position":"3425,5225","size":"100,100"}
+(print: "<video src='img/" +$current_preg_video +"' autoplay='' loop='' muted='' playsinline/>")
+(display:"pregnancy next link")
+
+
+:: pregnancy give birth {"position":"3550,5225","size":"100,100"}
+(newtrack:'pregnancy birth','aud/music/emotion/pregnant/birth.mp3')(set:$song to "pregnancy birth")(display:"play song")<div class='top_left_half'><img class='greyborder' 
+src='img/scenes/generic/pregnancy/ambulance.jpg' width=100% height=auto></div>You definitely feel it when your cervix begins to open - you spend a sleepless night writhing on the bed, body slicked in sweat.
+
+The contractions are exhausting. Your uterus, back muscles, abdominals feel like they're made out of a web of fire, trying to sear through your skin while simultaneously closing in on your uterus with daggers.
+
+In the morning, your stepdad makes the call to the number the doctors gave you, and within 30 minutes, an ambulance shows up outside your home. 
+
+*This is really happening...* 
+
+Two men in white suits, embroidered with the pink symbol of a dove, usher you into the vehicle. They make sure you're comfortable in the back, buckling you into a cushioned white chair. 
+
+"This is... fancy..." you say, grimacing as you feel the contractions again. 
+
+"Try to relax," one says. "We're going to take you to the Cyprian Towers." 
+
+"Cyprian Towers?" you say. "Is that a hospital?" 
+
+The first thing you notice is how the interior of the ambulance smells like orange blossom and bergamot. 
+
+A screen descends from the ceiling as the journey gets underway. 
+
+"Hello, $your_name," a woman's face on the screen smiles down at you. You recognize the face of the AI Aphrodite, from billboards around the city. "How are you feeling?"
+
+<div class='top_right_half'><img class='greyborder' 
+src='img/scenes/generic/pregnancy/aphrodite.jpg' width=100% height=auto></div>"Uhh, hi." *She's really TALKING to me?* "I'm just so tired.."
+
+"Of course you are. Bring her the ambrosia," Aphrodite commands, and an attendant comes to the back, handing you a metal goblet. 
+
+You take the cup, looking at the sparkling liquid inside. "What's this?"
+
+"It will help," she says. "Drink." 
+
+You obey - it tastes like honey. "Delicious."
+
+"Yes it is," she says. 
+
+Almost immediately, the overwhelming agony and fatigue begin to fade. You still *feel* your contractions, but the pain is a tiny sliver of what it was before. Your sore, taut muscles feel soothed, as if bathed in tropical ocean water. The overwhelming tiredness and feeling of dread begins to recede. Your breathing steadies. 
+
+"What are the Cyprian Towers?" you ask the AI, too loopy to second-guess talking to a computer. 
+
+"A special place I built for mothers like you," she says. "See - outside."
+
+On the horizon are two prismatic skyscrapers. They diffract the rosy dawn sky around them.
+
+<img class='greyborder' 
+src='img/scenes/generic/pregnancy/towers.jpg' width=100% height=auto>
+"They are part of what make Summer City unique," she says. "We revere childbirth, as it should be. It is a spiritual event. You'll find it better than those ugly hospitals you have in Boston."
+
+*She knows where I'm from...* "Is it expensive?" you ask, awkwardly. 
+
+Aphrodite laughs. "Yes it is. Very, very expensive. For me. Not for you." 
+
+*So, this AI really controls the city budget.* "Th- thank you." Seems like the right thing to say.  
+
+"You're welcome. Now I've got to go - I've been putting off this software update all night - have a blessed birth, $your_name."
+
+The TV retracts back into the ambulance roof, as you arrive at the Cyprian Towers.<div class='options'>(link:"Arrive")[(set:$next to "pregnancy give birth 1")(display:"change screen")]</div>
+
+
+:: pregnancy give birth 1 {"position":"3550,5325","size":"100,100"}
+<img class='greyborder' 
+src='img/scenes/generic/pregnancy/tower interior.jpg' width=100% height=auto>The attendants open the back door of the ambulance, and detach your bed so that it becomes like a big, luxe stretcher. They wheel you through the main entrance. 
+
+"This is $your_name," they tell the front desk. 
+
+"Floor 82," they respond, buzzing you into an elevator. 
+
+Your ears pop a little as the elevator shoots up. Through the glass wall, you see Summer City drop away, and you even ascend above some low-hanging clouds. 
+
+<img class='greyborder' 
+src='img/scenes/generic/pregnancy/delivery room.jpg' width=100% height=auto>
+The attendants wheel you into a room that you at first take to be a lounge. But no, you find out that this is your delivery room. The attendants transfer you to the bed, which is complete with stirrups.  
+
+You're hooked up to a fetal monitor, and soon a group of calm-faced attendants fill the room to assist you with the process. <div class='options'>(link:"Give birth")[(set:$next to "pregnancy give birth 2")(display:"change screen")]</div>
+
+
+:: pregnancy give birth 2 {"position":"3550,5425","size":"100,100"}
+(newtrack:'baby cry','aud/se/scene/pregnancy/crying.mp3')(set:$se to "baby cry")(display:"play sound")It takes you about (print:(random:12,15)) hours to give birth, and you're conscious the whole time. You feel virtually no pain - apparently that drink was so potent, that no epidural is necessary. 
+
+Despite feeling good, you're still in tune enough with your body that you're still able to push, and feel your contractions. <div class='options'>(css:"font-size:2em")[<mark>You give birth.</mark>]
+(link:"Afterwards...")[(set:$next to "pregnancy give birth 3")(display:"change screen")]</div>(set:$character's pregnant to "false")(set:$character's "pregnancy known" to "false")(display:"refresh stats")
+
+
+:: pregnancy give birth 3 {"position":"3550,5525","size":"100,100"}
+<div class='top_right_half'><img class='greyborder' 
+src='img/scenes/generic/pregnancy/lounge.jpg' width=100% height=auto></div>It's evening by the time you're led into a beautiful corner lounge, looking out over the sunset. Through every stage, you've been treated like you're at a 5-star resort. 
+
+They gave you a warm bath, as well as a wide variety of advanced drugs to start repairing the vaginal tears and changes your body went through during the birth process. By now, you're frankly feeling amazing - though part of it might be just the relief of the birth being over. 
+
+But now you have an important choice to make. 
+
+Earlier, you got to spend some time with your baby (if:$pregnancy's gender is "boy")[boy, and even got to breastfeed him](else:)[girl, and even got to breastfeed her] - you definitely felt the strength of that bond, and a taste of what your new life could be like. 
+
+The doctors made it clear that you have two options - either continue your life as normal, allowing your child to be raised in Summer City's childcare facilities by professional parents, or become a full-time parent yourself. 
+
+If you choose that second option, the city would pay you an income to move to its childcare facility, take care of your baby, and also assist in the raising of others. The downside of that second option? It's basically a lifetime commitment - you would be given a special variant of the Plus pill to better suit you to the role. <div class='options'>(link:"Become a full-time mother (Game Over)")[(set:$next to "pregnancy mother game over")(display:"change screen")](link:"Continue your life")[(set:$next to "pregnancy give birth go home")(display:"change screen")]</div>
+
+
+:: pregnancy mother game over {"position":"3450,5525","size":"100,100"}
+(masteraudio: 'stopall')(newtrack:'pregnancy game over','aud/music/emotion/pregnant/game over.mp3')(set:$song to "pregnancy game over")(display:"play song")(newtrack:'kids ambience','aud/music/emotion/pregnant/kids ambience.mp3')(set:$ambience to "kids ambience")(display:"play ambience")You make up your mind to be a full-time parent. (set:$pill_taken to "Plus")(display:"refresh stats")
+
+You're given a few days to say your goodbyes, but of course your friends and family can visit you anytime, you're just going to be living in a different part of the city. 
+
+<img class='greyborder' 
+src='img/scenes/generic/pregnancy/childcare.jpg' width=100% height=auto>
+Summer City's childcare facilties are absolutely HUGE - massive, colorful buildings, wide open playgrounds full of kids having fun. The campus is separated by year, with resources matching each stage of life. 
+
+*My child is never going to run out of playdates, that's for sure...*
+
+The parents that live here permanently have their own social clubs and activities amongst themselves, ranging from movie nights and brunches, music festivals, exercise classes, free group vacations, and entertainment options of every kind - all tailored around a life of raising kids. 
+
+The lactation bars are an interesting concept - considering your new pill will make you produce large quantities of milk for the rest of your adult life - you can go in a group, all strapping in to a big central breast pump machine together, and get milked together while you discuss the days events and get chef-prepared appetizers. After the first few times of going, you stopped feeling like a cow, and just enjoyed it. 
+
+Some might view this place as a prison, but the magic of getting to raise your own child in such a beautiful, dedicated environment, where every detail is taken care of, is worth the price of freedom in your eyes. And yes, it is quite a bit of responsibility, since you have to care for babies other than your own.
+
+It's a happy life.(display:"game over")
+
+
+:: pregnancy give birth go home {"position":"3550,5625","size":"100,100"}
+<div class='top_left_half'><img class='greyborder' 
+src='img/scenes/generic/pregnancy/tower.jpg' width=100% height=auto></div>Making up your mind, you say goodbye to the Cyprian Towers. 
+
+*What an incredible way to give birth...* you look back over your shoulder as you're whisked back home in a taxi. 
+
+With the miracles of modern medicine, your body has almost fully recovered. Tomorrow, life can go fully back to normal. You can sleep peacefully knowing that your new child is in the best care, and that you can visit him anytime.(set:$milk_timer to 180)
+
+(display:"pregnancy report")
+
+
+:: pregnancy first lactation {"position":"3175,5800","size":"100,100"}
+{(print:$character's id of (dm:
+"alina","<video src='img/scenes/generic/pregnancy/vignette/first lactation/alina.mp4' autoplay='' loop='' muted='' playsinline/>",
+"cassidy","<div class='top_left_half'><video src='img/scenes/generic/pregnancy/vignette/first lactation/cassidy.mp4' autoplay='' loop='' muted='' playsinline/></div>",
+"ella","<div class='top_left_half'><video src='img/scenes/generic/pregnancy/vignette/first lactation/cassidy.mp4' autoplay='' loop='' muted='' playsinline/></div>",
+"jade","<div class='top_left_half'><video src='img/scenes/generic/pregnancy/vignette/first lactation/jade.mp4' autoplay='' loop='' muted='' playsinline/></div>",
+"jia","<div class='top_left_half'><video src='img/scenes/generic/pregnancy/vignette/first lactation/jia.mp4' autoplay='' loop='' muted='' playsinline/></div>",
+"lana","<video src='img/scenes/generic/pregnancy/vignette/first lactation/lana.mp4' autoplay='' loop='' muted='' playsinline/>",
+"liya","<video src='img/scenes/generic/pregnancy/vignette/first lactation/scarlit.mp4' autoplay='' loop='' muted='' playsinline/>",
+"mia","<video src='img/scenes/generic/pregnancy/vignette/first lactation/mia.mp4' autoplay='' loop='' muted='' playsinline/>",
+"rae","<video src='img/scenes/generic/pregnancy/vignette/first lactation/alina.mp4' autoplay='' loop='' muted='' playsinline/>",
+"scarlit","<video src='img/scenes/generic/pregnancy/vignette/first lactation/scarlit.mp4' autoplay='' loop='' muted='' playsinline/>"))}(set:$pregnancy's events to it + (a:"pregnancy first lactation"))(print:$pregnancy's weeks) weeks into your pregnancy, you begin lactating. Right now, it's just colostrum, a slightly yellowish precursor to milk, which is supposedly packed with nutrients. It's not enough volume that you need to start pumping or anything - that won't happen until after you give birth. 
+
+Your breasts have been going through a significant number of changes - your nipples are getting darker, larger, and pointier. 
+(display:"pregnancy next link")
+
+
+:: pregnancy kicking {"position":"3300,5800","size":"100,100"}
+{(set:$pregnancy's events to it + (a:"pregnancy kicking"))(set:$video to "scenes/generic/pregnancy/vignette/movement.mp4")(print:"<video src='img/scenes/generic/pregnancy/vignette/movement.mp4' autoplay='' loop='' muted='' playsinline/>")
+(print:$pregnancy's weeks) weeks in - your baby has started moving, and really kicking. (either:"You feel a lot of strong thwumps, especially around your belly button.","You feel a lot of serious pokes, about an inch right of your belly button.","It feels like punches in your pelvis, and kicks under your ribs.")[(if:$pregnancy's gender is "male")[He](else:)[She] (either:"has been especially enjoying kicking you in the side of the stomach today...","seems to particularly enjoy kicking you right in the belly button.")]}
+
+(if:$pregnancy's mood is "horrified")[It's horrible. You feel like you have an alien chest-bursted nested inside your body. Except that the apparent goal of this one is to prevent you from EVER sleeping.](else-if:$pregnancy's mood is "nervous")[It's so freaking weird. And it seems like this baby's main intention, is to keep you from EVER sleeping.](else:)[Yeah, it's "beautiful". Yes it's "healthy". The problem, is you can't sleep.] You come to dread every movement - you might be laying on your side peacefully, ready to pass out, then suddenly BAM! Kicked straight in the bladder, back to vagina, a chubby little arm bashes your ribs. 
+
+*Goddamn it! I just want to sleep!!!* <div class='options'><mark>(if:$pregnancy's mood is "excited")[Since you're excited about your pregnancy, the difficulty is decreased.](else-if:it is "horrified")[Since you're pretty horrified about your pregnancy, the difficulty is increased.]</mark>
+(link:"Cope mentally 🧠")[(set:$choice to "mental")(set:$struggle_type to "kicking")(display:"pregnancy struggle")](link:"Cope physically 💪")[(set:$choice to "physical")(set:$struggle_type to "kicking")(display:"pregnancy struggle")]</div>
+
+
+:: pregnancy struggle {"position":"3300,5900","size":"100,100"}
+{(set:$blackjack_params to (dm:
+"challenge","convince him to pay his share.",
+"near victory","dynamic",
+"near defeat","dynamic",
+"skill check","pregnancy",
+"skill check difficulty",50,
+"difficulty","medium",
+"npc","enabled",
+"victory","Good job!",
+"defeat","Shit...",
+"points to win",20,
+"type","sale",
+"points",10,
+"result passage","pregnancy struggle result",
+"backdrop",$video,
+))
+
+(if:$choice is "mental")[
+(set:$blackjack_params's "skill check difficulty" to ($character's "effective intellect") of (a:100,100,90,80,70,60,50,40,30,25,20))]
+(if:$choice is "charm")[
+(set:$blackjack_params's "skill check difficulty" to ($character's "effective charm") of (a:100,100,90,80,70,60,50,40,30,25,20))]
+(if:$choice is "physical")[
+(set:$blackjack_params's "skill check difficulty" to ($character's "effective fitness") of (a:100,100,90,80,70,60,50,40,30,25,20))]
+
+(set:$blackjack_params's "skill check difficulty" to (max:(min:(it - $pregnancy's positivity),100),20))
+
+(if:$struggle_type is "kicking")[
+(set:$blackjack_params's "good action" to (either:"manage to continue to think positively about your pregnancy","are able to cope with the kicking","become accustomed to the kicking"))
+(set:$blackjack_params's "bad action" to (either:"can't handle it","can't handle the constant kicking"))]
+
+(if:$struggle_type is "mental")[
+(set:$blackjack_params's "good action" to (either:"manage to continue to think positively about your pregnancy","are able to cope","come to terms with things"))
+(set:$blackjack_params's "bad action" to (either:"can't handle it","have difficulty handling things"))]
+
+(if:$struggle_type is "physical")[
+(set:$blackjack_params's "good action" to "adjust your lifestyle to this new reality")
+(set:$blackjack_params's "bad action" to "have trouble handling the physical changes")]
+
+(set:$next to "tower blocks initialize")(display:"change screen")
+
+
+}
+
+
+:: initialize pregnancy progression {"position":"1400,1150","size":"100,100"}
+{(if:$milking_talent is 0)[(set:$milking_talent to (dm:
+"level",1,
+"xp",0,
+"xp to level",
+(dm:
+1,0,
+2,20,
+3,60,
+4,100,
+5,150,
+6,200,
+7,250,
+8,300,
+9,600,
+10,1000,
+)))]
+
+(if:$preg_talent is 0)[(set:$preg_talent to (dm:
+"level",1,
+"xp",0,
+"xp to level",
+(dm:
+1,0,
+2,20,
+3,60,
+4,100,
+5,150,
+6,200,
+7,250,
+8,300,
+9,600,
+10,1000,
+)))]}
+
+
+:: degrade sex skills {"position":"1525,900","size":"100,100"}
+{(set:$blowjob_talent's level to (max:$blowjob_talent's level - 1,1))
+(set:$blowjob_talent's xp to $blowjob_talent's level of $blowjob_talent's "xp to level")
+(set:$titfuck_talent's level to (max:$titfuck_talent's level - 1,1))
+(set:$titfuck_talent's xp to $titfuck_talent's level of $titfuck_talent's "xp to level")
+(set:$orgasm_control's level to (max:$orgasm_control's level - 1,1))
+(set:$orgasm_control's xp to $orgasm_control's level of $orgasm_control's "xp to level")
+(set:$arousal_denial's level to (max:$arousal_denial's level - 1,1))
+(set:$arousal_denial's xp to $arousal_denial's level of $arousal_denial's "xp to level")
+(set:$handjob_talent's level to (max:$handjob_talent's level - 1,1))
+(set:$handjob_talent's xp to $handjob_talent's level of $handjob_talent's "xp to level")
+(set:$pleasuring_girls_talent's level to (max:$pleasuring_girls_talent's level - 1,1))
+(set:$pleasuring_girls_talent's xp to $pleasuring_girls_talent's level of $pleasuring_girls_talent's "xp to level")
+(set:$dom_sex_talent's level to (max:$dom_sex_talent's level - 1,1))
+(set:$dom_sex_talent's xp to $dom_sex_talent's level of $dom_sex_talent's "xp to level")
+(set:$sub_sex_talent's level to (max:$sub_sex_talent's level - 1,1))
+(set:$sub_sex_talent's xp to $sub_sex_talent's level of $sub_sex_talent's "xp to level")
+(set:$gag_reflex's level to (max:$gag_reflex's level - 1,1))
+(set:$gag_reflex's xp to $gag_reflex's level of $gag_reflex's "xp to level")
+(set:$female_masturbation_talent's level to (max:$female_masturbation_talent's level - 1,1))
+(set:$female_masturbation_talent's xp to $female_masturbation_talent's level of $female_masturbation_talent's "xp to level")
+(set:$male_masturbation_talent's level to (max:$male_masturbation_talent's level - 1,1))
+(set:$male_masturbation_talent's xp to $male_masturbation_talent's level of $male_masturbation_talent's "xp to level")(set:$se to "drain")(display:"play sound")}
+
+
+:: pregnancy gain xp {"position":"1475,5750","size":"100,100"}
+{<div class='options'>
+(set:$gain to (ceil:$score_multiplier * $gain_base))
+(set:$skill_name to "Pregnancy skill")
+(set:$message to "+$gain pregnancy XP
+($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
+(set:$current_skill to (dm:))
+(set:$current_skill to $preg_talent)
+(display:"preg gain xp calc")
+(set:$preg_talent's level to $current_skill's level)
+(set:$preg_talent to $current_skill)
+</div>
+}
+
+
+:: pregnancy struggle result {"position":"3300,6000","size":"100,100"}
+(print: "<video src='img/" +$current_preg_video +"' autoplay='' loop='' muted='' playsinline/>")(if:$result is "pass")[(set:$gain to 2)(display:"pregnancy positivity")(set:$gain_base to 7)](else:)[(display:"pregnancy struggle consequence")(set:$gain_base to 3)](display:"pregnancy gain xp")(display:"pregnancy next link")
+
+
+:: preg gain xp calc {"position":"1475,5850","size":"100,100"}
+{(css:"font-size:5vmin")[
+
+(set:$level_up to "false")
+(set:$current_skill's xp to $current_skill's xp + $gain)
+
+(set:$next_level to (min:$current_skill's level + 1,10))
+(unless:$current_skill's level > 9)[
+(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill leveled up!","Permanent skill increase!"))(set:$level_up to "true")(set:$current_skill's level to $next_level)(set:$se to "ui good")(set:$next_level to $current_skill's level + 1)(display:"play sound")]
+
+(unless:$current_skill's level > 9)[
+(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Stat leveled up! (+2)","Permanent skill increase! (+2)"))(set:$level_up to "double")(set:$current_skill's level to $next_level)(set:$next_level to $current_skill's level + 1)(live:0.5s)[(display:"play sound")(stop:)]]
+
+(unless:$current_skill's level > 9)[
+(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill leveled up! (+3)","Skill increase! (+3)"))(set:$level_up to "triple")(set:$current_skill's level to $next_level)(set:$next_level to $current_skill's level + 1)(live:1s)[(display:"play sound")(stop:)]]
+
+(unless:$current_skill's level > 9)[
+(if:$current_skill's xp >= ($current_skill's level of $current_skill's "xp to level") and not ($current_skill's level > 9))[(set:$message_2 to (either:"Skill leveled up! (+3)","Permanent skill increase! (+3)"))(set:$level_up to "quadruple")(set:$current_skill's level to $next_level)(set:$next_level to $current_skill's level + 1)(live:1s)[(display:"play sound")(stop:)]]
+]
+|tooltip>[(text-style:"fade-in-out")[<span class='shadow'>$message(unless:$level_up is "false")[(print:"
+")(color:"Bisque")[(print:$message_2)]]</span>]|tooltiptext>[$skill_name: (print:$current_skill's level)(if:$level_up is "true")[ (+1)](else-if:$level_up is "double")[ (+2)](else-if:$level_up is "triple")[ (+3)](else-if:$level_up is "quadruple")[ (+4)](unless:$current_skill's level > 9)[(print:"
+")(meter: bind $current_skill's xp, $current_skill's level of $current_skill's "xp to level", "X", (text:$current_skill's level of $current_skill's "xp to level" - $current_skill's xp) + " XP to level " + (text:$next_level), #F2D2BD)]]]]]]]
+}
+
+
+:: pregnancy struggle consequence {"position":"3300,6100","size":"100,100"}
+{
+(set:$consequences to (shuffled:"sex skills","fitness","workplace","family"))
+
+(unless:((a:"hired","demo") contains $sales_job's "status") and $sales_job's "commission" > 5)[(set:$consequences to it - (a:"workplace"))]
+
+(if:$character's fitness < 3)[(set:$consequences to it - (a:"fitness"))]
+
+(if:1st of $consequences is "sex skills")[<div class='options'><mark>Your sex skills all decrease by 1.(display:"degrade sex skills")</mark></div>]
+(if:1st of $consequences is "fitness")[(set:$se to "drain")(display:"play sound")(set:$character's "fitness" to (max:$character's "fitness" - 1,1))(display:"sync stat progression")<div class='options'><mark>The pregnancy is taking a toll on your body, and thus your fitness decreases permanently by 1.</mark></div>]
+(if:1st of $consequences is "workplace")[<div class='options'><mark>You end up needing to taking a lot of time off work, and your sales commission is reduced by 1% as a penalty for your poor performance.</mark></div>]
+(if:(1st of $consequences) is "family")[
+(set:_target to (either:"stepsis","stepdad"))
+You have trouble controlling your mood and outbursts, due to your stress. 
+(if:_target is "stepsis")[
+(set:$npc_select to "stepsis")
+Recently you get in a lot of fights with Alexia, and your relationship with her really takes a hit. 
+(set:$gain_friendship to -5)(display:"change relationship")
+](else:)[
+(set:$npc_select to "stepdad")
+Recently you get in a lot of fights with your stepdad, and your relationship with him really takes a hit. 
+(set:$gain_friendship to -5)(display:"change relationship")
+
+]
+
+
+]
+(set:$gain to -2)(display:"pregnancy positivity")
+}
+
+
+:: pregnancy mental effects {"position":"3400,5800","size":"100,100"}
+(set:$pregnancy's events to it + (a:"pregnancy mental effects"))(set:$video to $current_preg_video)During Week (print:$pregnancy's weeks), you are really struggling with the realities of being pregnant. It feels like a total loss of body control. 
+
+It feels like your own body doesn't belong to you anymore. Every ache and twinge is brand new, and you don't know if it's good or bad. You're changing shape, and it is starting to really impact your self-esteem.
+
+Your metabolism is changing, your breast shape is changing... it's just a lot, and it's really difficult to handle.<div class='options'><mark>(if:$pregnancy's mood is "excited")[Since you're excited about your pregnancy, the difficulty is decreased.](else-if:it is "horrified")[Since you're pretty horrified about your pregnancy, the difficulty is increased.]</mark>
+(link:"Cope mentally 🧠")[(set:$choice to "mental")(set:$struggle_type to "mental")(display:"pregnancy struggle")](link:"Convince yourself it's alright 🍀")[(set:$choice to "charm")(set:$struggle_type to "mental")(display:"pregnancy struggle")]</div>
+
+
+:: pregnancy bigness {"position":"3400,5900","size":"100,100"}
+(print: "<video src='img/" +$current_preg_video +"' autoplay='' loop='' muted='' playsinline/>")(set:$pregnancy's events to it + (a:"pregnancy bigness"))(set:$video to $current_preg_video)You're just so... BIG now!
+
+Now that you're in your third trimester, that petite torso you used to have is totally gone. You just feel heavy, and big. You bump into stuff, you don't fit into your old shoes, old clothes...
+
+*And oh my god, I'm just going to get bigger...*<div class='options'><mark>(if:$pregnancy's mood is "excited")[Since you're excited about your pregnancy, the difficulty is decreased.](else-if:it is "horrified")[Since you're pretty horrified about your pregnancy, the difficulty is increased.]</mark>
+(link:"Cope mentally 🧠")[(set:$choice to "mental")(set:$struggle_type to "mental")(display:"pregnancy struggle")](link:"Convince yourself it's alright 🍀")[(set:$choice to "charm")(set:$struggle_type to "mental")(display:"pregnancy struggle")]</div>
+
+
+:: pregnancy physical struggles {"position":"3500,5900","size":"100,100"}
+(print: "<video src='img/" +$current_preg_video +"' autoplay='' loop='' muted='' playsinline/>")(set:$pregnancy's events to it + (a:"pregnancy physical struggles"))(set:$video to $current_preg_video)The back and hip pain you're experiencing by week (print:$pregnancy's weeks) is horrible. 
+
+Your joints feel loose, your body parts feel like they're all scrambled up inside you, and eventually it feels like you're just an oozing chariot of bones floating around in a big sack. You find it hard to believe everything will go back to normal after your baby is born... 
+
+You have to be way more careful about moving around, you just feel so fragile. 
+<div class='options'><mark>(if:$pregnancy's mood is "excited")[Since you're excited about your pregnancy, the difficulty is decreased.](else-if:it is "horrified")[Since you're pretty horrified about your pregnancy, the difficulty is increased.]</mark>
+(link:"Cope mentally 🧠")[(set:$choice to "mental")(set:$struggle_type to "physical")(display:"pregnancy struggle")](link:"Cope physically 💪")[(set:$choice to "physical")(set:$struggle_type to "physical")(display:"pregnancy struggle")]</div>
+
+
+:: pregnancy stepsis support {"position":"3575,5800","size":"100,100"}
+(set:$pregnancy's events to it + (a:"pregnancy stepsis support"))<div class='top_right_half'>(print:"<img class='greyborder' 
+src='img/npc/family/stepsis/alexia/talk/" + (text:(random:1,11)) + ".jpg' width=100% height=auto>")</div>(set:$required to (dm:"friendship",1))(display:"check relationship")(if:$result is "pass")[Surprisingly, Alexia is being really supportive. She's even actually doing the *chores* sometimes now! 
+
+One thing that really touches you, is when you mention that you're craving chocolate cake. That day, she secretly went out and brought one home, and you two wolf the whole thing down together while watching movies.
+
+You don't feel guilty at all about the cake. *It's nutrition for the baby!*{(set:$npc_select to "stepsis")(set:$gain_friendship to 2)(set:$gain_dom to 1)(display:"change relationship")}(set:$gain to 3)(display:"pregnancy positivity")](else:)[Alexia doesn't go easy on you during your pregnancy. She snickers at your troubles, constantly making fun of your rapidly-inflating body, speaking euphemistically around the dinner table about the slutty behavior that landed you in this situation.
+
+At a time when you feel the most vulnerable, her antics are NOT helpful.{(set:$npc_select to "stepsis")(set:$gain_friendship to -2)(set:$gain_respect to -2)(set:$gain_attraction to -1)(set:$gain_dom to 1)(display:"change relationship")}(set:$gain to -2)(display:"pregnancy positivity")](display:"pregnancy next link")
+
+
+:: Milk yourself {"position":"3450,4825","size":"100,100"}
+[(display:"character status")]<status|<div class='center_screen' data-simplebar>[(set:$current_location to "Your Bedroom")]<screen|</div><div class='top_right' data-simplebar>[(css:"font-size:3.5vmin")[<span class='shadow'>$day_of_week, Day $day</span>]]<right_screen|</div>{(display:"location and time")(set:$sex_loop_continue to "true")(set:$sex_loop to "milking")(display:"play sex loop")
+
+{
+(set:$video to $character's id of (dm:
+"alina","scenes/generic/pregnancy/milking/alina.mp4",
+"cassidy","scenes/generic/pregnancy/milking/cassidy.mp4",
+"ella","scenes/generic/pregnancy/milking/cassidy.mp4",
+"jade","scenes/generic/pregnancy/milking/jade.mp4",
+"jia","scenes/generic/pregnancy/milking/alina.mp4",
+"lana",(either:"scenes/generic/pregnancy/milking/lana.mp4","scenes/generic/pregnancy/milking/alina.mp4","scenes/generic/pregnancy/milking/rae.mp4","scenes/generic/pregnancy/milking/liya.mp4"),
+"liya",(either:"scenes/generic/pregnancy/milking/lana.mp4","scenes/generic/pregnancy/milking/alina.mp4","scenes/generic/pregnancy/milking/liya.mp4"),
+"mia",(either:"scenes/generic/pregnancy/milking/mia 1.mp4","scenes/generic/pregnancy/milking/mia 2.mp4"),
+"rae",(either:"scenes/generic/pregnancy/milking/rae.mp4","scenes/generic/pregnancy/milking/jade.mp4"),
+"scarlit","scenes/generic/pregnancy/milking/scarlit.mp4"))
+
+(set:$blackjack_params to (dm:
+"challenge","convince him to pay his share.",
+"near victory","dynamic",
+"near defeat","dynamic",
+"skill check","milking",
+"skill check difficulty",50,
+"difficulty","medium",
+"npc","enabled",
+"victory","Good job!",
+"defeat","Shit...",
+"points to win",20,
+"type","sale",
+"points",10,
+"result passage","milking result",
+"backdrop",$video,
+))
+(set:$blackjack_params's "skill check difficulty" to $milk * 2)
+(set:$blackjack_params's "good action" to (either:"manage to hand-express all your milk","squeeze out every last drop","milk out every last bit"))
+(set:$blackjack_params's "bad action" to (either:"don't manage to squeeze out all your milk","don't manage to hand-express all your milk","don't get everything out"))
+
+
+(set:$next to "tower blocks initialize")(display:"change screen")
+
+
+}
+
+
+
+
+
+}
+
+
+:: pregnancy consequence {"position":"3175,6100","size":"100,100"}
+{(if:$choice is "remove")[(set:$factor to 0.5)](else:)[(set:$factor to 1)]<div class='options'><mark>(if:$pregnancy's mood is "excited")[You feel excited about giving birth. (Identity gain, maximum masculinity penalty)](else-if:$pregnancy's mood is "nervous")[You feel ambivalent about giving birth. (Identity / masculinity changes determined by your final positivity score)](else:)[You're still horrified about giving birth. (Identity penalty, no masculinity cap change)](if:$choice is "remove")[ All changes are halved, since you ended the pregnancy early.]</mark></div><span class='shadow'>Final positivity score: (print:$pregnancy's positivity)(print:"
+")
+(if:$pregnancy's positivity < 0)[(set:$character's identity to (min:100,it + (ceil:($pregnancy's positivity*$factor))))Identity change: (print:(ceil:($pregnancy's positivity*$factor)))](else-if:it > 0)[Identity change:  (set:$character's identity to (min:100,it + (ceil:($pregnancy's positivity*$factor))))+(print:$pregnancy's positivity)](else:)[Identity change: none](print:"
+")(set:$masculinity_change to (ceil:$factor*(20 + $pregnancy's positivity)))(set:$masculinity_change to it * -1)(set:$character's masculinity to (max:0,it + $masculinity_change))Masculinity change: (print:$masculinity_change)(print:"
+")
+(if:$choice is "remove")[(if:$pregnancy's mood is "excited")[(set:$character's "max masculinity" to (max:it - 5,0))Max masculinity permanently decreased by 5. ((print:$character's "max masculinity"))](else-if:$pregnancy's mood is "nervous")[(set:$character's "max masculinity" to (max:it - 3,0))Max masculinity permanently decreased by 3. ((print:$character's "max masculinity"))](else:)[Max masculinity unchanged.]](else:)[(if:$pregnancy's mood is "excited")[(set:$character's "max masculinity" to (max:it - 10,0))Max masculinity permanently decreased by 10. ((print:$character's "max masculinity"))](else-if:$pregnancy's mood is "nervous")[(set:$character's "max masculinity" to (max:it - 5,0))Max masculinity permanently decreased by 5. ((print:$character's "max masculinity"))](else:)[Max masculinity unchanged.]]</span>}(display:"refresh stats")
+
+
+:: clamp stats {"position":"1525,450","size":"100,100"}
+{
+(set:$character's masculinity to (max:0,(min:($character's "max masculinity"),$character's masculinity)))
+
+
+}
+
+
+:: milking result {"position":"3450,4925","size":"100,100"}
+(print: "<video src='img/" +$video +"' autoplay='' loop='' muted='' playsinline/>")(if:$result is "pass")[(set:$gain_base to 5)(set:$milked to $milk)](else:)[(set:$gain_base to 2)(set:$milked to $score)]<div class='options'><mark>$milked/$milk milked!(set:$milk to it - $milked)
+(set:$character's money to it + $milked)+$(print:$milked)(set:$se to "kaching")(display:"play sound")</mark>(display:"milking gain xp")(if:$status's status is "milky")[(display:"reset status")](link:"Next")[(display:"advance time")]</div>(display:"refresh stats")
+
+
+:: milking gain xp {"position":"1575,5750","size":"100,100"}
+{<div class='options'>
+(set:$gain to (ceil:$score_multiplier * $gain_base))
+(set:$skill_name to "Milking skill")
+(set:$message to "+$gain milking XP
+($gain_base base x " + (text:$score_multiplier) + "x multiplier)")
+(set:$current_skill to (dm:))
+(set:$current_skill to $milking_talent)
+(display:"preg gain xp calc")
+(set:$milking_talent's level to $current_skill's level)
+(set:$milking_talent to $current_skill)
+</div>
+}
+
+
+:: initialize pregnancy {"position":"2350,5400","size":"100,100"}
+{
+(print:'(set:$pregnancy to (dm:
+"weeks",4,
+"day of week",(text:$day_of_week),
+"trimester",1,
+"events",(a:)))')
+{(set:$pregnancy's updates to $character's "id" of (dm:
+"alina",(a:8,9,11,14,19,22,25,30,35,36,38),
+"cassidy",(a:6,11,15,18,21,24,28,32,35,39),
+"ella",(a:6,11,12,23,26,29,32,35,36,37),
+"jade",(a:9,11,12,15,20,24,27,28,30,33,35,39),
+"jia",(a:5,9,11,14,17,25,27,30,32,35,39),
+"lana",(a:10,12,14,21,25,27,29,34,37),
+"liya",(a:8,10,12,21,27,33,38),
+"mia",(a:11,16,23,25,27,33,35,38,39),
+"rae",(a:7,11,20,24,27,29,31,35,39),
+"scarlit",(a:7,10,14,18,21,24,29,30,35)
+))}
+
+}
+
+
+:: favorite all {"position":"800,1900","size":"100,100"}
+{==
+(set:_outfits_to_favorite to (unique:...(find:_outfit where (1st of (words:_outfit)) is (text:$character's id), ...$outfit_inventory)))
+
+(for: each _outfit, ..._outfits_to_favorite)[
+
+(set:$select to _outfit)
+(display:"get outfit")
+(for: each _category, ...$select_outfit's locations)[
+
+(set:$favorite_outfits's (text:_category) to $favorite_outfits's (text:_category) - (a:$select_outfit's id))
+(set:$favorite_outfits's (text:_category) to $favorite_outfits's (text:_category) + (a:$select_outfit's id))
+
+]]
+
+(goto:"wardrobe")
+
+
+:: favorite primary {"position":"800,1775","size":"100,100"}
+{==
+(set:_outfits_to_favorite to (unique:...(find:_outfit where (1st of (words:_outfit)) is (text:$character's id), ...$outfit_inventory)))
+
+(for: each _outfit, ..._outfits_to_favorite)[
+(set:_category to (words:_outfit)'s 2nd)
+(set:$favorite_outfits's (text:_category) to $favorite_outfits's (text:_category) - (a:_outfit))
+(set:$favorite_outfits's (text:_category) to $favorite_outfits's (text:_category) + (a:_outfit))
+]
+
+(goto:"wardrobe")
+
+
+:: clear favorites {"position":"800,2000","size":"100,100"}
+{
+
+(print:'
+(set:$favorite_outfits to (dm:
+  "beach",(a:),
+  "casual",(a:),
+  "office",(a:),
+  "gym",(a:),
+  "lounge",(a:),
+  "lingerie",(a:),
+  "stylin",(a:),
+  "fetish",(a:)))')
+  
+(goto:"wardrobe")
+}
 
 

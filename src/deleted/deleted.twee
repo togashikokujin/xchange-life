@@ -16,13 +16,13 @@
 :: random guy description millenial lad
 :: random guy description genx
 :: tg cartoon update
-:: lights out win
+:: lights out win {"position":"725,6550","size":"100,100"}
 {
 (set:$result to "pass")
 (replace:?game_screen)[(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>You (print:$blackjack_params's "good action").</span>]]]
 (replace:?right_options)[(link:"Next")[(set:$next to $blackjack_params's "result passage")(set:$result to "pass")(display:"change screen")]]
 }
-:: lights out lose
+:: lights out lose {"position":"850,6550","size":"100,100"}
 {
 (set:$result to "fail")
 (replace:?game_screen)[(color:"#f9ced5")[(css:"font-size:4vmin")[<span class='shadow'>You (print:$blackjack_params's "bad action").</span>]]]

@@ -1,4 +1,4 @@
-:: quicktime gain xp calc {"position":"470,5262","size":"100,100"}
+:: quicktime gain xp calc {"position":"475,5250","size":"100,100"}
 {
   (set:$current_skill's level to (min:(max:it, 1), 10))
   
