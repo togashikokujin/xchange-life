@@ -30,7 +30,7 @@
   (set:$rentable_outfits to (a:))
   (set:$purchasable_outfits to (a:))
 
-  ($use_global: "$outfit_database", "window.GE.outfit_database", [
+  ($use_global: "$outfit_database", "window.GE.outfit_database", [{=
     (set:_character_outfits to $character's id of $outfit_database)
     (set:_purchase_limits to purchasable of _character_outfits)
 
